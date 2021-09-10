@@ -24,11 +24,8 @@ Trainees will work in a dedicated [AWS environment](https://en.wikipedia.org/wik
 
 ### Learning objectives
 
-About containers:
 * Locate and fetch Docker/Singularity images from dedicated repositories.
 * Execute/Run a Docker/Singularity container from the command line.
-* Build Docker container from an existing recipe.
-* Design/Write a Docker recipe.
 * Convert Docker to Singularity image.
 
 About Nextflow:
@@ -70,9 +67,8 @@ https://wiki.gentoo.org/wiki/Nano/Basics_Guide
 * 13:30-14:30 Talk by Cedric Notredame, CRG.
 * 14:30-15:00 Introduction to Docker and Singularity Containers.
 * 15:00-15:30 Break
-* 15:30-16:30 Docker hub: find existing containers. Run a Singularity container (interactively).
+* 15:30-16:30 Docker hub: find existing containers. Run a Singularity container (interactively). Convert Docker to Singularity????
 * 16:30-17:30 Nexflow: find existing pipelines. Run/troubleshoot an existing pipeline. Understand Nextflow main files (main.nf and config files).
-
 
 ### Day 2: Fetch, understand, run, and modify a Nexflow pipeline
 
@@ -82,31 +78,21 @@ https://wiki.gentoo.org/wiki/Nano/Basics_Guide
 * 15:30-16:30 Nextflow configuration files.
 * 16:30-17:30 Modify and run a Nextflow pipeline.
 
-### Day 3: Fetch, understand, run, and modify 
+### Day 3: Write/modify and run a pipeline 
 
-* 13:00-14:00 Hands-on: fetch and run an existing Nextflow pipeline.
-* 14:00-15:00 Nexflow basic concepts. Processes and channels.
+* 13:00-14:00 Hands-on: Modify and run a Nextflow pipeline.
+* 14:00-15:00 Write Nextflow pipeline from scratch.
 * 15:00-15:30 Break
-* 15:30-16:30 Nextflow configuration files.
-* 16:30-17:30 Modify and run a Nextflow pipeline.
+* 15:30-16:30 Run Nextflow with containers.
+* 16:30-17:30 Choose either Docker or Singularity.
 
-### Day 3: Write and share
+### Day 4: Build and share a pipeline
 
-* Write Nextflow pipeline from scratch.
-* Run Nextflow with containers.
-* Choose either Docker or Singularity.
-* Run Nextflow on a computing cluster (e.g. HPC).
-  * Definition of computing requirements and queues.
-  * Profiles.
-* Share Nextflow pipelines and good practices.
-
-### Day 4: Fetch, understand, run, and modify 
-
-* 13:00-14:00 Hands-on: fetch and run an existing Nextflow pipeline.
-* 14:00-15:00 Nexflow basic concepts. Processes and channels.
+* 13:00-14:00 Hands-on: build from scratch and run a Nextflow pipeline.
+* 14:00-15:00 (continue hands-on?).
 * 15:00-15:30 Break
-* 15:30-16:30 Nextflow configuration files.
-* 16:30-17:30 Modify and run a Nextflow pipeline.
+* 15:30-16:30 Run Nextflow on a computing cluster (e.g. HPC). Definition of computing requirements and queues. Profiles.
+* 16:30-17:30 Share Nextflow pipelines and good practices.
 
 
 
