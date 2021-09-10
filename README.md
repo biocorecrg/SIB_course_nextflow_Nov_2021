@@ -42,7 +42,8 @@ About Nextflow:
 Being comfortable working with the CLI (command-line interface) in a Linux-based environment.
 
 DIANA? SHOULD we require the knowledge of Linux containers? Because if we say that the SIB container course is a pre-requisite, then we will look at what is covered there and save our time. Alternatively, we might briefly cover the topic but not go into building containers.
-Here is the course page (incl. github page) of the docker & singularity course we will run at SIB in october. i think our main focus here would be on newxflow so we should ask for knowledge of linux containers if needed.  And a little refresher never hurts. 
+
+Julia: Here is the course page (incl. github page) of the docker & singularity course we will run at SIB in october (https://www.sib.swiss/training/course/20211014_DOCK). i think our main focus here would be on newxflow so we should ask for knowledge of linux containers if needed.  And a little refresher never hurts. 
 
 Practitioners will need to connect during the course to a remove server via the "ssh" protocotol. You can learn about it [here](https://www.hostinger.com/tutorials/ssh-tutorial-how-does-ssh-work)
 
