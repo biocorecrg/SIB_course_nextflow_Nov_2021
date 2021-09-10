@@ -1,4 +1,4 @@
-# Courses@S_course_nextflow_Nov_2021
+# Courses@SIB_course_nextflow_Nov_2021
 
 ## Title
 
