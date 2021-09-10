@@ -54,9 +54,9 @@ For some parts of the course, having a [GitHub account](https://github.com/join)
 
 ## Dates, time, location
 
-* Dates: May 2021:
- * Containers: Monday 3rd, Tuesday 4th
- * Nextflow: Monday 10th, Tuesday 11th
+* Dates: November 2021:
+ * Containers: Monday 15th, Tuesday 16th
+ * Nextflow: Wednesday 17th, Thursday 18th
 
 * Time: 9:30-17:30:
   * Morning coffee break: 11:00-11:30am
