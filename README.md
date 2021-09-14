@@ -64,37 +64,37 @@ Having a [GitHub account](https://github.com/join) accounts is recommended.
 * 13:30-14:30 Talk by Cedric Notredame, CRG.
 * 14:30-15:00 Introduction to Docker and Singularity containers.
 * 15:00-15:30 Break
-* 15:30-16:30 Docker hub and other repositories. Find existing containers. Run a Singularity container (interactively). 
+* 15:30-16:30 Docker hub, BioContainers and other repositories. Find existing containers. Execute a Singularity container. 
 * 16:30-17:30 Nexflow: introduction, installation, run a simple pipeline. 
 
 
-### Day 2: Understand and run a Nexflow pipeline
+### Day 2: Understand and run a basic Nexflow pipeline
 
-* 13:00-14:00 Nexflow basic concepts. Channels and Operators.
-* 14:00-14:30 Breakout rooms: iterate among data.
+* 13:00-14:00 Nexflow basic concepts. Channels and Operators. Processes, Workflows and the log
+* 14:00-14:30 Breakout rooms: create channels starting from data. Write and run more simple pipelines.
 * 14:30-15:00 T.
 * 15:00-15:30 Break
-* 15:30-16:30 Processes, Workflows and the log
-* 16:30-17:00 Breakout rooms: write and run more simple pipelines.
+* 15:30-16:30 Combining processes, directives, resuming the pipeline
+* 16:30-17:00 Breakout rooms: write and run a more complex pipelines
 * 17:00-17:30 T.  
 
 ### Day 3: Write/modify and run a complex pipeline 
 
-* 13:00-14:00 Combining processes, directives, resuming the pipeline
-* 14:00-14:30 Breakout rooms: write complex pipelines
+* 13:00-14:00 Decoupling resources, parameters and nextflow script (params and nextflow config). Help section. How to get pipelines and running them.
+* 14:00-14:30 Breakout rooms: example of directives // get a pipeline and run it with a test dataset.
 * 14:30-15:00 T.
 * 15:00-15:30 Break
-* 15:30-16:30 Decoupling resources, parameters and nextflow script (params and nextflow config). Help section. How to get pipelines and running them.
-* 16:30-17:00 Breakout rooms: example of directives // get a pipeline and run it with a test dataset.
+* 15:30-16:30 Fetch public pipelines, adapt and run them. 
+* 16:30-17:00 Breakout rooms: exercise
 * 17:00-17:30 T.  
 
-### Day 4: Build and share a pipeline
+### Day 4: Running in different environment, sharing, and reporting
 
 * 13:00-14:00 Using Singularity, profiles and deploying on AWS 
-* 14:00-14:30 Breakout rooms: exercise
+* 14:00-14:30 Breakout rooms: Deploy your pipeline on the cloud 
 * 14:30-15:00 T.
 * 15:00-15:30 Break
-* 15:30-16:30 Modules, reporting and share Nextflow pipelines on github
+* 15:30-16:30 Modules, reporting and share Nextflow pipelines on github. Nextflow Tower.
 * 16:30-17:00 Breakout rooms: 
 * 17:00-17:30 T.  
 
