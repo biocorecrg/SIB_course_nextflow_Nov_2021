@@ -66,33 +66,39 @@ Having a [GitHub account](https://github.com/join) accounts is recommended.
 * 15:00-15:30 Break
 * 15:30-16:30 Docker hub and other repositories. Find existing containers. Run a Singularity container (interactively). 
 * 16:30-17:30 Nexflow: introduction, installation, run a simple pipeline. 
-* 
-* 
-* find existing pipelines. Run/troubleshoot an existing pipeline. 
 
-### Day 2: Fetch, understand, run, and modify a Nexflow pipeline
 
-* 13:00-14:30 Nexflow basic concepts. Processes and channels. Understand Nextflow main files (main.nf and config files).
-* 14:30-15:00 Breakout rooms: run a pipeline.
+### Day 2: Understand and run a Nexflow pipeline
+
+* 13:00-14:00 Nexflow basic concepts. Channels and Operators.
+* 14:00-14:30 Breakout rooms: iterate among data.
+* 14:30-15:00 T.
 * 15:00-15:30 Break
-* 15:30-16:30 T.
-* 16:30-17:30 Modify and run a Nextflow pipeline.
+* 15:30-16:30 Processes, Workflows and the log
+* 16:30-17:00 Breakout rooms: write and run more simple pipelines.
+* 17:00-17:30 T.  
 
-### Day 3: Write/modify and run a pipeline 
+### Day 3: Write/modify and run a complex pipeline 
 
-* 13:00-14:00 Hands-on: Modify and run a Nextflow pipeline.
-* 14:00-15:00 Write Nextflow pipeline from scratch.
+* 13:00-14:00 Combining processes, directives, resuming the pipeline
+* 14:00-14:30 Breakout rooms: write complex pipelines
+* 14:30-15:00 T.
 * 15:00-15:30 Break
-* 15:30-16:30 Run Nextflow with containers.
-* 16:30-17:30 Choose either Docker or Singularity.
+* 15:30-16:30 Decoupling resources, parameters and nextflow script (params and nextflow config). Help section. How to get pipelines and running them.
+* 16:30-17:00 Breakout rooms: example of directives // get a pipeline and run it with a test dataset.
+* 17:00-17:30 T.  
 
 ### Day 4: Build and share a pipeline
 
-* 13:00-14:00 Hands-on: build from scratch and run a Nextflow pipeline.
-* 14:00-15:00 (continue hands-on?).
+* 13:00-14:00 Using Singularity, profiles and deploying on AWS 
+* 14:00-14:30 Breakout rooms: exercise
+* 14:30-15:00 T.
 * 15:00-15:30 Break
-* 15:30-16:30 Run Nextflow on a computing cluster (e.g. HPC). Definition of computing requirements and queues. Profiles.
-* 16:30-17:30 Share Nextflow pipelines and good practices.
+* 15:30-16:30 Modules, reporting and share Nextflow pipelines on github
+* 16:30-17:00 Breakout rooms: 
+* 17:00-17:30 T.  
+
+
 
 
 
