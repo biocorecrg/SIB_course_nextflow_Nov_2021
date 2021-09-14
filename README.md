@@ -26,31 +26,26 @@ Trainees will work in a dedicated [AWS environment](https://en.wikipedia.org/wik
 
 * Locate and fetch Docker/Singularity images from dedicated repositories.
 * Execute/Run a Docker/Singularity container from the command line.
-* Convert Docker to Singularity image.
-
-About Nextflow:
 * Locate and fetch Nextflow pipelines from dedicated repositories.
 * Execute/Run a Nextflow pipeline.
 * Describe and explain Nextflow's basic concepts.
 * Test and modify a Nextflow pipeline.
 * Implement short blocks of code into a Nextflow pipeline.
 * Develop a Nextflow pipeline from scratch.
-* Run pipeline in diverse computational environments (local, HPC, cloud )
+* Run a pipeline in diverse computational environments (local, HPC, cloud).
+* Share a pipeline.
 
 ### Prerequisite / technical requirements
 
 Being comfortable working with the CLI (command-line interface) in a Linux-based environment.
-
-DIANA? SHOULD we require the knowledge of Linux containers? Because if we say that the SIB container course is a pre-requisite, then we will look at what is covered there and save our time. Alternatively, we might briefly cover the topic but not go into building containers.
-
-Julia: Here is the course page (incl. github page) of the docker & singularity course we will run at SIB in october (https://www.sib.swiss/training/course/20211014_DOCK). i think our main focus here would be on newxflow so we should ask for knowledge of linux containers if needed.  And a little refresher never hurts. 
+Knowledge of containers is not mandatory; however, this SIB course (https://www.sib.swiss/training/course/20211014_DOCK) can be advised to take. 
 
 Practitioners will need to connect during the course to a remove server via the "ssh" protocotol. You can learn about it [here](https://www.hostinger.com/tutorials/ssh-tutorial-how-does-ssh-work)
 
 Those who follow the course should be able to use a command-line/screen-oriented text editor (such as nano or vi/vim, which are already available in the server) or to be able to use an editor able to connect remotely. For sake of information, below the basics of "nano":
 https://wiki.gentoo.org/wiki/Nano/Basics_Guide
 
-??? For some parts of the course, having a [GitHub account](https://github.com/join) accounts is recommended. - This we might skip???
+Having a [GitHub account](https://github.com/join) accounts is recommended. 
 
 ## Dates, time, location
 
@@ -67,17 +62,20 @@ https://wiki.gentoo.org/wiki/Nano/Basics_Guide
 
 * 13:00-13:30 Getting started, became familiar with the working environment.
 * 13:30-14:30 Talk by Cedric Notredame, CRG.
-* 14:30-15:00 Introduction to Docker and Singularity Containers.
+* 14:30-15:00 Introduction to Docker and Singularity containers.
 * 15:00-15:30 Break
-* 15:30-16:30 Docker hub: find existing containers. Run a Singularity container (interactively). Convert Docker to Singularity????
-* 16:30-17:30 Nexflow: find existing pipelines. Run/troubleshoot an existing pipeline. Understand Nextflow main files (main.nf and config files).
+* 15:30-16:30 Docker hub and other repositories. Find existing containers. Run a Singularity container (interactively). 
+* 16:30-17:30 Nexflow: introduction, installation, run a simple pipeline. 
+* 
+* 
+* find existing pipelines. Run/troubleshoot an existing pipeline. 
 
 ### Day 2: Fetch, understand, run, and modify a Nexflow pipeline
 
-* 13:00-14:00 Hands-on: fetch and run an existing Nextflow pipeline.
-* 14:00-15:00 Nexflow basic concepts. Processes and channels.
+* 13:00-14:30 Nexflow basic concepts. Processes and channels. Understand Nextflow main files (main.nf and config files).
+* 14:30-15:00 Breakout rooms: run a pipeline.
 * 15:00-15:30 Break
-* 15:30-16:30 Nextflow configuration files.
+* 15:30-16:30 T.
 * 16:30-17:30 Modify and run a Nextflow pipeline.
 
 ### Day 3: Write/modify and run a pipeline 
