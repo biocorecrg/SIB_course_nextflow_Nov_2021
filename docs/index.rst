@@ -4,6 +4,7 @@
 This is an example of documentation
 *******************
 
+Hello
 This is done automatically thanks to:
 
 `Shinx-pages <https://github.com/seanzhengw/sphinx-pages>`_
