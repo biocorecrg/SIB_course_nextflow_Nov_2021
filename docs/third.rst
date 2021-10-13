@@ -6,6 +6,19 @@ Third Day
 
 Modify Pages to allow uploading an image as decoration (like News Items do).
 
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide Code**
+
+    .. code-block:: xml
+       :linenos:
+
+       from plone import api
+       ...
+
+
 ```{admonition} Solution
 :class: toggle
 
