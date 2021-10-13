@@ -7,9 +7,19 @@ Third Day
 Modify Pages to allow uploading an image as decoration (like News Items do).
 
 
-.. rst-class:: html-toggle
-    ocazz
+.. raw:: html
 
+   <details>
+   <summary><a>big code</a></summary>
+
+.. code-block:: python
+
+   lots_of_code = "this text block"
+
+.. raw:: html
+
+   </details>
+   
 
 .. container:: toggle
 
