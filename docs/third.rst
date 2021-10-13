@@ -6,6 +6,11 @@ Third Day
 
 Modify Pages to allow uploading an image as decoration (like News Items do).
 
+
+.. rst-class:: html-toggle
+    ocazz
+
+
 .. container:: toggle
 
     .. container:: header
