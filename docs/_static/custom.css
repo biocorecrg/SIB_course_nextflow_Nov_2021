@@ -1,16 +1,12 @@
-.toggle {
-    background: none repeat scroll 0 0 #e7f2fa;
-}
-
-.toggle .admonition-title {
+.toggle .header {
     display: block;
     clear: both;
 }
 
-.toggle .admonition-title:after {
-    content: " ▼";
+.toggle .header:after {
+    content: " ▶";
 }
 
-.toggle .admonition-title.open:after {
-    content: " ▲";
+.toggle .header.open:after {
+    content: " ▼";
 }
