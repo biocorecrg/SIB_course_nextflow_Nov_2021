@@ -1,7 +1,7 @@
 .. _third-page:
 
 *******************
-Second Day
+Third Day
 *******************
 
 Main concepts about Nextflow.
