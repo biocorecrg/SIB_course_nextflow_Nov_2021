@@ -5,6 +5,7 @@ Courses @ SIB course Nextflow Nov 2021
 *******************
 
 Reproducible research and data analysis using **Nextflow** pipelines
+=======
 
 `Course page <https://www.sib.swiss/training/course/20211115_NEXTF>`_
 
