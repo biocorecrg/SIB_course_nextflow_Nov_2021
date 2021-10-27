@@ -230,7 +230,7 @@ Any kind of code / command line can be run there, as it is **language agnostic**
 .. note::
 	You can have some trouble with escaping some characters: in that case, it is better to save the code into a file and call that file as a program.
 
-Before the input, you can indicate a **tag** that will be reported in the log. This is quite useful for <u>logging / debugging</u>.
+Before the input, you can indicate a **tag** that will be reported in the log. This is quite useful for **logging / debugging**.
 
 Workflow and log
 ============
@@ -305,9 +305,11 @@ Let's inspect now the log file:
 The **tag** allows us to see that the process **printHello** was launched <u>three times</u> on the hola, hello and bonjour values contained in the input channel.
 
 
-At the start of each row, there is an <u>alphanumeric code</u>:
+At the start of each row, there is an **alphanumeric code**:
 
-**[6a/2dfcaf]** Submitted process > printHello (hola)
+.. code-block:: console
+
+	**[6a/2dfcaf]** Submitted process > printHello (hola)
 
 This code indicates **the path** in which the process is "isolated" and where the corresponding temporary files are kept in the **work** directory. 
 
@@ -399,8 +401,8 @@ You can also give a name to workflows, so that you can combine them in the main 
 	workflow first_pipeline {
  	   take: str_input
 	   
-	    main:
-	    printHello(str_input).view()
+	   main:
+	   printHello(str_input).view()
 	}
 	
 	/*
@@ -459,10 +461,10 @@ EXERCISE 2
    * You can write another process to handle the fact that you have a list in the workflow2 (`workflow second_pipeline`). 
    * You need also to specify within the workflow what to output using the `**emit** keyword <https://www.nextflow.io/docs/latest/dsl2.html?#workflow-outputs>`__.
 
-<details>
-<summary>
-<h5 style="background-color: #e6fadc; display: inline-block;">*Answer*</h5>
-</summary>
+.. raw:: html
+
+   <details>
+   <summary><a>Solution</a></summary>
 
 
 .. code-block:: groovy
@@ -540,17 +542,19 @@ EXERCISE 2
 	    out2 = second_pipeline(str)
 	}
 
-</details>
+.. raw:: html
+
+   </details>
 
 
 - Change the pipeline to use only one process to handle both the cases (either one element or a list).
 
 You can choose the elements from a list using the positional keys (i.e. list[0], list[1], etc...)
 
-<details>
-<summary>
-<h5 style="background-color: #e6fadc; display: inline-block;">*Answer*</h5>
-</summary>
+.. raw:: html
+
+   <details>
+   <summary><a>Solution</a></summary>
 
 
 .. code-block:: groovy
@@ -614,7 +618,9 @@ You can choose the elements from a list using the positional keys (i.e. list[0],
 	}
 
 
-</details>
+.. raw:: html
+
+   </details>
 
 
 
@@ -893,8 +899,7 @@ We can add the directive `**publishDir** <https://www.nextflow.io/docs/latest/pr
 	}
 
 
-We can also use `**storeDir**` <https://www.nextflow.io/docs/latest/process.html#storedir>`__ in case we want to have a permanent cache.
-
+We can also use `**storeDir** <https://www.nextflow.io/docs/latest/process.html#storedir>`__ in case we want to have a permanent cache.
 
 The process is executed only if the output files do not exist in the folder specified by **storeDir**.
 
@@ -905,7 +910,7 @@ For example, this can be useful if we don't want to generate indexes each time a
 
 We can also indicate what to do in case a process fails.
 
-The default is to stop the pipeline and to raise an error. But we can also skip the process using the `**errorStrategy**<https://www.nextflow.io/docs/latest/process.html#errorstrategy>`__ directive:
+The default is to stop the pipeline and to raise an error. But we can also skip the process using the `**errorStrategy** <https://www.nextflow.io/docs/latest/process.html#errorstrategy>`__ directive:
 
 .. code-block:: groovy
 
@@ -990,10 +995,10 @@ Try to make the previous pipeline resilient to the failing of a process and stor
 
 First make the process `reverseSequence` failing by creating a mistake in the command line, then add the directive to the process.
 
-<details>
-<summary>
-<h5 style="background-color: #e6fadc; display: inline-block;">*Answer*</h5>
-</summary>
+.. raw:: html
+
+   <details>
+   <summary><a>Solution</a></summary>
 
 	
 .. code-block:: groovy
@@ -1023,17 +1028,21 @@ First make the process `reverseSequence` failing by creating a mistake in the co
 	}
 
 	
-</details>
+.. raw:: html
+
+   </details>
+
 
 Write the first workflow using pipes. Nextflow DLS2 allows you to use pipes for connecting channels via input / output.
 
 See the `documentation on pipes <https://www.nextflow.io/docs/latest/dsl2.html#pipes>`.
 
 
-<details>
-<summary>
-<h5 style="background-color: #e6fadc; display: inline-block;">*Answer*</h5>
-</summary>
+.. raw:: html
+
+   <details>
+   <summary><a>Solution</a></summary>
+
 
 .. code-block:: groovy
 
@@ -1045,5 +1054,6 @@ See the `documentation on pipes <https://www.nextflow.io/docs/latest/dsl2.html#p
 	}
 
 	
-</details>
+.. raw:: html
 
+   </details>
