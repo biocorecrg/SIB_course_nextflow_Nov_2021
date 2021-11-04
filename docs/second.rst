@@ -1078,3 +1078,5 @@ See the `documentation on `pipes <https://www.nextflow.io/docs/latest/dsl2.html#
 .. raw:: html
 
    </details>
+| 
+| 
