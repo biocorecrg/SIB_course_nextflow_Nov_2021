@@ -886,7 +886,7 @@ Directives
 The `directives <https://www.nextflow.io/docs/latest/process.html#directives>`__ are declaration blocks that can provide optional settings to a process.
 
 
-For instance, they can affect the way a process stages in and out the input and output files (`stageInMode<https://www.nextflow.io/docs/latest/process.html#stageinmode>`__ and `stageOutMode <https://www.nextflow.io/docs/latest/process.html#stageoutmode>`__), or they can indicate which file has to be considered a final result and in which folder it should be published (`publishDir <https://www.nextflow.io/docs/latest/process.html#publishdir>`__).
+For instance, they can affect the way a process stages in and out the input and output files (`stageInMode <https://www.nextflow.io/docs/latest/process.html#stageinmode>`__ and `stageOutMode <https://www.nextflow.io/docs/latest/process.html#stageoutmode>`__), or they can indicate which file has to be considered a final result and in which folder it should be published (`publishDir <https://www.nextflow.io/docs/latest/process.html#publishdir>`__).
 
 We can add the directive `publishDir <https://www.nextflow.io/docs/latest/process.html#publishdir>`__ to our previous example:
 
