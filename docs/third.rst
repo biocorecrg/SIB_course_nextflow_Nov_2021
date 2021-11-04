@@ -72,7 +72,7 @@ If we have a look at process **fastQC** we can see the use of the label.
 
 	/*
 	 * Process 1. Run FastQC on raw data.
-	*/
+	 */
 	process fastQC {
 
 	    publishDir fastqcOutputFolder  		
@@ -408,12 +408,11 @@ while the nextflow.config file would be:
 	     time='6h'
 
 	     withLabel: 'keep_trying'	
-		{ 
-			time = { 10.second * task.attempt }
+	     { 
+		time = { 10.second * task.attempt }
 		errorStrategy = 'retry' 
 		maxRetries = 3	
-	    } 	
-
+	     } 	
 	}
 
 	process.container = 'biocorecrg/c4lwg-2018:latest'
@@ -422,4 +421,6 @@ while the nextflow.config file would be:
 .. raw:: html
 	</details>
 
+Using a public pipeline
+=============================================
 
