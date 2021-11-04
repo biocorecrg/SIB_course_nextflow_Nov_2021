@@ -8,8 +8,9 @@ Introduction to Docker and Singularity containers.
 ============
 TONI
 
-Docker hub, BioContainers and other repositories. Find existing containers. Execute a Singularity container.
+Docker hub, BioContainers and other repositories.
 ============
+Find existing containers. Execute a Singularity container.
 TONI
 
 Introduction to Nextflow
