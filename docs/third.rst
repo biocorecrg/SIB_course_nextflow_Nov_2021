@@ -420,7 +420,239 @@ while the nextflow.config file would be:
 
 .. raw:: html
 	</details>
+|
+|
+|
 
 Using a public pipeline
 =============================================
+At this point we have an idea about how is written a Nextflow pipeline, so we can easily install and run a published one. As an example let's use the following one, called `Master Of Pores <https://github.com/biocorecrg/mop2>`__ published by us in `2019 <https://www.frontiersin.org/articles/10.3389/fgene.2020.00211/full`>__ :
+
+This repository contains a collection of pipelines able to process nanopore's raw data and to make detect putative chemical modifications and estimate polyA tail sizes.  
+
+As stated in the website for installing it we need to clone the pipeline together with the submodules. The submodules contain **Nextflow modules**, that will be described later.
+
+.. code-block:: console
+	
+	git clone --depth 1 --recurse-submodules git@github.com:biocorecrg/MoP2.git
+
+	Cloning into 'MoP2'...
+	remote: Enumerating objects: 113, done.
+	remote: Counting objects: 100% (113/113), done.
+	remote: Compressing objects: 100% (99/99), done.
+	remote: Total 113 (delta 14), reused 58 (delta 3), pack-reused 0
+	Receiving objects: 100% (113/113), 21.87 MiB | 5.02 MiB/s, done.
+	Resolving deltas: 100% (14/14), done.
+	Submodule 'BioNextflow' (https://github.com/biocorecrg/BioNextflow) registered for path 'BioNextflow'
+	Cloning into '/Users/lcozzuto/aaa/MoP2/BioNextflow'...
+	remote: Enumerating objects: 971, done.        
+	remote: Counting objects: 100% (641/641), done.        
+	remote: Compressing objects: 100% (456/456), done.        
+	remote: Total 971 (delta 393), reused 362 (delta 166), pack-reused 330        
+	Receiving objects: 100% (971/971), 107.51 MiB | 5.66 MiB/s, done.
+	Resolving deltas: 100% (560/560), done.
+	Submodule path 'BioNextflow': checked out '0473d7f177ce718477b852b353894b71a9a9a08b'
+	
+	
+Let's inspect the folder **MoP2**.
+
+.. code-block:: console
+	
+	ls MoP2
+	
+	BioNextflow		conf			docs			mop_preprocess
+	INSTALL.sh		conf.py			img			mop_tail
+	README.md		data			local_modules.nf	nextflow.global.config
+	TODO.md			deeplexicon		mop_consensus		outdirs.nf
+	anno			docker			mop_mod			requirements.txt
+
+We have different pipelines bundled in a single repository: **mop_preprocess**, **mop_mod**, **mop_tail** and **mop_consensus**. Let's inspect the folder **mop_preprocess** that contains the nextflow pipeline **mop_preprocess.nf**. This pipeline allows to pre-process the raw fast5 files that are produced by Nanopore instruments. We can see the presence of a folder named **bin**. This folder contains a number of custom script that can be read by the pipeline without storing them inside the containers. This is particularly useful in case of programs with a restrictive license that prevent you to redistribute their code. And actually this is one of those cases. Nextflow however allows us to solve this problem, we just need to place in this folder the executables.
+
+.. code-block:: console
+	
+	cd MoP2
+	ls mop_preprocess/bin/
+	
+	bam2stats.py			fast5_to_fastq.py
+	extract_sequence_from_fastq.py	fast5_type.py
+
+The basecaller **Guppy** cannot be redistributed so we add a **INSTALL.sh** script that has to be run by the user for downloading the executable and place it inside the **bin** folder.
+
+.. code-block:: console
+	
+	sh INSTALL.sh
+
+	INSTALLING GUPPY VERSION 3.4.5
+	[...]
+	ont-guppy_3.4.5_linux64.tar. 100%[============================================>] 363,86M  5,59MB/s    in 65s     
+
+	2021-11-04 18:38:58 (5,63 MB/s) - ‘ont-guppy_3.4.5_linux64.tar.gz’ saved [381538294/381538294]
+
+	x ont-guppy/bin/
+	x ont-guppy/bin/guppy_basecall_server
+	x ont-guppy/bin/guppy_basecaller
+	[...]
+
+We can check what is inside **bin** now
+
+.. code-block:: console
+	
+	cd mop_preprocess
+
+	ls bin/
+	
+	MINIMAP2_LICENSE			libboost_system.so.1.66.0
+	bam2stats.py				libboost_thread.so
+	extract_sequence_from_fastq.py		libboost_thread.so.1.66.0
+	fast5_to_fastq.py			libcrypto.so
+	fast5_type.py				libcrypto.so.1.0.1e
+	guppy_aligner				libcrypto.so.10
+	guppy_barcoder				libcurl.so
+	[...]
+
+It is always a good idea to bundle your pipeline with a little test dataset so that people can test it once installed. You can also use this for continuous integration (CI). Basically each time you make a commit to GitHub you trigger a test that send you an alert in case it fails. 
+We can inspect the **params.config** file that is pointing to a small dataset that is contained inside the repository (**data** and **anno** folders).
+
+.. code-block:: groovy
+
+	params {
+	    conffile            = "final_summary_01.txt"
+	    fast5               = "$baseDir/../data/**/*.fast5"
+	    fastq               = ""
+
+	    reference           = "$baseDir/../anno/curlcake_constructs.fasta.gz"
+	    annotation          = ""
+	    ref_type            = "transcriptome"
+
+	    pars_tools          = "drna_tool_splice_opt.tsv" 
+	    output              = "$baseDir/output"
+	    qualityqc           = 5
+	    granularity         = 1
+
+	    basecalling         = "guppy"
+	    GPU                 = "OFF"
+	    demultiplexing      = "NO"
+	    demulti_fast5       = "NO" 
+
+	    filtering           = "NO"
+
+	    mapping             = "minimap2"
+	    counting            = "nanocount"
+	    discovery           = "NO"
+
+	    cram_conv           = "YES"
+	    subsampling_cram    = 50
+
+	    saveSpace           = "NO"
+
+	    email               = ""
+	}
+
+So running just the pipeline will give an idea of what is happening. 
+
+.. code-block:: console
+
+	nextflow run mop_preprocess.nf -with-docker -bg > log.txt
+	
+	tail -f log.txt
+	
+	N E X T F L O W  ~  version 21.04.3
+	Launching `mop_preprocess.nf` [adoring_allen] - revision: 7457956da7
+
+
+	╔╦╗╔═╗╔═╗  ╔═╗┬─┐┌─┐┌─┐┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐
+	║║║║ ║╠═╝  ╠═╝├┬┘├┤ ├─┘├┬┘│ ││  ├┤ └─┐└─┐
+	╩ ╩╚═╝╩    ╩  ┴└─└─┘┴  ┴└─└─┘└─┘└─┘└─┘└─┘
+
+	====================================================
+	BIOCORE@CRG Master of Pores 2. Preprocessing - N F  ~  version 2.0
+	====================================================
+
+	conffile	          : final_summary_01.txt
+
+	fast5                     : /Users/lcozzuto/aaa/MoP2/mop_preprocess/../data/**/*.fast5
+	fastq                     : 
+
+	reference                 : /Users/lcozzuto/aaa/MoP2/mop_preprocess/../anno/curlcake_constructs.fasta.gz
+	annotation                : 
+
+	granularity		  : 1
+
+	ref_type                  : transcriptome
+	pars_tools		  : drna_tool_splice_opt.tsv
+
+	output                    : /Users/lcozzuto/aaa/MoP2/mop_preprocess/output
+	qualityqc                 : 5
+
+	GPU                       : OFF
+
+	basecalling               : guppy 
+	demultiplexing            : NO 
+	demulti_fast5		  : NO
+
+	filtering                 : NO
+	mapping                   : minimap2
+
+	counting                  : nanocount
+	discovery		  : NO
+
+	cram_conv           	  : YES
+	subsampling_cram	  : 50
+
+
+	saveSpace   		  : NO
+
+	email                     : 
+
+	Skipping the email
+
+	----------------------CHECK TOOLS -----------------------------
+	basecalling : guppy
+	> demultiplexing will be skipped
+	mapping : minimap2
+	> filtering will be skipped
+	counting : nanocount
+	> discovery will be skipped
+	--------------------------------------------------------------
+	[bd/bd8dcf] Submitted process > preprocess_flow:checkRef (Checking curlcake_constructs.fasta.gz)
+	[7a/1d2244] Submitted process > FILTER_VER:getVersion
+	[26/dbd3f2] Submitted process > GRAPHMAP_VER:getVersion
+	[11/84981d] Submitted process > BWA_VER:getVersion
+	[03/2b6939] Submitted process > DEMULTIPLEX_VER:getVersion
+	[38/ec6382] Submitted process > BAMBU_VER:getVersion
+	[63/a2a072] Submitted process > SAMTOOLS_VERSION:getVersion
+	[75/0a1e9e] Submitted process > NANOPLOT_VER:getVersion
+	[4f/b50c2a] Submitted process > MULTIQC_VER:getVersion
+	[7c/de96a4] Submitted process > NANOCOUNT_VER:getVersion
+	[79/a56c5f] Submitted process > GRAPHMAP2_VER:getVersion
+	[14/b52ead] Submitted process > HTSEQ_VER:getVersion
+	[60/aaad30] Submitted process > MINIMAP2_VER:getVersion
+	[de/7077d4] Submitted process > FASTQC_VER:getVersion
+	[18/403b7d] Submitted process > flow1:GUPPY_BASECALL:baseCall (multifast---1)
+	[f8/8973d4] Submitted process > preprocess_flow:MINIMAP2:map (multifast---1)
+	[8e/d31464] Submitted process > preprocess_flow:concatenateFastQFiles (multifast)
+	[1e/37d8c5] Submitted process > preprocess_flow:MinIONQC (multifast)
+	[d3/eafd5e] Submitted process > preprocess_flow:FASTQC:fastQC (multifast.fq.gz)
+	[fb/a1a7ca] Submitted process > preprocess_flow:SAMTOOLS_CAT:catAln (multifast)
+	[3b/ee710f] Submitted process > preprocess_flow:SAMTOOLS_SORT:sortAln (multifast)
+	[19/172450] Submitted process > preprocess_flow:bam2stats (multifast)
+	[bc/9bc0d6] Submitted process > preprocess_flow:AssignReads (multifast)
+	[b8/d65861] Submitted process > preprocess_flow:NANOPLOT_QC:MOP_nanoPlot (multifast)
+	[cc/5d50c4] Submitted process > preprocess_flow:SAMTOOLS_INDEX:indexBam (multifast)
+	[ce/990016] Submitted process > preprocess_flow:NANOCOUNT:nanoCount (multifast)
+	[3a/27a47a] Submitted process > preprocess_flow:countStats (multifast)
+	[96/c53238] Submitted process > preprocess_flow:joinAlnStats (joining aln stats)
+	[93/7de48e] Submitted process > preprocess_flow:bam2Cram (multifast)
+	[8e/3c1454] Submitted process > preprocess_flow:joinCountStats (joining count stats)
+	[a9/c6149b] Submitted process > preprocess_flow:MULTIQC:makeReport
+	Pipeline BIOCORE@CRG Master of Pore - preprocess completed!
+	Started at  2021-11-04T19:08:12.706+01:00
+	Finished at 2021-11-04T19:11:54.580+01:00
+	Time elapsed: 3m 42s
+	Execution status: OK
+
+
+
+
+
 
