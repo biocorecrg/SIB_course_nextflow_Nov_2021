@@ -117,8 +117,10 @@ First create a couple of empty files:
 See here `fromFilePairs <https://www.nextflow.io/docs/latest/channel.html#fromfilepairs>`__.
 
 
-ANSWER
---------------
+.. raw:: html
+
+   <details>
+   <summary><a>Solution</a></summary>
 
 .. code-block:: groovy
 
@@ -138,7 +140,10 @@ ANSWER
 	    
 	my_files.view()
 
+.. raw:: html
 
+   </details>
+   
 - For the second part of this exercise, We can start again from `.fromPath` and read the previous 3 `.txt` files ("aa.txt", "bb.txt", "cc.txt") into the input channel.
 
 
@@ -150,8 +155,11 @@ Try to reshape the input channel using different operators by generating:
 See here the list of `Operators <https://www.nextflow.io/docs/latest/operator.html#>`__ available. 
 
 
-RESULTS
----------------
+.. raw:: html
+
+   <details>
+   <summary><a>Solution</a></summary>
+
 
 .. code-block:: groovy
 
@@ -180,7 +188,9 @@ RESULTS
 		}
 	    .view()
 
+.. raw:: html
 
+   </details>
 
 Processes
 ============
