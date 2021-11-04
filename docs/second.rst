@@ -313,7 +313,8 @@ At the start of each row, there is an **alphanumeric code**:
 
 This code indicates **the path** in which the process is "isolated" and where the corresponding temporary files are kept in the **work** directory. 
 
-**IMPORTANT: Nextflow will randomly generate temporary folders so they will be named differently in your execution!!!**
+.. note::
+	**IMPORTANT: Nextflow will randomly generate temporary folders so they will be named differently in your execution!!!**
 
 Let's have a look inside that folder:
 
