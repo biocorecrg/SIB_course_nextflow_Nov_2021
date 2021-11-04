@@ -1036,7 +1036,7 @@ First make the process `reverseSequence` failing by creating a mistake in the co
 
 Write the first workflow using pipes. Nextflow DLS2 allows you to use pipes for connecting channels via input / output.
 
-See the `documentation on pipes <https://www.nextflow.io/docs/latest/dsl2.html#pipes>`.
+See the `documentation on `pipes <https://www.nextflow.io/docs/latest/dsl2.html#pipes>`.
 
 
 .. raw:: html
