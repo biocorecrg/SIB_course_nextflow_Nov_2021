@@ -143,7 +143,8 @@ See here `fromFilePairs <https://www.nextflow.io/docs/latest/channel.html#fromfi
 .. raw:: html
 
    </details>
-   
+| 
+| 
 - For the second part of this exercise, We can start again from `.fromPath` and read the previous 3 `.txt` files ("aa.txt", "bb.txt", "cc.txt") into the input channel.
 
 
@@ -191,6 +192,8 @@ See here the list of `Operators <https://www.nextflow.io/docs/latest/operator.ht
 .. raw:: html
 
    </details>
+| 
+| 
 
 Processes
 ============
