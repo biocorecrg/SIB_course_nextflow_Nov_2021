@@ -24,7 +24,7 @@ You can label your processes to make a link with the definitions in the nextflow
 
 .. code-block:: console
 
-includeConfig "$baseDir/params.config"
+	includeConfig "$baseDir/params.config"
 
 	process {
 	     memory='0.6G'
@@ -74,6 +74,7 @@ If we have a look at process **fastQC** we can see the use of the label.
 	 * Process 1. Run FastQC on raw data.
 	*/
 	process fastQC {
+
 	    publishDir fastqcOutputFolder  		
 	    tag { "${reads}" }  					
 	    label 'bigmem'
@@ -215,8 +216,8 @@ In our pipeline we define these folders here:
 .. code-block:: groovy
 
 	/*
- 	* Defining the output folders.
- 	*/
+ 	 * Defining the output folders.
+ 	 */
 	
 	fastqcOutputFolder    = "output_fastqc"
 	multiqcOutputFolder   = "output_multiQC"
@@ -325,9 +326,10 @@ The process should become:
 .. code-block:: groovy
 
 	process reverseSequence {
+
 	    tag { "${seq}" }                  
 	    publishDir "output"
-		label 'ignorefail'
+	    label 'ignorefail'
 
 	    input:
 	    path seq
@@ -350,7 +352,8 @@ while the nextflow.config file would be:
 		withLabel: 'ignorefail'
 		{
 			errorStrategy = 'ignore' 
-	    	}   	}
+	    	}   	
+	}
 
    
 .. raw:: html
@@ -373,19 +376,20 @@ The process should become:
 .. code-block:: groovy
 
 	process fastQC {
+
 		publishDir fastqcOutputFolder	// where (and whether) to publish the results
 		tag { "${reads}" } 	// during the execution prints the indicated variable for follow-up
 		label 'keep_trying' 
 
 		input:
-			path reads   	// it defines the input of the process. It sets values from a channel
+		path reads   	// it defines the input of the process. It sets values from a channel
 
 		output:			// It defines the output of the process (i.e. files) and send to a new channel
-   			path "*_fastqc.*"
+   		path "*_fastqc.*"
 
     		script:			// here you have the execution of the script / program. Basically is the command line
     		"""
-        		fastqc ${reads} 
+        	fastqc ${reads} 
    		"""
 	}
 
