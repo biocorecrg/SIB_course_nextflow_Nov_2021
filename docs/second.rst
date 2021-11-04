@@ -868,12 +868,12 @@ Directives
 ============
 
 
-The `**directives** <https://www.nextflow.io/docs/latest/process.html#directives>`__ are declaration blocks that can provide optional settings to a process.
+The `directives <https://www.nextflow.io/docs/latest/process.html#directives>`__ are declaration blocks that can provide optional settings to a process.
 
 
-For instance, they can affect the way a process stages in and out the input and output files (`**stageInMode**<https://www.nextflow.io/docs/latest/process.html#stageinmode>`__ and `**stageOutMode** <https://www.nextflow.io/docs/latest/process.html#stageoutmode>`__), or they can indicate which file has to be considered a final result and in which folder it should be published (`**publishDir** <https://www.nextflow.io/docs/latest/process.html#publishdir>`__).
+For instance, they can affect the way a process stages in and out the input and output files (`stageInMode<https://www.nextflow.io/docs/latest/process.html#stageinmode>`__ and `stageOutMode <https://www.nextflow.io/docs/latest/process.html#stageoutmode>`__), or they can indicate which file has to be considered a final result and in which folder it should be published (`publishDir <https://www.nextflow.io/docs/latest/process.html#publishdir>`__).
 
-We can add the directive `**publishDir** <https://www.nextflow.io/docs/latest/process.html#publishdir>`__ to our previous example:
+We can add the directive `publishDir <https://www.nextflow.io/docs/latest/process.html#publishdir>`__ to our previous example:
 
 
 .. code-block:: groovy
@@ -900,7 +900,7 @@ We can add the directive `**publishDir** <https://www.nextflow.io/docs/latest/pr
 	}
 
 
-We can also use `**storeDir** <https://www.nextflow.io/docs/latest/process.html#storedir>`__ in case we want to have a permanent cache.
+We can also use `storeDir <https://www.nextflow.io/docs/latest/process.html#storedir>`__ in case we want to have a permanent cache.
 
 The process is executed only if the output files do not exist in the folder specified by **storeDir**.
 
@@ -911,7 +911,7 @@ For example, this can be useful if we don't want to generate indexes each time a
 
 We can also indicate what to do in case a process fails.
 
-The default is to stop the pipeline and to raise an error. But we can also skip the process using the `**errorStrategy** <https://www.nextflow.io/docs/latest/process.html#errorstrategy>`__ directive:
+The default is to stop the pipeline and to raise an error. But we can also skip the process using the `errorStrategy <https://www.nextflow.io/docs/latest/process.html#errorstrategy>`__ directive:
 
 .. code-block:: groovy
 
