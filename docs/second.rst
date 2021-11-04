@@ -455,7 +455,7 @@ Let's run the code:
 	['hello in Italian is ciao\n', 'hola in Italian is ciao\n', 'bonjour in Italian is ciao\n']
 	
 
-EXERCISE 2
+EXERCISE
 --------------
 
  - Change the pipeline for producing files instead of `standard output <https://www.nextflow.io/docs/latest/dsl2.html#process-outputs>`__:
