@@ -636,14 +636,9 @@ You can choose the elements from a list using the positional keys (i.e. list[0],
 
    </details>
 
-
-
-
-
-
-
-
-
+|
+|
+|
 
 More complex scripts
 ============
