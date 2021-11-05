@@ -4,7 +4,8 @@
 Fourth Day
 *******************
 
-## Using Singularity
+Using Singularity
+=======================
 
 We recommend to use Singularity instead of Docker in HPC environments.
 This can be done by using the Nextflow parameter `-with-singularity` and  without changing the code.
@@ -13,169 +14,179 @@ Nextflow will take care of **pulling, converting and storing the image** for you
 
 Within the AWS main node both Docker and singularity are available. Within the AWS batch system we only have Docker.
 
-```{bash, eval=FALSE, echo=TRUE}
-nextflow run test2.nf -with-singularity -bg > log
+.. code-block:: console
+	nextflow run test2.nf -with-singularity -bg > log
 
-tail -f log 
-N E X T F L O W  ~  version 20.10.0
-Launching `test2.nf` [soggy_miescher] - revision: 5a0a513d38
+		tail -f log 
+		N E X T F L O W  ~  version 20.10.0
+		Launching `test2.nf` [soggy_miescher] - revision: 5a0a513d38
 
-BIOCORE@CRG - N F TESTPIPE  ~  version 1.0
-=============================================
-reads                           : /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/test2/../../testdata/*.fastq.gz
+	BIOCORE@CRG - N F TESTPIPE  ~  version 1.0
+	=============================================
+	reads                           : /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/test2/../../testdata/*.fastq.gz
 
-Pulling Singularity image docker://biocorecrg/c4lwg-2018:latest [cache /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/test2/singularity/biocorecrg-c4lwg-2018-latest.img]
-[da/eb7564] Submitted process > fastQC (B7_H3K4me1_s_chr19.fastq.gz)
-[f6/32dc41] Submitted process > fastQC (B7_input_s_chr19.fastq.gz)
-...
-```
+	Pulling Singularity image docker://biocorecrg/c4lwg-2018:latest [cache /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/test2/singularity/biocorecrg-c4lwg-2018-latest.img]
+	[da/eb7564] Submitted process > fastQC (B7_H3K4me1_s_chr19.fastq.gz)
+	[f6/32dc41] Submitted process > fastQC (B7_input_s_chr19.fastq.gz)
+	...
+
 
 We can then inspect the presence of the singularity image inside the folder singularity.
 
-```{bash, eval=FALSE, echo=TRUE}
-ls singularity/
-biocorecrg-c4lwg-2018-latest.img
-```
+.. code-block:: console
 
-We can then reuse this image if we want to execute the code <u>exactly in the same way</u> as in the pipeline but outside the pipeline.
+	ls singularity/
+	biocorecrg-c4lwg-2018-latest.img
+
+
+We can then reuse this image if we want to execute the code **exactly in the same way** as in the pipeline but outside the pipeline.
 
 Sometimes we can be interested in launching just one job, because it failed or for just making a test. We can go to the corresponding temporary folder: as an example let's go to one of the fastQC temporary folder:
 
-```{bash, eval=FALSE, echo=TRUE}
-cd work/da/eb7564*/
-```
+.. code-block:: console
+
+	cd work/da/eb7564*/
+
 
 Inspecting the `.command.run` file shows us this piece of code:
 
-```{bash, eval=FALSE, echo=TRUE}
-...
+.. code-block:: groovy
 
-nxf_launch() {
-    set +u; env - PATH="$PATH" SINGULARITYENV_TMP="$TMP" SINGULARITYENV_TMPDIR="$TMPDIR" singularity exec /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/test2/singularity/biocorecrg-c4lwg-2018-latest.img /bin/bash -c "cd $PWD; /bin/bash -ue /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/test2/work/da/eb756433aa0881d25b20afb5b1366e/.command.sh"
-}
-...
-```
+	...
+
+	nxf_launch() {
+	    set +u; env - PATH="$PATH" SINGULARITYENV_TMP="$TMP" SINGULARITYENV_TMPDIR="$TMPDIR" singularity exec /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/test2/singularity/biocorecrg-c4lwg-2018-latest.img /bin/bash -c "cd $PWD; /bin/bash -ue /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/test2/work/da/eb756433aa0881d25b20afb5b1366e/.command.sh"
+	}
+	...
+
 
 This means that Nextflow is running the code by using the **singularity exec** command. 
 
 Then we can launch the following command:
 
-```{bash, eval=FALSE, echo=TRUE}
-bash .command.run 
-Started analysis of B7_H3K4me1_s_chr19.fastq.gz
-Approx 5% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 10% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 15% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 20% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 25% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 30% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 35% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 40% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 45% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 50% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 55% complete for B7_H3K4me1_s_chr19.fastq.gz
-Approx 60% complete for B7_H3K4me1_s_chr19.fastq.gz
-...
-```
+.. code-block:: console
 
-In this way you are doing the same execution done by Nextflow using the local machine. In case you are submitting a job to a HPC you need to use the corresponding program, for instance **qsub**.
+	bash .command.run 
 
-```{bash, eval=FALSE, echo=TRUE}
-qsub .command.run 
-```
+	Started analysis of B7_H3K4me1_s_chr19.fastq.gz
+	Approx 5% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 10% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 15% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 20% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 25% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 30% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 35% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 40% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 45% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 50% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 55% complete for B7_H3K4me1_s_chr19.fastq.gz
+	Approx 60% complete for B7_H3K4me1_s_chr19.fastq.gz
+	...
 
-## Adding more steps
+In this way you are doing the same execution done by Nextflow using the local machine. In case you are submitting a job to a HPC you need to use the corresponding program, for instance **qsub** or **sbatch**.
+
+.. code-block:: console
+
+	qsub .command.run 
+
+
+Adding more steps
+======================
 
 We can make pipelines incrementally complex by adding more and more processes. 
 Nextflow will take care of the dependencies between the input / output and of the parallelization.
 
-Within the **test3** folder we have two more steps to add: the reference indexing and the read alignments with **bowtie** (http://bowtie-bio.sourceforge.net/index.shtml).
+Within the **test3** folder we have two more steps to add: the reference indexing and the read alignments with `bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`__.
 
 We add a new input for the reference sequence:
 
-```nextflow
-log.info """
-BIOCORE@CRG - N F TESTPIPE  ~  version ${version}
-=============================================
-reads                           : ${params.reads}
-reference                       : ${params.reference}
-outdir                          : ${params.outdir}
+.. code-block:: groovy
 
-"""
+	log.info """
+	BIOCORE@CRG - N F TESTPIPE  ~  version ${version}
+	=============================================
+	reads                           : ${params.reads}
+	reference                       : ${params.reference}
+	outdir                          : ${params.outdir}
 
-reference = file(params.reference)
-```
+	"""
+
+	reference = file(params.reference)
+
 
 The **singleton channel** called **reference** is created. Its content is never consumed and can be indefinitely used. We also add a path specifying where to place the output files.
 
-```{java, eval=FALSE, echo=TRUE}
-/*
- * Defining the output folders.
- */
-fastqcOutputFolder    = "${params.outdir}/output_fastqc"
-alnOutputFolder       = "${params.outdir}/output_aln"
-multiqcOutputFolder   = "${params.outdir}/output_multiQC"
+.. code-block:: groovy
 
-```
+	/*
+	 * Defining the output folders.
+	 */
+	fastqcOutputFolder    = "${params.outdir}/output_fastqc"
+	alnOutputFolder       = "${params.outdir}/output_aln"
+	multiqcOutputFolder   = "${params.outdir}/output_multiQC"
+
+
 
 We add two more processes. The first one is for the indexing the reference genome (with `bowtie-build`):
 
-```{java, eval=FALSE, echo=TRUE}
-/*
- * Process 2. Bowtie index
- */
-process bowtieIdx {
-    tag { "${ref}" }  							
+.. code-block:: groovy
 
-    input:
-    path ref   							
+	/*
+	 * Process 2. Bowtie index
+	 */
+	process bowtieIdx {
+	    tag { "${ref}" }  							
 
-    output:									
-    tuple val("${ref}"), path ("${ref}*.ebwt")
+	    input:
+	    path ref   							
 
-    script:									
-    """
-        gunzip -c ${ref} > reference.fa
-        bowtie-build reference.fa ${ref}
-        rm reference.fa
-    """
-}
-```
+	    output:									
+	    tuple val("${ref}"), path ("${ref}*.ebwt")
+
+	    script:									
+	    """
+		gunzip -c ${ref} > reference.fa
+		bowtie-build reference.fa ${ref}
+		rm reference.fa
+	    """
+	}
+
 
 Since bowtie indexing requires unzipped reference fasta file, we first **gunzip** it, we then build the reference index, and we finally remove the unzipped file.
 
 The output channel generated is organized as a **tuple**, i.e. a list of elements.
 
-The first element of the list is the <u>name of the index as a value</u>, the second is a <u>list of files constituting the index</u>.
+The first element of the list is the **name of the index as a value**, the second is a **list of files constituting the index**.
 
 The former is needed for building the command line of the alignment step, the latter are the files needed for the alignment.
 
-The second process `bowtieAln` is the alignment step:
+The second process **bowtieAln** is the alignment step:
 
-```{java, eval=FALSE, echo=TRUE}
-/*
- * Process 3. Bowtie alignment
- */
-process bowtieAln {
-    publishDir alnOutputFolder, pattern: '*.sam'
+.. code-block:: groovy
 
-    tag { "${reads}" }  							
-    label 'twocpus'
+	/*
+	 * Process 3. Bowtie alignment
+	 */
+	process bowtieAln {
+	    publishDir alnOutputFolder, pattern: '*.sam'
 
-    input:
-    tuple val(refname), path (ref_files)
-    path reads  							
+	    tag { "${reads}" }  							
+	    label 'twocpus'
 
-    output:									
-    path "${reads}.sam", emit: samples_sam
-    path "${reads}.log", emit: samples_log
+	    input:
+	    tuple val(refname), path (ref_files)
+	    path reads  							
 
-    script:									
-    """
-    bowtie -p ${task.cpus} ${refname} -q ${reads} -S > ${reads}.sam 2> ${reads}.log
-    """
-}
-```
+	    output:									
+	    path "${reads}.sam", emit: samples_sam
+	    path "${reads}.log", emit: samples_log
+
+	    script:									
+	    """
+	    bowtie -p ${task.cpus} ${refname} -q ${reads} -S > ${reads}.sam 2> ${reads}.log
+	    """
+	}
+
 
 There are two different input channels: the **index** and the **reads**.
 
@@ -184,37 +195,40 @@ The index name specified by **refname** is used for building the command line wh
 We also produced two kind of outputs: the **alignments** and the **logs**.
 The first one is the one we want to keep as a final result. So we specify this using the **pattern** parameter in **publishDir**.
 
-```{java, eval=FALSE, echo=TRUE}
-    publishDir alnOutputFolder, pattern: '*.sam'
-```
+.. code-block:: groovy
+
+	publishDir alnOutputFolder, pattern: '*.sam'
+
 
 The second one will be just passed to the next process for being used by the multiQC process. To distinguish them we can assign them different names.
 
-```{java, eval=FALSE, echo=TRUE}
- output:									
-    path "${reads}.sam", emit: samples_sam
-    path "${reads}.log", emit: samples_log
+.. code-block:: groovy
 
-```
+	output:									
+	    path "${reads}.sam", emit: samples_sam
+	    path "${reads}.log", emit: samples_log
+
 
 This section will allow us to connect these outputs directly with other processes when we call them in the workflow section:
 
-```{java, eval=FALSE, echo=TRUE}
-workflow {
-	fastqc_out = fastQC(reads)
-	bowtie_index = bowtieIdx(reference)
-	bowtieAln(bowtie_index, reads)
-	multiQC(fastqc_out.mix(bowtieAln.out.samples_log).collect())
-}
-```
+.. code-block:: groovy
+
+	workflow {
+		fastqc_out = fastQC(reads)
+		bowtie_index = bowtieIdx(reference)
+		bowtieAln(bowtie_index, reads)
+		multiQC(fastqc_out.mix(bowtieAln.out.samples_log).collect())
+	}
+
 
 So we passed the **samples_log** output to the multiqc process after mixing it with the output channel from the fastqc process.
 
-## Profiles 
+Profiles 
+=================
 
 For deploying a pipeline in a cluster environment or a cloud, we need to add some information in the **nextflow.config** file. 
 
-In particular we need to indicate the kind of [executor](https://www.nextflow.io/docs/latest/process.html#executor) should be used.
+In particular we need to indicate the kind of `executor <https://www.nextflow.io/docs/latest/process.html#executor>`__ should be used.
 
 In the Nextflow framework architecture, the executor indicates which is the **batch-queuing system** to use to submit jobs to the HPC or to the cloud.
 
@@ -231,107 +245,112 @@ Let's inspect the **nextflow.config** file in **test3** folder. We can look at t
 
 The first one indicates the resources needed for running the pipeline locally. They are quite small since we have little power and CPUs on the test node.
 
-```{java, eval=FALSE, echo=TRUE}
+.. code-block:: groovy
 
-profiles {
-  standard {
-     process {
-        containerOptions = { workflow.containerEngine == "docker" ? '-u $(id -u):$(id -g)': null}
-        executor="local"
-        memory='0.6G'
-        cpus='1'
-        time='6h'
+	profiles {
+	  standard {
+	     process {
+		containerOptions = { workflow.containerEngine == "docker" ? '-u $(id -u):$(id -g)': null}
+		executor="local"
+		memory='0.6G'
+		cpus='1'
+		time='6h'
 
-        withLabel: 'twocpus' {
-            memory='0.6G'
-            cpus='1'
-        }
-   	  }
-   }
- ```
+		withLabel: 'twocpus' {
+		    memory='0.6G'
+		    cpus='1'
+		}
+		  }
+	   }
+ 
  
 As you can see we indicate explicitly the **local** executor. So this will be the default when running the pipeline indicating without specifying a profiles.
 
 The second one is **cluster**:
 
-```{java, eval=FALSE, echo=TRUE}
+.. code-block:: groovy
 
-   cluster {
-     process {
-        containerOptions = { workflow.containerEngine == "docker" ? '-u $(id -u):$(id -g)': null}
-        executor="SGE"
-        queue="smallcpus"
+	   cluster {
+	     process {
+		containerOptions = { workflow.containerEngine == "docker" ? '-u $(id -u):$(id -g)': null}
+		executor="SGE"
+		queue="smallcpus"
 
-        memory='1G'
-        cpus='1'
-        time='6h'
+		memory='1G'
+		cpus='1'
+		time='6h'
 
-        withLabel: 'twocpus' {
-            queue="bigcpus"
-            memory='4G'
-            cpus='2'
-        }
-      }
-   }
-```
+		withLabel: 'twocpus' {
+		    queue="bigcpus"
+		    memory='4G'
+		    cpus='2'
+		}
+	      }
+	   }
+
 
 This indicates that the system uses **Sun Grid Engine** as job scheduler and that we have different queues for small jobs and more intensive ones.
 
 
-## Deployment in the AWS cloud 
+Deployment in the AWS cloud 
+=============================
 
 The final profile is for running the pipeline in the **Amazon Cloud**, known as Amazon Web Services or AWS. In particular we will use **AWS Batch** that allows the execution of containerised workloads in the Amazon cloud infrastructure.
 
-```{java, eval=FALSE, echo=TRUE}
+.. code-block:: groovy
 
-   cloud {
-    workDir = 's3://class-bucket-1/work'
-    aws.region = 'eu-central-1'
-    aws.batch.cliPath = '/home/ec2-user/miniconda/bin/aws'
-    
-   process {
-       containerOptions = { workflow.containerEngine == "docker" ? '-u $(id -u):$(id -g)': null}
-       executor = 'awsbatch'
-       queue = 'spot'
-       memory='1G'
-       cpus='1'
-       time='6h'
+	   cloud {
+	    workDir = 's3://class-bucket-1/work'
+	    aws.region = 'eu-central-1'
+	    aws.batch.cliPath = '/home/ec2-user/miniconda/bin/aws'
 
-       withLabel: 'twocpus' {
-           memory='0.6G'
-           cpus='2'
-       }
-    }
-  }
-```
+	   process {
+	       containerOptions = { workflow.containerEngine == "docker" ? '-u $(id -u):$(id -g)': null}
+	       executor = 'awsbatch'
+	       queue = 'spot'
+	       memory='1G'
+	       cpus='1'
+	       time='6h'
 
-We indicate some <u>AWS specific parameters</u> (**region** and **cliPath**) and the executor that is **awsbatch**.
-Then we indicate that the working directory, that is normally written locally, should be mounted as [S3 volume](https://aws.amazon.com/s3/). 
+	       withLabel: 'twocpus' {
+		   memory='0.6G'
+		   cpus='2'
+	       }
+	    }
+	  }
+
+
+We indicate some **AWS specific parameters** (**region** and **cliPath**) and the executor that is **awsbatch**.
+Then we indicate that the working directory, that is normally written locally, should be mounted as `S3 volume <https://aws.amazon.com/s3/>`__. 
 This is mandatory when running Nextflow on the cloud.
 
 We can now launch the pipeline indicating `-profile cloud`
 
-```{bash, eval=FALSE, echo=TRUE}
-nextflow run test3.nf -bg -with-docker -profile cloud > log
-```
+.. code-block:: console
+
+	nextflow run test3.nf -bg -with-docker -profile cloud > log
+
 
 Note that there is no longer a **work** folder because, on the AWS cloud, the output is copied locally. 
 
 Sometimes you can find that the Nextflow process itself is very memory intensive and the main node can run out of memory. To avoid this you can reduce the memory needed by setting an environmental variable:
 
-```{bash, eval=FALSE, echo=TRUE}
-export NXF_OPTS="-Xms50m -Xmx500m"
-```
+.. code-block:: console
+
+	export NXF_OPTS="-Xms50m -Xmx500m"
+
 
 Again we can copy the output file to the bucket.
 
 We can also tell Nextflow to directly copy the output file to the S3 bucket: to do so, change the parameter **outdir** in the params file:
 
-```{java, eval=FALSE, echo=TRUE}
-outdir = "s3://class-bucket-1/results"
-```
+.. code-block:: groovy
 
-## EXERCISE 5 
+	outdir = "s3://class-bucket-1/results"
+
+
+EXERCISE 
+---------------
 
 Modify the **test3.nf** file to make two different subworkflows: 
 
@@ -340,125 +359,132 @@ Modify the **test3.nf** file to make two different subworkflows:
 
 For convenience you can use the multiqc config file called config.yaml in the multiqc process.
 
-<details>
-<summary>
-<h5 style="background-color: #e6fadc; display: inline-block;">*Answer*</h5>
-</summary>
+.. raw:: html
+
+   <details>
+   <summary><a>Solution</a></summary>
 
 Solution in the file test3_2.nf
 
-</details>
+.. raw:: html
+
+	</details>
+	<br>
+	<br>
 
 
 
-
-## Modules and re-usage of the code
+Modules and re-usage of the code
+==================================
 
 A great advance of the new DSL2 is to allow the **modularization of the code**.
 In particular, you can move a named workflow within a module and keep it aside for being accessed from different pipelines.
 
 Looking at the **test4** folder gives you an idea of how the code uses modules.
 
-```{java, eval=FALSE, echo=TRUE}
-#!/usr/bin/env nextflow
+.. code-block:: groovy
 
-nextflow.enable.dsl=2
+	#!/usr/bin/env nextflow
 
-/*
- * Input parameters: read pairs
- * Params are stored in the params.config file
- */
+	nextflow.enable.dsl=2
 
-version                 = "1.0"
-params.help             = false
+	/*
+	 * Input parameters: read pairs
+	 * Params are stored in the params.config file
+	 */
 
-// this prints the input parameters
-log.info """
-BIOCORE@CRG - N F TESTPIPE  ~  version ${version}
-=============================================
-reads                           : ${params.reads}
-"""
+	version                 = "1.0"
+	params.help             = false
 
-if (params.help) {
-    log.info 'This is the Biocore\'s NF test pipeline'
-    log.info 'Enjoy!'
-    log.info '\n'
-    exit 1
-}
+	// this prints the input parameters
+	log.info """
+	BIOCORE@CRG - N F TESTPIPE  ~  version ${version}
+	=============================================
+	reads                           : ${params.reads}
+	"""
 
-/*
- * Defining the output folders.
- */
-fastqcOutputFolder    = "output_fastqc"
-multiqcOutputFolder   = "output_multiQC"
+	if (params.help) {
+	    log.info 'This is the Biocore\'s NF test pipeline'
+	    log.info 'Enjoy!'
+	    log.info '\n'
+	    exit 1
+	}
 
-
-Channel
-    .fromPath( params.reads )  											                            
-    .ifEmpty { error "Cannot find any reads matching: ${params.reads}" }
-    .set {reads_for_fastqc} 											
+	/*
+	 * Defining the output folders.
+	 */
+	fastqcOutputFolder    = "output_fastqc"
+	multiqcOutputFolder   = "output_multiQC"
 
 
-/*
- * Here we include two modules from two files. We also add the parameter OUTPUT to pass them the folders where to publish the results
- */
-include { fastqc } from "${baseDir}/lib/fastqc" addParams(OUTPUT: fastqcOutputFolder)
-include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder)
-
-// The main worflow can directly call the named workflows from the modules
-workflow {
-	fastqc_out = fastqc(reads_for_fastqc)
-	multiqc(fastqc_out.collect())
-}
+	Channel
+	    .fromPath( params.reads )  											                            
+	    .ifEmpty { error "Cannot find any reads matching: ${params.reads}" }
+	    .set {reads_for_fastqc} 											
 
 
-workflow.onComplete {
-	println ( workflow.success ? "\nDone! Open the following report in your browser --> ${multiqcOutputFolder}/multiqc_report.html\n" : "Oops .. something went wrong" )
-}
-```
+	/*
+	 * Here we include two modules from two files. We also add the parameter OUTPUT to pass them the folders where to publish the results
+	 */
+	include { fastqc } from "${baseDir}/lib/fastqc" addParams(OUTPUT: fastqcOutputFolder)
+	include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder)
+
+	// The main worflow can directly call the named workflows from the modules
+	workflow {
+		fastqc_out = fastqc(reads_for_fastqc)
+		multiqc(fastqc_out.collect())
+	}
+
+
+	workflow.onComplete {
+		println ( workflow.success ? "\nDone! Open the following report in your browser --> ${multiqcOutputFolder}/multiqc_report.html\n" : "Oops .. something went wrong" )
+	}
+
 
 We now include two modules named **fastqc** and **multiqc** from ```${baseDir}/lib/fastqc.nf``` and ```${baseDir}/lib/multiqc.nf```.
 Let's inspect the **fastqc** module:
 
-```{java, eval=FALSE, echo=TRUE}
-/*
-*  fastqc module
-*/
+.. code-block:: groovy
 
-params.CONTAINER = "quay.io/biocontainers/fastqc:0.11.9--0"
-params.OUTPUT = "fastqc_output"
+	/*
+	*  fastqc module
+	*/
 
-process qc {
-    publishDir(params.OUTPUT, mode: 'copy')
-    tag { "${reads}" }
-    container params.CONTAINER
+	params.CONTAINER = "quay.io/biocontainers/fastqc:0.11.9--0"
+	params.OUTPUT = "fastqc_output"
 
-    input:
-    path(reads)
+	process qc {
+	    publishDir(params.OUTPUT, mode: 'copy')
+	    tag { "${reads}" }
+	    container params.CONTAINER
 
-    output:
-    path("*_fastqc*")
+	    input:
+	    path(reads)
 
-    script:
-    """
-	fastqc ${reads}
-    """
-}
+	    output:
+	    path("*_fastqc*")
 
-```
+	    script:
+	    """
+		fastqc ${reads}
+	    """
+	}
+
+
 
 Module **fastqc** takes as **input** a channel with reads and produces as **output** the files generated by the fastqc program.
 
-The module is quite simple: it contains the directive `publishDir`, the tag, the container to be used and has a similar input, output and script session than seen previously.
+The module is quite simple: it contains the directive **publishDir**, the tag, the container to be used and has a similar input, output and script session than seen previously.
 
 A module can contain its own parameters that can be used for connecting the main script to some variables inside the module.
 
 In this example we have the declaration of two **parameters** that are defined at the beginning:
 
-```{java, eval=FALSE, echo=TRUE}
-params.CONTAINER = "quay.io/biocontainers/fastqc:0.11.9--0"
-params.OUTPUT = "fastqc_output"
-```
+.. code-block:: groovy
+
+	params.CONTAINER = "quay.io/biocontainers/fastqc:0.11.9--0"
+	params.OUTPUT = "fastqc_output"
+
 
 They can be overridden from the main script that is calling the module:
 
@@ -467,109 +493,119 @@ They can be overridden from the main script that is calling the module:
 
 In this example in our main script we pass only the OUTPUT parameters by writing in this way:
 
-```{java, eval=FALSE, echo=TRUE}
-include { fastqc } from "${baseDir}/lib/fastqc" addParams(OUTPUT: fastqcOutputFolder)
-include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder)
-```
+.. code-block:: groovy
+
+	include { fastqc } from "${baseDir}/lib/fastqc" addParams(OUTPUT: fastqcOutputFolder)
+	include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder)
+
 
 While we keep the information of the container inside the module for better reproducibility:
 
-```{java, eval=FALSE, echo=TRUE}
-params.CONTAINER = = "quay.io/biocontainers/fastqc:0.11.9--0"
-```
+.. code-block:: groovy
 
-Here you see that we are not using our own image but one provided by **biocontainers** stored in [quay](https://quay.io/).
+	params.CONTAINER = = "quay.io/biocontainers/fastqc:0.11.9--0"
 
-Here you can find a list of fastqc images developed and stored by the biocontainers community [https://biocontainers.pro/#/tools/fastqc](https://biocontainers.pro/#/tools/fastqc).
+
+Here you see that we are not using our own image but one provided by **biocontainers** stored in `quay <https://quay.io/>`__.
+
+Here you can find a list of fastqc images developed and stored by the biocontainers community `https://biocontainers.pro/#/tools/fastqc <https://biocontainers.pro/#/tools/fastqc>`___.
 
 Let's have a look at the **multiqc.nf** module:
 
-```{java, eval=FALSE, echo=TRUE}
-/*
-*  multiqc module
-*/
+.. code-block:: groovy
 
-params.CONTAINER = "quay.io/biocontainers/multiqc:1.9--pyh9f0ad1d_0"
-params.OUTPUT = "multiqc_output"
-params.LABEL = ""
+	/*
+	*  multiqc module
+	*/
 
-process multiqc {
-    publishDir(params.OUTPUT, mode: 'copy')
-    container params.CONTAINER
-    label (params.LABEL)
+	params.CONTAINER = "quay.io/biocontainers/multiqc:1.9--pyh9f0ad1d_0"
+	params.OUTPUT = "multiqc_output"
+	params.LABEL = ""
 
-    input:
-    path (inputfiles)
+	process multiqc {
+	    publishDir(params.OUTPUT, mode: 'copy')
+	    container params.CONTAINER
+	    label (params.LABEL)
 
-    output:
-    path "multiqc_report.html"					
+	    input:
+	    path (inputfiles)
 
-    script:
-    """
-    multiqc .
-    """
-}
+	    output:
+	    path "multiqc_report.html"					
 
-```
+	    script:
+	    """
+	    multiqc .
+	    """
+	}
+
+
 
 It is very similar to the fastqc one: we just add an extra parameter for connecting the resources defined in the nextflow.config file and the label indicated in the process.
 
 In case we want to use it we would need to change the main code in this way:
 
-```{java, eval=FALSE, echo=TRUE}
-include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder, LABEL="onecpu")
-```
+.. code-block:: groovy
+
+	include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder, LABEL="onecpu")
+
 
 This is because we specified the label **onecpu** in out **nextflow.config** file:
 
-```{java, eval=FALSE, echo=TRUE}
-includeConfig "$baseDir/params.config"
+.. code-block:: groovy
 
-process {
-     container = 'biocorecrg/debian-perlbrew-pyenv3-java'
-     memory='0.6G'
-     cpus='1'
-     time='6h'
+	includeConfig "$baseDir/params.config"
 
-     withLabel: 'onecpu'
-   	{
-		memory='0.6G'
-   	 	cpus='1'
-	} 	
+	process {
+	     container = 'biocorecrg/debian-perlbrew-pyenv3-java'
+	     memory='0.6G'
+	     cpus='1'
+	     time='6h'
 
-}
+	     withLabel: 'onecpu'
+		{
+			memory='0.6G'
+			cpus='1'
+		} 	
 
-singularity.cacheDir = "$baseDir/singularity"
-```
+	}
 
-**IMPORTANT: you will need to specify a default image when you want to run nextflow -with-docker or -with-singularity and you have containers defined inside the modules**
+	singularity.cacheDir = "$baseDir/singularity"
 
-## EXERCISE 6 
+.. note::
+
+	IMPORTANT: you will need to specify a default image when you want to run nextflow -with-docker or -with-singularity and you have containers defined inside the modules
+
+EXERCISE 
+------------
 
 Try to make a module wrapper of the bowtie tool and change the script accordingly as the test3.
 
-<details>
-<summary>
-<h5 style="background-color: #e6fadc; display: inline-block;">*Answer*</h5>
-</summary>
+.. raw:: html
+
+   <details>
+   <summary><a>Solution</a></summary>
 
 Solution in the folder test5
 
-</details>
+.. raw:: html
+
+   </details>
 
 
-## Reporting and graphical interface
+Reporting and graphical interface
+===================================
 
-Nextflow has an embedded function for reporting a number of informations about the resources needed by each job and the timing: you can get a nice html report with parameter `-with-report`:
+Nextflow has an embedded function for reporting a number of informations about the resources needed by each job and the timing: you can get a nice html report with parameter **-with-report**:
 
-```{java, eval=FALSE, echo=TRUE}
-nextflow run test5.nf -with-docker -bg -with-report > log
-```
+.. code-block:: console
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/report.png')
-```
+	nextflow run test5.nf -with-docker -bg -with-report > log
 
+
+.. image:: images/report.png
+  :width: 800
+  
 **Nextflow Tower** is an open source monitoring and managing platform for Nextflow workflows. There are two versions:
 
 - Open source for monitoring of single pipelines
@@ -577,77 +613,80 @@ knitr::include_graphics('docs/images/report.png')
 
 We will show the open source one. 
 
-First of all you need to access the tower.nf website and doing the login using one of the methods.
+First of all you need to access the `tower.nf <https://tower.nf/>`___ website and doing the login using one of the methods.
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE, fig.link='https://tower.nf/'}
-knitr::include_graphics('docs/images/tower.png')
-```
+
+.. image:: images/tower.png
+  :width: 800
+
 
 We select the email for receiving the instructions and the token to be used for the pipeline.
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/tower0.png')
-```
-
+.. image:: images/tower0.png
+  :width: 800
+ 
 So we check the email:
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/tower1.png')
-```
+.. image:: images/tower1.png
+  :width: 800
 
 We then go on getting started and follow the instructions for exporting two environmental variables:
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/tower2.png')
-```
+.. image:: images/tower2.png
+  :width: 800
 
-You can then generate your token here: [https://tower.nf/tokens](https://tower.nf/tokens) and copy paste in your pipeline using this snippet in the configuration file
 
-```{java, eval=FALSE, echo=TRUE}
-tower {
-  accessToken = '<YOUR TOKEN>'
-  enabled = true
-}
-```
+You can then generate your token here: `https://tower.nf/tokens <https://tower.nf/tokens>`___ and copy paste in your pipeline using this snippet in the configuration file
+
+.. code-block:: groovy
+
+	tower {
+	  accessToken = '<YOUR TOKEN>'
+	  enabled = true
+	}
+
 
 or exporting those environmental variables:
 
-```{bash, eval=FALSE, echo=TRUE}
-export TOWER_ACCESS_TOKEN=*******YOUR***TOKEN*****HERE*******
-export NXF_VER=21.04.0
-```
+.. code-block:: groovy
+
+	export TOWER_ACCESS_TOKEN=*******YOUR***TOKEN*****HERE*******
+	export NXF_VER=21.04.0
+
 
 we then launch the pipeline:
 
-```{bash, eval=FALSE, echo=TRUE}
-nextflow run test5.nf -with-singularity -with-tower -bg > log
+.. code-block:: console
+
+	nextflow run test5.nf -with-singularity -with-tower -bg > log
 
 
-CAPSULE: Downloading dependency io.nextflow:nf-tower:jar:20.09.1-edge
-CAPSULE: Downloading dependency org.codehaus.groovy:groovy-nio:jar:3.0.5
-CAPSULE: Downloading dependency io.nextflow:nextflow:jar:20.09.1-edge
-CAPSULE: Downloading dependency io.nextflow:nf-httpfs:jar:20.09.1-edge
-CAPSULE: Downloading dependency org.codehaus.groovy:groovy-json:jar:3.0.5
-CAPSULE: Downloading dependency org.codehaus.groovy:groovy:jar:3.0.5
-CAPSULE: Downloading dependency io.nextflow:nf-amazon:jar:20.09.1-edge
-CAPSULE: Downloading dependency org.codehaus.groovy:groovy-templates:jar:3.0.5
-CAPSULE: Downloading dependency org.codehaus.groovy:groovy-xml:jar:3.0.5
-```
+	CAPSULE: Downloading dependency io.nextflow:nf-tower:jar:20.09.1-edge
+	CAPSULE: Downloading dependency org.codehaus.groovy:groovy-nio:jar:3.0.5
+	CAPSULE: Downloading dependency io.nextflow:nextflow:jar:20.09.1-edge
+	CAPSULE: Downloading dependency io.nextflow:nf-httpfs:jar:20.09.1-edge
+	CAPSULE: Downloading dependency org.codehaus.groovy:groovy-json:jar:3.0.5
+	CAPSULE: Downloading dependency org.codehaus.groovy:groovy:jar:3.0.5
+	CAPSULE: Downloading dependency io.nextflow:nf-amazon:jar:20.09.1-edge
+	CAPSULE: Downloading dependency org.codehaus.groovy:groovy-templates:jar:3.0.5
+	CAPSULE: Downloading dependency org.codehaus.groovy:groovy-xml:jar:3.0.5
+
 
 We finally go to the tower website again:
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/tower3.png')
-```
+
+.. image:: images/tower3.png
+  :width: 800
+
 
 And in the end when the pipeline is finished we can also receive a mail.
 
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/tower4.png')
-```
+.. image:: images/tower4.png
+  :width: 800
 
-## Share Nextflow pipelines and good practices
+Share Nextflow pipelines and good practices
+============================================
 
 Nextflow supports a number of code sharing platforms: **BitBucket**, **GitHub**, and **GitLab**.
 This feature allows to run pipelines by just pointing to an online repository without caring about downloading etc.
@@ -656,114 +695,116 @@ The default platform is **GitHub**, so we will use this repository as an example
 
 Let's create a new repository with a unique name:
 
-```{r, out.width="300px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/git_1.png')
-```
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/git_2.png')
-```
+.. image:: images/git_1.png
+  :width: 800
+  
+.. image:: images/git_2.png
+  :width: 800
+  
 
 And then let's clone it in one of our test folder. Let's choose **test5**. We can get the url path by clicking like on the figure:
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/git_3.png')
-```
+.. image:: images/git_3.png
+  :width: 800
+  
+.. code-block:: console
 
-```{bash, eval=FALSE, echo=TRUE}
-git clone https://github.com/lucacozzuto/test_course.git
-Cloning into 'test_course'...
-remote: Enumerating objects: 3, done.
-remote: Counting objects: 100% (3/3), done.
-remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-Unpacking objects: 100% (3/3), done.
+	git clone https://github.com/lucacozzuto/test_course.git
+	Cloning into 'test_course'...
+	remote: Enumerating objects: 3, done.
+	remote: Counting objects: 100% (3/3), done.
+	remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+	Unpacking objects: 100% (3/3), done.
 
-```
 
 We have an almost empty folder named **test_course**. We can just move or copy our files there:
 
-```{bash, eval=FALSE, echo=TRUE}
-cp *.* lib -r test_course/ 
-cd test_course
+.. code-block:: console
 
-git status
+	cp *.* lib -r test_course/ 
+	cd test_course
 
-# On branch main
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	lib/
-#	nextflow.config
-#	params.config
-#	test5.nf
-nothing added to commit but untracked files present (use "git add" to track)
-```
+	git status
+
+	# On branch main
+	# Untracked files:
+	#   (use "git add <file>..." to include in what will be committed)
+	#
+	#	lib/
+	#	nextflow.config
+	#	params.config
+	#	test5.nf
+	nothing added to commit but untracked files present (use "git add" to track)
+
 
 Now we are ready for committing and pushing everything to the online repository. But before we need to rename **test5.nf** to **main.nf**.
 
-```{bash, eval=FALSE, echo=TRUE}
-mv test5.nf main.nf
+.. code-block:: groovy
 
-git add *
+	mv test5.nf main.nf
 
-git status
-# On branch main
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	new file:   lib/bowtie.nf
-#	new file:   lib/fastqc.nf
-#	new file:   lib/multiqc.nf
-#	new file:   nextflow.config
-#	new file:   params.config
-#	new file:   main.nf
-#
+	git add *
+
+	git status
+	# On branch main
+	# Changes to be committed:
+	#   (use "git reset HEAD <file>..." to unstage)
+	#
+	#	new file:   lib/bowtie.nf
+	#	new file:   lib/fastqc.nf
+	#	new file:   lib/multiqc.nf
+	#	new file:   nextflow.config
+	#	new file:   params.config
+	#	new file:   main.nf
+	#
 
 
-git commit -m "first commit"
+	git commit -m "first commit"
 
-[main 7681f85] first commit
- 6 files changed, 186 insertions(+)
- create mode 100644 lib/bowtie.nf
- create mode 100644 lib/fastqc.nf
- create mode 100644 lib/multiqc.nf
- create mode 100644 nextflow.config
- create mode 100644 params.config
- create mode 100755 main.nf
-[lcozzuto@nextflow test_course]$ git push
-Username for 'https://github.com': ######
-Password for 'https://######@github.com': 
-Counting objects: 10, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (7/7), done.
-Writing objects: 100% (9/9), 2.62 KiB | 0 bytes/s, done.
-Total 9 (delta 0), reused 0 (delta 0)
-To https://github.com/lucacozzuto/test_course.git
-   bbd6a44..7681f85  main -> main
+	[main 7681f85] first commit
+	 6 files changed, 186 insertions(+)
+	 create mode 100644 lib/bowtie.nf
+	 create mode 100644 lib/fastqc.nf
+	 create mode 100644 lib/multiqc.nf
+	 create mode 100644 nextflow.config
+	 create mode 100644 params.config
+	 create mode 100755 main.nf
+	[lcozzuto@nextflow test_course]$ git push
+	Username for 'https://github.com': ######
+	Password for 'https://######@github.com': 
+	Counting objects: 10, done.
+	Delta compression using up to 8 threads.
+	Compressing objects: 100% (7/7), done.
+	Writing objects: 100% (9/9), 2.62 KiB | 0 bytes/s, done.
+	Total 9 (delta 0), reused 0 (delta 0)
+	To https://github.com/lucacozzuto/test_course.git
+	   bbd6a44..7681f85  main -> main
 
-```
 
 If we go back to the GitHub website we can see that everything has been uploaded.
 
-```{r, out.width="800px", echo=FALSE, eval = TRUE }
-knitr::include_graphics('docs/images/git_2.png')
-```
+.. image:: images/git_2.png
+  :width: 800
+
+CHECK THIS!!!
 
 Now we can remove that folder and go in the home folder.
 
-```{bash, eval=FALSE, echo=TRUE}
-rm -fr test_course
-cd $HOME
-```
+.. code-block:: console
+
+	rm -fr test_course
+	cd $HOME
+
 
 And we can launch directly this pipeline with:
 
-```{bash, eval=FALSE, echo=TRUE}
-nextflow run lucacozzuto/test_course -with-docker -r main \
---reads "/home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/testdata/*.fastq.gz" \
---reference "/home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/testdata/chr19.fasta.gz"
+.. code-block:: console
 
-```
+	nextflow run lucacozzuto/test_course -with-docker -r main \
+	--reads "/home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/testdata/*.fastq.gz" \
+	--reference "/home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/testdata/chr19.fasta.gz"
+
 
 As you can see we just use the repository name and two Nextflow parameters:
 
@@ -774,77 +815,80 @@ Then we pass to the pipelines the path of our input files:
 - `--reads`
 - `--reference`
 
-```{bash, eval=FALSE, echo=TRUE}
+.. code-block:: console
 
-N E X T F L O W  ~  version 20.10.0
-Pulling lucacozzuto/test_course ...
-downloaded from https://github.com/lucacozzuto/test_course.git
-Launching `lucacozzuto/test_course` [voluminous_feynman] - revision: 95d1028adf [main]
-BIOCORE@CRG - N F TESTPIPE  ~  version 1.0
-=============================================
-reads                           : /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/testdata/*.fastq.gz
-reference                       : /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/testdata/chr19.fasta.gz
-executor >  local (5)
-[5b/4a36e8] process > fastqc (B7_input_s_chr19.fastq.gz)             [100%] 2 of 2 ✔
-[5c/644577] process > BOWTIE:bowtieIdx (chr19.fasta.gz)              [100%] 1 of 1 ✔
-executor >  local (5)
-[5b/4a36e8] process > fastqc (B7_input_s_chr19.fastq.gz)           [100%] 2 of 2 ✔
-[5c/644577] process > BOWTIE:bowtieIdx (chr19.fasta.gz)            [100%] 1 of 1 ✔
-[4b/dad392] process > BOWTIE:bowtieAln (B7_input_s_chr19.fastq.gz) [100%] 2 of 2 ✔
-/home/ec2-user/work/d1/11fe0bff99f424571033347bf4b042/B7_H3K4me1_s_chr19.fastq.gz.sam
-/home/ec2-user/work/4b/dad392b12d2f78f976d2a890ebcaea/B7_input_s_chr19.fastq.gz.sam
-Completed at: 27-Apr-2021 20:27:14
-Duration    : 1m 26s
-CPU hours   : (a few seconds)
-Succeeded   : 5
-```
+	N E X T F L O W  ~  version 20.10.0
+	Pulling lucacozzuto/test_course ...
+	downloaded from https://github.com/lucacozzuto/test_course.git
+	Launching `lucacozzuto/test_course` [voluminous_feynman] - revision: 95d1028adf [main]
+	BIOCORE@CRG - N F TESTPIPE  ~  version 1.0
+	=============================================
+	reads                           : /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/testdata/*.fastq.gz
+	reference                       : /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/testdata/chr19.fasta.gz
+	executor >  local (5)
+	[5b/4a36e8] process > fastqc (B7_input_s_chr19.fastq.gz)             [100%] 2 of 2 ✔
+	[5c/644577] process > BOWTIE:bowtieIdx (chr19.fasta.gz)              [100%] 1 of 1 ✔
+	executor >  local (5)
+	[5b/4a36e8] process > fastqc (B7_input_s_chr19.fastq.gz)           [100%] 2 of 2 ✔
+	[5c/644577] process > BOWTIE:bowtieIdx (chr19.fasta.gz)            [100%] 1 of 1 ✔
+	[4b/dad392] process > BOWTIE:bowtieAln (B7_input_s_chr19.fastq.gz) [100%] 2 of 2 ✔
+	/home/ec2-user/work/d1/11fe0bff99f424571033347bf4b042/B7_H3K4me1_s_chr19.fastq.gz.sam
+	/home/ec2-user/work/4b/dad392b12d2f78f976d2a890ebcaea/B7_input_s_chr19.fastq.gz.sam
+	Completed at: 27-Apr-2021 20:27:14
+	Duration    : 1m 26s
+	CPU hours   : (a few seconds)
+	Succeeded   : 5
+
 
 Nextflow first pulls down the required version of the pipeline and it stores it in:
 
-```{bash, eval=FALSE, echo=TRUE}
-/home/ec2-user/.nextflow/assets/lucacozzuto/test_course/
-```
+.. code-block:: console
+
+	/home/ec2-user/.nextflow/assets/lucacozzuto/test_course/
+
 
 then it pulls the Docker image and runs the pipeline.
 
 You can use the Nextflow's command **list** that shows the number of pipelines installed in your environment and the command **info** for fetching some useful information.
 
-```{bash, eval=FALSE, echo=TRUE}
-nextflow list
-lucacozzuto/test_course
-...
-```
+.. code-block:: console
 
-```{bash, eval=FALSE, echo=TRUE}
-nextflow info lucacozzuto/test_course
+	nextflow list
+	lucacozzuto/test_course
+	...
 
- project name: lucacozzuto/test_course
- repository  : https://github.com/lucacozzuto/test_course
- local path  : /home/ec2-user/.nextflow/assets/lucacozzuto/test_course
- main script : main.nf
- revision    : * main
-```
+
+.. code-block:: console
+
+	nextflow info lucacozzuto/test_course
+
+	 project name: lucacozzuto/test_course
+	 repository  : https://github.com/lucacozzuto/test_course
+	 local path  : /home/ec2-user/.nextflow/assets/lucacozzuto/test_course
+	 main script : main.nf
+	 revision    : * main
+
 
 Finally you can update, view or delete a project by using the Nextflow commands **pull**, **view** and **drop**.
 
-```{bash, eval=FALSE, echo=TRUE}
-nextflow view lucacozzuto/test_course
+.. code-block:: groovy
 
-== content of file: /users/bi/lcozzuto/.nextflow/assets/lucacozzuto/test_course/main.nf
-#!/usr/bin/env nextflow
+	nextflow view lucacozzuto/test_course
 
-/*
- * Copyright (c) 2013-2020, Centre for Genomic Regulation (CRG).
- *
- *   This file is part of 'CRG_Containers_NextFlow'.
- *
- *   CRG_Containers_NextFlow is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   CRG_Containers_NextFlow is distributed in the hope that it will be useful,
-[...]
-```
+	== content of file: /users/bi/lcozzuto/.nextflow/assets/lucacozzuto/test_course/main.nf
+	#!/usr/bin/env nextflow
+
+	/*
+	 * Copyright (c) 2013-2020, Centre for Genomic Regulation (CRG).
+	 *
+	 *   This file is part of 'CRG_Containers_NextFlow'.
+	 *
+	 *   CRG_Containers_NextFlow is free software: you can redistribute it and/or modify
+	 *   it under the terms of the GNU General Public License as published by
+	 *   the Free Software Foundation, either version 3 of the License, or
+	 *   (at your option) any later version.
+	 *
+	 *   CRG_Containers_NextFlow is distributed in the hope that it will be useful,
+	[...]
 
 
