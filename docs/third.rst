@@ -420,13 +420,19 @@ while the nextflow.config file would be:
 
 .. raw:: html
 	</details>
+
+|
+|
+|
 |
 |
 |
 
+
+
 Using a public pipeline
 =============================================
-At this point we have an idea about how is written a Nextflow pipeline, so we can easily install and run a published one. As an example let's use the following one, called `Master Of Pores <https://github.com/biocorecrg/mop2>`__ published by us in `2019 <https://www.frontiersin.org/articles/10.3389/fgene.2020.00211/full`>__ :
+At this point we have an idea about how is written a Nextflow pipeline, so we can easily install and run a published one. As an example let's use the following one, called `Master Of Pores <https://github.com/biocorecrg/mop2>`__ published by us in `2019 <https://www.frontiersin.org/articles/10.3389/fgene.2020.00211/full>`__ :
 
 This repository contains a collection of pipelines able to process nanopore's raw data and to make detect putative chemical modifications and estimate polyA tail sizes.  
 
