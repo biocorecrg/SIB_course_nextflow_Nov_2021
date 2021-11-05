@@ -360,8 +360,8 @@ while the nextflow.config file would be:
 .. raw:: html
 
 	</details>
-	</br>
-	</br>
+	<br>
+	<br>
 
 - Now look at **test2.nf**.
 Can you make a configuration for that script with a new label for handling failing processes by retrying 3 times and incrementing the time?
@@ -423,9 +423,9 @@ while the nextflow.config file would be:
 
 .. raw:: html
 	</details>
-	</br>
-	</br>
-	</br>
+	<br>
+	<br>
+	<br>
 
 
 Using a public pipeline
@@ -656,7 +656,28 @@ So running just the pipeline will give an idea of what is happening.
 	Execution status: OK
 
 
+EXERCISE 
+------------------
 
+- Look at the documentation and try to change the mapper, to skip the filtering and to enable the demultiplexing. 
+
+.. raw:: html
+
+   <details>
+   <summary><a>Solution</a></summary>
+
+The params can be set on the fly like this
+
+.. code-block:: console
+
+	nextflow run mop_preprocess.nf -with-docker -bg --mapping graphmap --filtering nanofilt --demultiplexing deeplexicon > log.txt
+	
+ 
+.. raw:: html
+
+	</details>
+	<br>
+	<br>
 
 
 
