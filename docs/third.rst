@@ -360,6 +360,8 @@ while the nextflow.config file would be:
 .. raw:: html
 
 	</details>
+	</br>
+	</br>
 
 - Now look at **test2.nf**.
 Can you make a configuration for that script with a new label for handling failing processes by retrying 3 times and incrementing the time?
@@ -421,14 +423,9 @@ while the nextflow.config file would be:
 
 .. raw:: html
 	</details>
-
-|
-|
-|
-|
-|
-|
-
+	</br>
+	</br>
+	</br>
 
 
 Using a public pipeline
