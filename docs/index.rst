@@ -9,10 +9,26 @@ Reproducible research and data analysis using **Nextflow** pipelines
 
 `Course page <https://www.sib.swiss/training/course/20211115_NEXTF>`_
 
-.. Nextflow documentation master file, created by
-   sphinx-quickstart on Sat May  5 16:57:28 2012.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Instructors:
+
+.. |luca| image:: images/lcozzuto.jpg
+      :width: 20pt
+      :height: 20pt
+
+.. |toni| image:: images/thermoso.jpg
+      :width: 20pt
+      :height: 20pt
+
+.. |julia| image:: images/jponomarenko.jpg
+      :width: 20pt
+      :height: 20pt
+
+
+ +---------+-----------+
+ | |luca|  +  |toni|  +
+ +---------+-----------+
+
+
 
 Contents:
 
