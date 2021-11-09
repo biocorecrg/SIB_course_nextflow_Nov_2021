@@ -21,7 +21,7 @@ Reproducible research and data analysis using **Nextflow** pipelines
   :alt: Alternative text
   
 
-.. list-table:: Instructors:
+.. list-table:: Main instructors:
    :widths: 25 25 50
    :header-rows: 1
 
