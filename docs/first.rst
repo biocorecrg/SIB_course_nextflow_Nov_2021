@@ -11,7 +11,8 @@ Introduction to Docker and Singularity containers.
 
 ## What are containers ?
 
-<a href="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2018/04/containers-rsa.jpg"><img src="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2018/04/containers-rsa.jpg" width="700/"></a>
+.. image:: https://www.synopsys.com/blogs/software-security/wp-content/uploads/2018/04/containers-rsa.jpg
+  :width: 700
 
 A Container can be seen as a **minimal virtual environment** that can be used in any Linux-compatible machine (and beyond).
 
@@ -47,7 +48,8 @@ Containers allow us to use **exactly the same versions of the tools**.
 
 ### Virtual machines vs containers
 
-<a href="https://raw.githubusercontent.com/collabnix/dockerlabs/master/beginners/docker/images/vm-docker5.png"><img src="https://raw.githubusercontent.com/collabnix/dockerlabs/master/beginners/docker/images/vm-docker5.png" width="800/"></a>
+.. image:: https://raw.githubusercontent.com/collabnix/dockerlabs/master/beginners/docker/images/vm-docker5.png
+  :width: 800
 
 [Source](https://dockerlabs.collabnix.com/beginners/difference-docker-vm.html)
 
@@ -67,6 +69,8 @@ Containers allow us to use **exactly the same versions of the tools**.
 * Honeypot, recovery of systems, etc.
 
 <a href="https://sysopsio.files.wordpress.com/2016/09/linux-chroot-jail.png"><img src="https://sysopsio.files.wordpress.com/2016/09/linux-chroot-jail.png" width="550/"></a>
+
+
 
 Source: https://sysopsio.wordpress.com/2016/09/09/jails-in-linux/
 
@@ -112,8 +116,8 @@ There is an increasing number of alternative container technologies and provider
 * Images are not run.
 * Images have several layers.
 
-<a href="https://i.stack.imgur.com/vGuay.png"><img src="https://i.stack.imgur.com/vGuay.png" width="700/"></a>
-
+.. image:: https://i.stack.imgur.com/vGuay.png
+  :width: 700
 
 ### Images versus containers
 
@@ -126,8 +130,8 @@ When you start an image, you have a running container of this image. You can hav
 
 https://stackoverflow.com/questions/23735149/what-is-the-difference-between-a-docker-image-and-a-container
 
-
-<img src="docs/images/singularity_logo.svg" width="300">
+.. image:: docs/images/singularity_logo.svg
+  :width: 300
 
 ## Introduction to Singularity
 
