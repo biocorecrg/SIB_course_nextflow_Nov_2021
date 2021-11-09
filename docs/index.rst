@@ -9,15 +9,12 @@ Reproducible research and data analysis using **Nextflow** pipelines
 
 
 .. |luca| image:: images/lcozzuto.jpg
-  :height: 200
   :alt: Alternative text
   
 .. |toni| image:: images/thermoso.jpg
-  :height: 200
   :alt: Alternative text
   
 .. |julia| image:: images/jponomarenko.jpg
-  :height: 200
   :alt: Alternative text
   
 
