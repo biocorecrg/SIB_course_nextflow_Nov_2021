@@ -22,7 +22,7 @@ Reproducible research and data analysis using **Nextflow** pipelines
   
 
 .. list-table:: Main instructors:
-   :widths: 25 25 50
+   :widths: 50 50 50
    :header-rows: 1
 
    * - Luca Cozzuto
