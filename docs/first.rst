@@ -6,7 +6,184 @@ First Day
 
 Introduction to Docker and Singularity containers.
 ============
-TONI
+
+# Introduction to containers
+
+## What are containers ?
+
+<a href="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2018/04/containers-rsa.jpg"><img src="https://www.synopsys.com/blogs/software-security/wp-content/uploads/2018/04/containers-rsa.jpg" width="700/"></a>
+
+A Container can be seen as a **minimal virtual environment** that can be used in any Linux-compatible machine (and beyond).
+
+Using containers is time- and resource-saving as they allow:
+
+* Controlling for software installation and dependencies.
+* Reproducibility of the analysis.
+
+Containers allow us to use **exactly the same versions of the tools**.
+
+## Virtual machines or containers ?
+
+| Virtualisation | Containerisation (aka lightweight virtualisation) |
+| ----- | ----- |
+| Abstraction of physical hardware | Abstraction of application layer |
+| Depends on hypervisor (software) | Depends on host kernel (OS) |
+| Do not confuse with hardware emulator | Application and dependencies bundled all together |
+| Enable virtual machines:<br>Every virtual machine with an OS (Operating System) ||
+
+### Virtualisation
+
+* Abstraction of physical hardware
+* Depends on hypervisor (software)
+* Do not confuse with hardware emulator
+* Enable virtual machines:
+	* Every virtual machine with an OS (Operating System)
+
+### Containerisation (aka lightweight virtualisation)
+
+* Abstraction of application layer
+* Depends on host kernel (OS)
+* Application and dependencies bundled all together
+
+### Virtual machines vs containers
+
+<a href="https://raw.githubusercontent.com/collabnix/dockerlabs/master/beginners/docker/images/vm-docker5.png"><img src="https://raw.githubusercontent.com/collabnix/dockerlabs/master/beginners/docker/images/vm-docker5.png" width="800/"></a>
+
+[Source](https://dockerlabs.collabnix.com/beginners/difference-docker-vm.html)
+
+**Pros and cons**
+
+|| Virtualisation | Containerisation |
+| :------ | :------------: | :--------------: |
+| PROS | Very similar to a full OS. <br> With current solutions, high OS diversity. | No need of full OS installation (less space). <br> Faster than virtual machines. <br> Easier automation. <br> Current solutions allow easier distribution of recipes. <br> Better portability.|
+| CONS | Need more space and resources. <br> Slower than containers. <br> Not that good automation. | Some cases might not be exactly the same as a full OS. <br> Still less OS diversity, even with current solutions. |
+
+## History of containers
+
+### chroot
+
+* chroot jail (BSD jail): first concept in 1979
+* Notable use in SSH and FTP servers
+* Honeypot, recovery of systems, etc.
+
+<a href="https://sysopsio.files.wordpress.com/2016/09/linux-chroot-jail.png"><img src="https://sysopsio.files.wordpress.com/2016/09/linux-chroot-jail.png" width="550/"></a>
+
+Source: https://sysopsio.wordpress.com/2016/09/09/jails-in-linux/
+
+### Additions in Linux kernel
+
+* First version: 2008
+* cgroups (control groups), before "process containers"
+	* isolate resource usage (CPU, memory, disk I/O, network, etc.) of a collection of processes
+* Linux namespaces
+	* one set of kernel resources restrict to one set of processes
+
+<img src="docs/images/linux-vs-docker-comparison-architecture-docker-lxc.png" width="600" />
+
+Source: https://sysopsio.wordpress.com/2016/09/09/jails-in-linux/
+
+
+## Introduction to Docker
+
+<a href="https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png"><img src="https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png" width="400/"></a>
+
+### What is Docker?
+
+* Platform for developing, shipping and running applications.
+* Infrastructure as application / code.
+* First version: 2013.
+* Company: originally dotCloud (2010), later named Docker.
+* Established [Open Container Initiative](https://www.opencontainers.org/).
+
+As a software:
+
+* [Docker Community Edition](https://www.docker.com/products/container-runtime).
+* Docker Enterprise Edition.
+
+```{block2, type='rdmnote'}
+There is an increasing number of alternative container technologies and providers. Many of them are actually based on software components originally from the Docker stack and they normally try to address some specific use cases or weakpoints. As a example, **Singularity**, that we introduce later in this couse, is focused in HPC environments. Another case, **Podman**, keeps a high functional compatibility with Docker but with a different focus on technology (not keeping a daemon) and permissions.
+```
+
+### Docker components
+
+<a href="http://apachebooster.com/kb/wp-content/uploads/2017/09/docker-architecture.png"><img src="http://apachebooster.com/kb/wp-content/uploads/2017/09/docker-architecture.png" width="700/"></a>
+
+* Read-only templates.
+* Containers are run from them.
+* Images are not run.
+* Images have several layers.
+
+<a href="https://i.stack.imgur.com/vGuay.png"><img src="https://i.stack.imgur.com/vGuay.png" width="700/"></a>
+
+
+### Images versus containers
+
+* **Image**: A set of layers, read-only templates, inert.
+* An instance of an image is called a **container**.
+
+When you start an image, you have a running container of this image. You can have many running containers of the same image.
+
+*"The image is the recipe, the container is the cake; you can make as many cakes as you like with a given recipe."*
+
+https://stackoverflow.com/questions/23735149/what-is-the-difference-between-a-docker-image-and-a-container
+
+
+<img src="docs/images/singularity_logo.svg" width="300">
+
+## Introduction to Singularity
+
+* Focus:
+  * Reproducibility to scientific computing and the high-performance computing (HPC) world.
+* Origin: Lawrence Berkeley National Laboratory. Later spin-off: Sylabs
+* Version 1.0 -> 2016
+* More information: [https://en.wikipedia.org/wiki/Singularity_(software)](https://en.wikipedia.org/wiki/Singularity_(software))
+
+### Singularity architecture
+
+<img src="docs/images/singularity_architecture.png" width="800">
+
+| Strengths | Weaknesses |
+| ----- | ----- |
+| No dependency of a daemon | At the time of writing only good support in Linux<br>Mac experimental. Desktop edition. Only running|
+| Can be run as a simple user<br>Avoids permission headaches and hacks | For some features you need root account (or sudo) |
+| Image/container is a file (or directory) ||
+| More easily portable ||
+| Two types of images:<br>Read-only (production)<br>Writable (development, via sandbox)||
+
+### Strengths
+
+* No dependency of a daemon
+* Can be run as a simple user
+  * Avoid permission headaches and hacks
+* Image/container is a file (or directory)
+* More easily portable
+* Two type of images
+  * Read-only (production)
+  * Writable (development, via sandbox)
+
+
+### Weaknesses
+
+* At the time of writing only good support in Linux
+  * Mac experimental. Desktop edition. Only running
+* For some features you need root account (or sudo) - alternatively using fakeroot option
+
+
+## Trivia
+
+Nowadays, there may be some confusion since there are two projects which the share the same name:
+
+* [HPCng Singularity](https://singularity.hpcng.org/)
+* [Sylabs Singularity](https://sylabs.io/singularity/)
+
+They "forked" not long ago. So far they share most of the codebase, but eventually this may different and software could have different functionality.
+
+```{block2, type='rmdnote'}
+At the CRG HPC system there are several Singularity versions than can be accessed using Environment modules.
+To check available Singularity versions, type: module avail Singularity
+Then you can load one using: module load Singularity/x.y.z
+```
+
 
 Docker hub, BioContainers and other repositories.
 ============
@@ -19,7 +196,7 @@ A DSL for data-driven computational pipelines. `www.nextflow.io <https://www.nex
 
 .. image:: images/nextflow_logo_deep.png
   :width: 400
-  
+
 
 What is Nextflow?
 ----------------
@@ -27,22 +204,22 @@ What is Nextflow?
 .. image:: images/nextf_groovy.png
   :width: 600
 
-`Nextflow <https://www.nextflow.io>`__ is a domain specific language for workflow orchestration that stems from `Groovy <https://groovy-lang.org/>`__. It enables scalable and reproducible workflows using software containers. 
+`Nextflow <https://www.nextflow.io>`__ is a domain specific language for workflow orchestration that stems from `Groovy <https://groovy-lang.org/>`__. It enables scalable and reproducible workflows using software containers.
 It was developed at the `CRG <www.crg.eu>`__ in the Lab of Cedric Notredame by `Paolo Di Tommaso <https://github.com/pditommaso>`__.
 The Nextflow documentation is `available here <https://www.nextflow.io/docs/latest/>`__ and you can ask help to the community using their `gitter channel <https://gitter.im/nextflow-io/nextflow>`__
 
-Nextflow has been upgraded in 2020 from DSL1 (Domain-Specific Language) version to DSL2. In this course we will use exclusively DSL2.  
+Nextflow has been upgraded in 2020 from DSL1 (Domain-Specific Language) version to DSL2. In this course we will use exclusively DSL2.
 
 What is Nextflow for?
 ----------------
 
-It is for making pipelines without caring about parallelization, dependencies, intermediate file names, data structures, handling exceptions, resuming executions etc. 
+It is for making pipelines without caring about parallelization, dependencies, intermediate file names, data structures, handling exceptions, resuming executions etc.
 
 It was published in `Nature Biotechnology in 2017 <https://pubmed.ncbi.nlm.nih.gov/28398311/>`__.
 
 .. image:: images/NF_pub.png
   :width: 600
-  
+
 
 There is a growing number of publications mentioning Nextflow in `PubMed <https://pubmed.ncbi.nlm.nih.gov/?term=nextflow&timeline=expanded&sort=pubdate&sort_order=asc>`__, since many bioinformaticians are starting to write their pipeline with Nextflow.
 
@@ -102,7 +279,7 @@ The **processes** are blocks of code that can be executed - such as scripts or p
 
 .. image:: images/wf_example.png
   :width: 600
-  
+
 
 Processes are independent from one another and can be run in parallel depending on the number of elements in a channel.
 In the previous example, processes **A**, **B** and **C** can be run in parallel and only when they **ALL** end can process **D** be triggered.
@@ -112,7 +289,7 @@ Installation
 
 .. note::
   Nextflow is already installed on the machines for the training!
-  You need at least the Java version 8 for Nextflow installation. 
+  You need at least the Java version 8 for Nextflow installation.
 
 .. tip::
   You can check the version fo java by typing::
@@ -149,18 +326,18 @@ We can now launch a test pipeline to show what will be using a nextflow pipeline
 
 .. code-block:: console
 
-  nextflow run nextflow-io/rnaseq-nf -with-singularity 
-  
+  nextflow run nextflow-io/rnaseq-nf -with-singularity
+
 The command will automatically pull the pipeline and the required test data from the `github repository <https://github.com/nextflow-io/rnatoy>`__
 The command ``-with-singularity`` will trigger automatically the download of the image ``nextflow/rnatoy:1.3`` from DockerHub and convert it on the fly into a singularity image that will be used for running each step of the pipeline.
-Moreover the pipeline can also recognize the kind of queue system used where is launched. In the following examples I launched the same pipeline both on the CRG high performance computing centre (HPC) and on my MacBook: 
+Moreover the pipeline can also recognize the kind of queue system used where is launched. In the following examples I launched the same pipeline both on the CRG high performance computing centre (HPC) and on my MacBook:
 
 The result from CRG's HPC:
 
 .. code-block:: console
 
 	nextflow run nextflow-io/rnaseq-nf -with-singularity
-	
+
 	N E X T F L O W  ~  version 21.04.3
 	Pulling nextflow-io/rnaseq-nf ...
 	downloaded from https://github.com/nextflow-io/rnaseq-nf.git
@@ -170,7 +347,7 @@ The result from CRG's HPC:
 	transcriptome: /users/bi/lcozzuto/.nextflow/assets/nextflow-io/rnaseq-nf/data/ggal/ggal_1_48850000_49020000.Ggal71.500bpflank.fa
 	reads        : /users/bi/lcozzuto/.nextflow/assets/nextflow-io/rnaseq-nf/data/ggal/*_{1,2}.fq
 	outdir       : results
-	
+
 	[-        ] process > RNASEQ:INDEX  -
 	[-        ] process > RNASEQ:FASTQC -
 	executor >  crg (6)
@@ -178,23 +355,23 @@ The result from CRG's HPC:
 	[7d/7a96f2] process > RNASEQ:FASTQC (FASTQC on ggal_liver)    [100%] 2 of 2 ✔
 	[ab/ac8558] process > RNASEQ:QUANT (ggal_gut)                 [100%] 2 of 2 ✔
 	[a0/452d3f] process > MULTIQC                                 [100%] 1 of 1 ✔
-	
+
 	Pulling Singularity image docker://quay.io/nextflow/rnaseq-nf:v1.0 [cache /nfs/users2/bi/lcozzuto/aaa/work/singularity/quay.io-nextflow-rnaseq-nf-v1.0.img]
 	WARN: Singularity cache directory has not been defined -- Remote image will be stored in the path: /nfs/users2/bi/lcozzuto/aaa/work/singularity -- Use env  variable NXF_SINGULARITY_CACHEDIR to specify a different location
 		Done! Open the following report in your browser --> results/multiqc_report.html
-	
+
 	Completed at: 01-Oct-2021 12:01:50
 	Duration    : 3m 57s
 	CPU hours   : (a few seconds)
 	Succeeded   : 6
-  
+
 
 The result from my MacBook:
 
 .. code-block:: console
 
 	nextflow run nextflow-io/rnaseq-nf -with-docker
-	
+
 	N E X T F L O W  ~  version 21.04.3
 	Launching `nextflow-io/rnaseq-nf` [happy_torvalds] - revision: 83bdb3199b [master]
 	R N A S E Q - N F   P I P E L I N E
@@ -202,19 +379,15 @@ The result from my MacBook:
 	transcriptome: /Users/lcozzuto/.nextflow/assets/nextflow-io/rnaseq-nf/data/ggal/ggal_1_48850000_49020000.Ggal71.500bpflank.fa
 	reads        : /Users/lcozzuto/.nextflow/assets/nextflow-io/rnaseq-nf/data/ggal/*_{1,2}.fq
 	outdir       : results
-	
+
 	executor >  local (6)
 	[37/933971] process > RNASEQ:INDEX (ggal_1_48850000_49020000) [100%] 1 of 1 ✔
 	[fe/b06693] process > RNASEQ:FASTQC (FASTQC on ggal_gut)      [100%] 2 of 2 ✔
 	[73/84b898] process > RNASEQ:QUANT (ggal_gut)                 [100%] 2 of 2 ✔
 	[f2/917905] process > MULTIQC                                 [100%] 1 of 1 ✔
-	
+
 	Done! Open the following report in your browser --> results/multiqc_report.html
-	
+
 
 
 This is just an example of the power of the automation of the Nextflow environment.
-
-
-
-
