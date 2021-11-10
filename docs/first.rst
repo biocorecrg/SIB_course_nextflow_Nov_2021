@@ -60,6 +60,28 @@ Virtual machines vs containers
 `Source <https://dockerlabs.collabnix.com/beginners/difference-docker-vm.html>`__
 
 
+**Pros and cons**
+
+===== ===================================================== =====================================================
+ADV   Virtualisation                                        Containerisation 
+===== ===================================================== =====================================================
+PROS. Very similar to a full OS. With current solutions.     No need of full OS installation (less space).
+      high OS diversity No need of full OS installation      Better portability
+      (less space). 
+      Faster than virtual machines. 
+      Easier automation. 
+      Current solutions allow easier 
+      distribution of recipes.
+      Better portability.
+
+CONS. Need more space and resources.                        Some cases might not be exactly the same as a full OS.
+      Slower than containers.                               Still less OS diversity, even with current solutions
+      Not that good automation.
+===== ===================================================== =====================================================
+
+
+
+
 
 Introduction to Nextflow
 ============
