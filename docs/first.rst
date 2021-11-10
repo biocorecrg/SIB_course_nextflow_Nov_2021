@@ -7,6 +7,54 @@ First Day
 Introduction to Docker and Singularity containers.
 ============
 
+What are containers?
+---------------------
+
+.. image:: https://www.synopsys.com/blogs/software-security/wp-content/uploads/2018/04/containers-rsa.jpg
+  :width: 700
+
+A Container can be seen as a **minimal virtual environment** that can be used in any Linux-compatible machine (and beyond).
+
+Using containers is time- and resource-saving as they allow:
+
+* Controlling for software installation and dependencies.
+* Reproducibility of the analysis.
+
+Containers allow us to use **exactly the same versions of the tools**.
+
+Virtual machines or containers ?
+----------------------------------
+
+| Virtualisation | Containerisation (aka lightweight virtualisation) |
+| ----- | ----- |
+| Abstraction of physical hardware | Abstraction of application layer |
+| Depends on hypervisor (software) | Depends on host kernel (OS) |
+| Do not confuse with hardware emulator | Application and dependencies bundled all together |
+| Enable virtual machines:<br>Every virtual machine with an OS (Operating System) ||
+
+Virtualisation
+----------------------------------
+
+* Abstraction of physical hardware
+* Depends on hypervisor (software)
+* Do not confuse with hardware emulator
+* Enable virtual machines:
+	* Every virtual machine with an OS (Operating System)
+
+Containerisation (aka lightweight virtualisation)
+----------------------------------
+
+* Abstraction of application layer
+* Depends on host kernel (OS)
+* Application and dependencies bundled all together
+
+### Virtual machines vs containers
+
+.. image:: https://raw.githubusercontent.com/collabnix/dockerlabs/master/beginners/docker/images/vm-docker5.png
+  :width: 800
+
+`Source <https://dockerlabs.collabnix.com/beginners/difference-docker-vm.html>`__
+
 
 
 Introduction to Nextflow
