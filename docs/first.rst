@@ -80,6 +80,148 @@ CONS. Need more space and resources.                        Some cases might not
 ===== ===================================================== =====================================================
 
 
+History of containers
+======================
+
+chroot
+----------------------
+
+* chroot jail (BSD jail): first concept in 1979
+* Notable use in SSH and FTP servers
+* Honeypot, recovery of systems, etc.
+
+.. image:: https://sysopsio.files.wordpress.com/2016/09/linux-chroot-jail.png
+  :width: 550
+
+Additions in Linux kernel
+-----------------------------
+
+* First version: 2008
+* cgroups (control groups), before "process containers"
+	* isolate resource usage (CPU, memory, disk I/O, network, etc.) of a collection of processes
+* Linux namespaces
+	* one set of kernel resources restrict to one set of processes
+
+.. image:: images/linux-vs-docker-comparison-architecture-docker-lxc.png
+  :width: 600
+
+Introduction to Docker
+========================
+
+.. image:: https://connpass-tokyo.s3.amazonaws.com/thumbs/80/52/80521f18aec0945dfedbb471dad6aa1a.png
+  :width: 400
+
+
+What is Docker?
+-------------------
+
+* Platform for developing, shipping and running applications.
+* Infrastructure as application / code.
+* First version: 2013.
+* Company: originally dotCloud (2010), later named Docker.
+* Established [Open Container Initiative](https://www.opencontainers.org/).
+
+As a software:
+
+* `Docker Community Edition <https://www.docker.com/products/container-runtime>`__.
+* Docker Enterprise Edition.
+
+There is an increasing number of alternative container technologies and providers. Many of them are actually based on software components originally from the Docker stack and they normally try to address some specific use cases or weakpoints. As a example, **Singularity**, that we introduce later in this couse, is focused in HPC environments. Another case, **Podman**, keeps a high functional compatibility with Docker but with a different focus on technology (not keeping a daemon) and permissions.
+
+
+Docker components
+--------------------
+
+.. image:: http://apachebooster.com/kb/wp-content/uploads/2017/09/docker-architecture.png
+  :width: 700
+
+* Read-only templates.
+* Containers are run from them.
+* Images are not run.
+* Images have several layers.
+
+.. image:: https://i.stack.imgur.com/vGuay.png
+  :width: 700
+
+Images versus containers
+----------------------------
+
+* **Image**: A set of layers, read-only templates, inert.
+* An instance of an image is called a **container**.
+
+When you start an image, you have a running container of this image. You can have many running containers of the same image.
+
+*"The image is the recipe, the container is the cake; you can make as many cakes as you like with a given recipe."*
+
+https://stackoverflow.com/questions/23735149/what-is-the-difference-between-a-docker-image-and-a-container
+
+.. image:: images/singularity_logo.svg
+  :width: 300
+
+Introduction to Singularity
+=============================
+
+
+* Focus:
+  * Reproducibility to scientific computing and the high-performance computing (HPC) world.
+* Origin: Lawrence Berkeley National Laboratory. Later spin-off: Sylabs
+* Version 1.0 -> 2016
+* More information: `https://en.wikipedia.org/wiki/Singularity_(software) <https://en.wikipedia.org/wiki/Singularity_(software)>`__
+
+Singularity architecture
+---------------------------
+
+.. image:: images/singularity_architecture.png
+  :width: 800
+
+<img src="images/singularity_architecture.png" width="800">
+
+| Strengths | Weaknesses |
+| ----- | ----- |
+| No dependency of a daemon | At the time of writing only good support in Linux<br>Mac experimental. Desktop edition. Only running|
+| Can be run as a simple user<br>Avoids permission headaches and hacks | For some features you need root account (or sudo) |
+| Image/container is a file (or directory) ||
+| More easily portable ||
+| Two types of images:<br>Read-only (production)<br>Writable (development, via sandbox)||
+
+### Strengths
+
+* No dependency of a daemon
+* Can be run as a simple user
+  * Avoid permission headaches and hacks
+* Image/container is a file (or directory)
+* More easily portable
+* Two type of images
+  * Read-only (production)
+  * Writable (development, via sandbox)
+
+
+### Weaknesses
+
+* At the time of writing only good support in Linux
+  * Mac experimental. Desktop edition. Only running
+* For some features you need root account (or sudo) - alternatively using fakeroot option
+
+
+## Trivia
+
+Nowadays, there may be some confusion since there are two projects which the share the same name:
+
+* [HPCng Singularity](https://singularity.hpcng.org/)
+* [Sylabs Singularity](https://sylabs.io/singularity/)
+
+They "forked" not long ago. So far they share most of the codebase, but eventually this may different and software could have different functionality.
+
+
+At the CRG HPC system there are several Singularity versions than can be accessed using Environment modules.
+To check available Singularity versions, type: module avail Singularity
+Then you can load one using: module load Singularity/x.y.z
+
+
+
+
+
+
 
 
 
