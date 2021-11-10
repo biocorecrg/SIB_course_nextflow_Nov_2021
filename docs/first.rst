@@ -25,16 +25,6 @@ Containers allow us to use **exactly the same versions of the tools**.
 Virtual machines or containers ?
 ----------------------------------
 
-=====  =====  =======
-A      B      A and B
-=====  =====  =======
-False  False  False
-True   False  False
-False  True   False
-True   True   True
-=====  =====  =======
-
-
 =====================================================  ===================================================== 
 Virtualisation                                         Containerisation (aka lightweight virtualisation) 
 =====================================================  ===================================================== 
@@ -42,6 +32,8 @@ Abstraction of physical hardware                       Abstraction of applicatio
 Depends on hypervisor (software)                       Depends on host kernel (OS) 
 Do not confuse with hardware emulator                  Application and dependencies bundled all together
 Enable virtual machines                                Every virtual machine with an OS (Operating System)
+=====================================================  ===================================================== 
+
 
 Virtualisation
 ----------------------------------
