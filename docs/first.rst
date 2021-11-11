@@ -231,7 +231,8 @@ Through registries
 `https://hub.docker.com/r/biocontainers/fastqc <https://hub.docker.com/r/biocontainers/fastqc>`__
 
 .. code-block:: console
-    singularity build fastqc-0.11.9_cv7.sif docker://biocontainers/fastqc:v0.11.9_cv7
+
+	singularity build fastqc-0.11.9_cv7.sif docker://biocontainers/fastqc:v0.11.9_cv7
 
 
 **Biocontainers**
@@ -241,13 +242,16 @@ Through registries
 `https://quay.io/repository/biocontainers/fastqc <https://quay.io/repository/biocontainers/fastqc)>`__
 
 .. code-block:: console
-    singularity build fastqc-0.11.9.sif docker://quay.io/biocontainers/fastqc:0.11.9--0
+
+	singularity build fastqc-0.11.9.sif docker://quay.io/biocontainers/fastqc:0.11.9--0
 
 
-###### Via Galaxy project prebuilt images
+Via Galaxy project prebuilt images
+-------------------------------------
 
 .. code-block:: console
-    singularity pull --name fastqc-0.11.9.sif https://depot.galaxyproject.org/singularity/fastqc:0.11.9--0
+    
+	singularity pull --name fastqc-0.11.9.sif https://depot.galaxyproject.org/singularity/fastqc:0.11.9--0
 
 
 Galaxy project provides all Bioinformatics software from Biocontainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue for you, this is likely the best option if working in the biomedical field.
