@@ -81,10 +81,9 @@ CONS. Need more space and resources.                        Some cases might not
 
 
 History of containers
-======================
-
-chroot
 ----------------------
+
+**chroot**
 
 * chroot jail (BSD jail): first concept in 1979
 * Notable use in SSH and FTP servers
@@ -93,8 +92,7 @@ chroot
 .. image:: https://sysopsio.files.wordpress.com/2016/09/linux-chroot-jail.png
   :width: 550
 
-Additions in Linux kernel
------------------------------
+**Additions in Linux kernel**
 
 * First version: 2008
 * cgroups (control groups), before "process containers"
@@ -210,8 +208,8 @@ Weaknesses
 * For some features you need root account (or sudo) - alternatively using fakeroot option
 
 
-Trivia
-==============
+**Trivia**
+
 
 Nowadays, there may be some confusion since there are two projects which the share the same name:
 
@@ -258,7 +256,7 @@ Galaxy project provides all Bioinformatics software from Biocontainers initiativ
 
 
 Run and execution process
-===========================
+--------------------------
 
 Once we have some image files (or directories) ready, we can run or favourite processes.
 
