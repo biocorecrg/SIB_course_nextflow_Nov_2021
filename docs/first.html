@@ -46,11 +46,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#virtualisation">Virtualisation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#containerisation-aka-lightweight-virtualisation">Containerisation (aka lightweight virtualisation)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#virtual-machines-vs-containers">Virtual machines vs containers</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#history-of-containers">History of containers</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#chroot">chroot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#additions-in-linux-kernel">Additions in Linux kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#history-of-containers">History of containers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#introduction-to-docker">Introduction to Docker</a><ul>
@@ -65,13 +61,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#weaknesses">Weaknesses</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#trivia">Trivia</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker-hub-biocontainers-and-other-repositories">Docker hub, BioContainers and other repositories.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#through-registries">Through registries</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#via-galaxy-project-prebuilt-images">Via Galaxy project prebuilt images</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#run-and-execution-process">Run and execution process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#run-and-execution-process">Run and execution process</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#singularity-shell">Singularity shell</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#singularity-exec">Singularity exec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#singularity-run">Singularity run</a></li>
@@ -222,20 +215,16 @@ Still less OS diversity, even with current solutions</p></td>
 </tbody>
 </table>
 </section>
-</section>
 <section id="history-of-containers">
-<h2>History of containers<a class="headerlink" href="#history-of-containers" title="Permalink to this headline"></a></h2>
-<section id="chroot">
-<h3>chroot<a class="headerlink" href="#chroot" title="Permalink to this headline"></a></h3>
+<h3>History of containers<a class="headerlink" href="#history-of-containers" title="Permalink to this headline"></a></h3>
+<p><strong>chroot</strong></p>
 <ul class="simple">
 <li><p>chroot jail (BSD jail): first concept in 1979</p></li>
 <li><p>Notable use in SSH and FTP servers</p></li>
 <li><p>Honeypot, recovery of systems, etc.</p></li>
 </ul>
 <a class="reference internal image-reference" href="https://sysopsio.files.wordpress.com/2016/09/linux-chroot-jail.png"><img alt="https://sysopsio.files.wordpress.com/2016/09/linux-chroot-jail.png" src="https://sysopsio.files.wordpress.com/2016/09/linux-chroot-jail.png" style="width: 550px;" /></a>
-</section>
-<section id="additions-in-linux-kernel">
-<h3>Additions in Linux kernel<a class="headerlink" href="#additions-in-linux-kernel" title="Permalink to this headline"></a></h3>
+<p><strong>Additions in Linux kernel</strong></p>
 <ul class="simple">
 <li><p>First version: 2008</p></li>
 <li><dl class="simple">
@@ -365,16 +354,14 @@ Still less OS diversity, even with current solutions</p></td>
 * Mac experimental. Desktop edition. Only running</p></li>
 <li><p>For some features you need root account (or sudo) - alternatively using fakeroot option</p></li>
 </ul>
-</section>
-</section>
-<section id="trivia">
-<h2>Trivia<a class="headerlink" href="#trivia" title="Permalink to this headline"></a></h2>
+<p><strong>Trivia</strong></p>
 <p>Nowadays, there may be some confusion since there are two projects which the share the same name:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://singularity.hpcng.org/">HPCng Singularity</a></p></li>
 <li><p><a class="reference external" href="https://sylabs.io/singularity/">Sylabs Singularity</a></p></li>
 </ul>
 <p>They “forked” not long ago. So far they share most of the codebase, but eventually this may different and software could have different functionality.</p>
+</section>
 </section>
 <section id="docker-hub-biocontainers-and-other-repositories">
 <h2>Docker hub, BioContainers and other repositories.<a class="headerlink" href="#docker-hub-biocontainers-and-other-repositories" title="Permalink to this headline"></a></h2>
@@ -399,10 +386,10 @@ Still less OS diversity, even with current solutions</p></td>
 </div>
 <p>Galaxy project provides all Bioinformatics software from Biocontainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue for you, this is likely the best option if working in the biomedical field.</p>
 </section>
-</section>
 <section id="run-and-execution-process">
-<h2>Run and execution process<a class="headerlink" href="#run-and-execution-process" title="Permalink to this headline"></a></h2>
+<h3>Run and execution process<a class="headerlink" href="#run-and-execution-process" title="Permalink to this headline"></a></h3>
 <p>Once we have some image files (or directories) ready, we can run or favourite processes.</p>
+</section>
 <section id="singularity-shell">
 <h3>Singularity shell<a class="headerlink" href="#singularity-shell" title="Permalink to this headline"></a></h3>
 <p>The straight-forward exploratory approach, equivalent to <code class="docutils literal notranslate"><span class="pre">`docker</span> <span class="pre">run</span> <span class="pre">-ti</span> <span class="pre">myimage</span> <span class="pre">/bin/shell`</span></code>. But with a more handy syntax.</p>
