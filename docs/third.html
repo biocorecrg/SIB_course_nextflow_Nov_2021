@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Third Day &mdash; Reproducible research and data analysis using Nextflow pipelines  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fourth Day" href="fourth.html" />
+    <link rel="prev" title="Second Day" href="second.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Reproducible research and data analysis using Nextflow pipelines
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About the course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first.html">First Day</a></li>
+<li class="toctree-l1"><a class="reference internal" href="second.html">Second Day</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Third Day</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#decoupling-resources-parameters-and-nextflow-script">Decoupling resources, parameters and nextflow script</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#publishing-final-results">Publishing final results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-help-section-for-the-whole-pipeline">Adding a help section for the whole pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exercise">EXERCISE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-a-public-pipeline">Using a public pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">EXERCISE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fourth.html">Fourth Day</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Reproducible research and data analysis using Nextflow pipelines</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Third Day</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="third-day">
+<span id="second-page"></span><h1>Third Day<a class="headerlink" href="#third-day" title="Permalink to this headline"></a></h1>
+<p>During this day we will make more complex pipelines and separate the main code from the configuration. Then we will focus on the reuse of the code and on how to share your code.</p>
+<a class="reference internal image-reference" href="../_images/nextflow_logo_deep.png"><img alt="../_images/nextflow_logo_deep.png" src="../_images/nextflow_logo_deep.png" style="width: 300px;" /></a>
+<section id="decoupling-resources-parameters-and-nextflow-script">
+<h2>Decoupling resources, parameters and nextflow script<a class="headerlink" href="#decoupling-resources-parameters-and-nextflow-script" title="Permalink to this headline"></a></h2>
+<p>When you make a complex pipelines you might want to keep separated the definition of resources needed, the default parameters and the main script.
+You can achieve this by two additional files:</p>
+<ul class="simple">
+<li><p>nextflow.config</p></li>
+<li><p>params.config</p></li>
+</ul>
+<p>The <strong>nextflow.config</strong> file allows to indicate the resources needed for each class of processes.
+You can label your processes to make a link with the definitions in the nextflow.config file. This is an example of a nextflow.config file:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">includeConfig</span> <span class="s2">&quot;$baseDir/params.config&quot;</span>
+
+<span class="n">process</span> <span class="o">{</span>
+     <span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+     <span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+     <span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
+
+     <span class="nl">withLabel:</span> <span class="s1">&#39;onecpu&#39;</span>
+        <span class="o">{</span>
+                <span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+                <span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+        <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="n">process</span><span class="o">.</span><span class="na">container</span> <span class="o">=</span> <span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
+<span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span> <span class="o">=</span> <span class="s2">&quot;$baseDir/singularity&quot;</span>
+</pre></div>
+</div>
+<p>The first row indicates to use the information stored in the <strong>params.config</strong> file (described later). Then we have the definition of the default resources for a process:</p>
+<p>Then we have the resources needed for a class of processes in particular labeled with <strong>bigmem</strong> (i.e. the default options will be overridden)</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">withLabel:</span> <span class="s1">&#39;bigmem&#39;</span>
+<span class="o">{</span>
+        <span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.7G&#39;</span>
+        <span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>In the script <strong>test2.nf file</strong> we have two processes that will run two programs:
+- <a class="reference external" href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastQC</a>: a tool that calculates a number of quality control metrics on single fastq files.
+- <a class="reference external" href="https://multiqc.info/">multiQC</a>: an aggregator of results from bioinformatics tools and samples for generating a single report.</p>
+<p>If we have a look at process <strong>fastQC</strong> we can see the use of the label.</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * Process 1. Run FastQC on raw data.</span>
+<span class="cm"> */</span>
+<span class="n">process</span> <span class="n">fastQC</span> <span class="o">{</span>
+
+    <span class="n">publishDir</span> <span class="n">fastqcOutputFolder</span>
+    <span class="n">tag</span> <span class="o">{</span> <span class="s2">&quot;${reads}&quot;</span> <span class="o">}</span>
+    <span class="n">label</span> <span class="s1">&#39;bigmem&#39;</span>
+
+    <span class="nl">input:</span>
+    <span class="n">path</span> <span class="n">reads</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>The last two rows of the config file indicate which container needs to be used.
+In this example, it is pulling it from <a href="#id1"><span class="problematic" id="id2">`</span></a>DockerHub &lt;<a class="reference external" href="https://hub.docker.com/">https://hub.docker.com/</a>&gt;__.
+In case you want to use a singularity container, you can indicate where to store the local image by using the <strong>singularity.cacheDir</strong> option.</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="o">.</span><span class="na">container</span> <span class="o">=</span> <span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
+<span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span> <span class="o">=</span> <span class="s2">&quot;$baseDir/singularity&quot;</span>
+</pre></div>
+</div>
+<p>Let’s now launch the script <strong>test2.nf</strong>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd test2;</span>
+<span class="go">nextflow run test2.nf</span>
+
+<span class="go">N E X T F L O W  ~  version 20.07.1</span>
+<span class="go">Launching `test2.nf` [distracted_edison] - revision: e3a80b15a2</span>
+<span class="go">BIOCORE@CRG - N F TESTPIPE  ~  version 1.0</span>
+<span class="go">=============================================</span>
+<span class="go">reads                           : /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/test2/../testdata/*.fastq.gz</span>
+<span class="go">executor &gt;  local (2)</span>
+<span class="go">[df/2c45f2] process &gt; fastQC (B7_input_s_chr19.fastq.gz) [  0%] 0 of 2</span>
+<span class="go">[-        ] process &gt; multiQC                            -</span>
+<span class="go">Error executing process &gt; &#39;fastQC (B7_H3K4me1_s_chr19.fastq.gz)&#39;</span>
+
+<span class="go">Caused by:</span>
+<span class="go">  Process `fastQC (B7_H3K4me1_s_chr19.fastq.gz)` terminated with an error exit status (127)</span>
+
+<span class="go">Command executed:</span>
+
+<span class="go">  fastqc B7_H3K4me1_s_chr19.fastq.gz</span>
+
+<span class="go">Command exit status:</span>
+<span class="go">  127</span>
+
+<span class="go">executor &gt;  local (2)</span>
+<span class="go">[df/2c45f2] process &gt; fastQC (B7_input_s_chr19.fastq.gz) [100%] 2 of 2, failed: 2 ✘</span>
+<span class="go">[-        ] process &gt; multiQC                            -</span>
+<span class="go">Error executing process &gt; &#39;fastQC (B7_H3K4me1_s_chr19.fastq.gz)&#39;</span>
+
+<span class="go">Caused by:</span>
+<span class="go">  Process `fastQC (B7_H3K4me1_s_chr19.fastq.gz)` terminated with an error exit status (127)</span>
+
+<span class="go">Command executed:</span>
+
+<span class="go">  fastqc B7_H3K4me1_s_chr19.fastq.gz</span>
+
+<span class="go">Command exit status:</span>
+<span class="go">  127</span>
+
+<span class="go">Command output:</span>
+<span class="go">  (empty)</span>
+
+<span class="go">Command error:</span>
+<span class="go">  .command.sh: line 2: fastqc: command not found</span>
+
+<span class="go">Work dir:</span>
+<span class="go">  /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/test2/work/c5/18e76b2e6ffd64aac2b52e69bedef3</span>
+
+<span class="go">Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line</span>
+</pre></div>
+</div>
+<p>We will get a number of errors since no executable is found in our environment / path. This because they are stored in our docker image! So we can launch it this time with the <cite>-with-docker</cite> parameter.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test2.nf -with-docker</span>
+
+<span class="go">nextflow run test2.nf -with-docker</span>
+<span class="go">N E X T F L O W  ~  version 20.07.1</span>
+<span class="go">Launching `test2.nf` [boring_hamilton] - revision: e3a80b15a2</span>
+<span class="go">BIOCORE@CRG - N F TESTPIPE  ~  version 1.0</span>
+<span class="go">=============================================</span>
+<span class="go">reads                           : /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/test2/../testdata/*.fastq.gz</span>
+<span class="go">executor &gt;  local (3)</span>
+<span class="go">[22/b437be] process &gt; fastQC (B7_H3K4me1_s_chr19.fastq.gz) [100%] 2 of 2 ✔</span>
+<span class="go">[1a/cfe63b] process &gt; multiQC                              [  0%] 0 of 1</span>
+<span class="go">executor &gt;  local (3)</span>
+<span class="go">[22/b437be] process &gt; fastQC (B7_H3K4me1_s_chr19.fastq.gz) [100%] 2 of 2 ✔</span>
+<span class="go">[1a/cfe63b] process &gt; multiQC                              [100%] 1 of 1 ✔</span>
+</pre></div>
+</div>
+<p>This time it worked beautifully since Nextflow used the image indicated within the nextflow.config file that contains our executables.</p>
+<p>Now we can have a look at the <strong>params.config</strong> file</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">{</span>
+        <span class="n">reads</span>           <span class="o">=</span> <span class="s2">&quot;$baseDir/../testdata/*.fastq.gz&quot;</span>
+        <span class="n">email</span>           <span class="o">=</span> <span class="s2">&quot;myemail@google.com&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>As you can see we indicates the pipeline parameters that can be overridden by using <cite>–reads</cite> and <cite>–email</cite>.
+This is not mandatory but I found quite useful to modify this file instead of using very long command lines with tons of <cite>–something</cite>.</p>
+<p>Now, let’s have a look at the folders generated by the pipeline.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls  work/2a/22e3df887b1b5ac8af4f9cd0d88ac5/</span>
+
+<span class="go">total 0</span>
+<span class="go">drwxrwxr-x 3 ec2-user ec2-user  26 Apr 23 13:52 .</span>
+<span class="go">drwxr-xr-x 2 root     root     136 Apr 23 13:51 multiqc_data</span>
+<span class="go">drwxrwxr-x 3 ec2-user ec2-user  44 Apr 23 13:51 ..</span>
+</pre></div>
+</div>
+<p>We observe that Docker runs as “root”. This can be problematic and generates security issues. To avoid this we can add this line of code within the process section of the config file:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">containerOptions</span> <span class="o">=</span> <span class="o">{</span> <span class="n">workflow</span><span class="o">.</span><span class="na">containerEngine</span> <span class="o">==</span> <span class="s2">&quot;docker&quot;</span> <span class="o">?</span> <span class="s1">&#39;-u $(id -u):$(id -g)&#39;</span><span class="o">:</span> <span class="kc">null</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>This will tell Nextflow that if is running with Docker, this has to produce files that belong to your user and not to root.</p>
+<section id="publishing-final-results">
+<h3>Publishing final results<a class="headerlink" href="#publishing-final-results" title="Permalink to this headline"></a></h3>
+<p>After running the script you see two new folders named <strong>output_fastqc</strong> and <strong>output_multiQC</strong> that contain the result of the pipeline.
+We can indicate which process and which output can be considered the final output of the pipeline by using the <strong>publishDir</strong> directive that has to be specified at the beginning of a process.</p>
+<p>In our pipeline we define these folders here:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * Defining the output folders.</span>
+<span class="cm"> */</span>
+
+<span class="n">fastqcOutputFolder</span>    <span class="o">=</span> <span class="s2">&quot;output_fastqc&quot;</span>
+<span class="n">multiqcOutputFolder</span>   <span class="o">=</span> <span class="s2">&quot;output_multiQC&quot;</span>
+
+<span class="o">[...]</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Process 1. Run FastQC on raw data. A process is the element for executing scripts / programs etc.</span>
+<span class="cm"> */</span>
+
+<span class="n">process</span> <span class="n">fastQC</span> <span class="o">{</span>
+    <span class="n">publishDir</span> <span class="n">fastqcOutputFolder</span>                       <span class="c1">// where (and whether) to publish the results</span>
+
+<span class="o">[...]</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Process 2. Run multiQC on fastQC results</span>
+<span class="cm"> */</span>
+
+<span class="n">process</span> <span class="n">multiQC</span> <span class="o">{</span>
+    <span class="n">publishDir</span> <span class="n">multiqcOutputFolder</span><span class="o">,</span> <span class="nl">mode:</span> <span class="s1">&#39;copy&#39;</span>        <span class="c1">// this time do not link but copy the output file</span>
+</pre></div>
+</div>
+<p>You can see that the default mode to publish the results in Nextflow is soft linking. You can change this behaviour by specifying the mode as indicated in the <strong>multiQC</strong> process.</p>
+<p><strong>IMPORTANT: You can also “move” the results but this is not suggested for files that will be needed for other processes. This will likely disrupt your pipeline.</strong></p>
+<p>We can copy the output files to our <a class="reference external" href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html">S3 bucket</a> to be accessed via web. Your bucket is mounted in <strong>/mnt</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls /mnt</span>
+
+<span class="go">/mnt/class-bucket-1</span>
+</pre></div>
+</div>
+<p>Your number can be different (i.e. class-bucket-2, class-bucket-3, etc) since we have one bucket per student. Let’s copy the <strong>multiqc_report.html</strong> file there and let’s change the privileges.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cp output_multiQC/multiqc_report.html /mnt/class-bucket-1</span>
+
+<span class="go">sudo chmod 775 /mnt/class-bucket-1/multiqc_report.html</span>
+</pre></div>
+</div>
+<p>Now you can see via browser at at:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">http://class-bucket-1.s3.eu-central-1.amazonaws.com/multiqc_report.html</span>
+</pre></div>
+</div>
+<p>Of course again we need to change <strong>class-bucket-1</strong> with your own number.</p>
+</section>
+</section>
+<section id="adding-a-help-section-for-the-whole-pipeline">
+<h2>Adding a help section for the whole pipeline<a class="headerlink" href="#adding-a-help-section-for-the-whole-pipeline" title="Permalink to this headline"></a></h2>
+<p>In this example we also describe another good practice: the use of the <cite>–help</cite> parameter. At the beginning of the pipeline we can write:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="o">.</span><span class="na">help</span>             <span class="o">=</span> <span class="kc">false</span>    <span class="c1">// this prevents a warning of undefined parameter</span>
+
+<span class="c1">// this prints the input parameters</span>
+<span class="n">log</span><span class="o">.</span><span class="na">info</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">BIOCORE@CRG - N F TESTPIPE  ~  version ${version}</span>
+<span class="s2">=============================================</span>
+<span class="s2">reads                           : ${params.reads}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1">// this prints the help in case you use --help parameter in the command line and it stops the pipeline</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">help</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">info</span> <span class="s1">&#39;This is the Biocore\&#39;s NF test pipeline&#39;</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">info</span> <span class="s1">&#39;Enjoy!&#39;</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">info</span> <span class="s1">&#39;\n&#39;</span>
+    <span class="n">exit</span> <span class="mi">1</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>so launching the pipeline with <cite>–help</cite> will show you just the parameters and the help.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test2.nf --help</span>
+
+<span class="go">N E X T F L O W  ~  version 20.07.1</span>
+<span class="go">Launching `test2.nf` [mad_elion] - revision: e3a80b15a2</span>
+<span class="go">BIOCORE@CRG - N F TESTPIPE  ~  version 1.0</span>
+<span class="go">=============================================</span>
+<span class="go">reads                           : /home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/test2/../testdata/*.fastq.gz</span>
+<span class="go">This is the Biocore&#39;s NF test pipeline</span>
+<span class="go">Enjoy!</span>
+</pre></div>
+</div>
+<section id="exercise">
+<h3>EXERCISE<a class="headerlink" href="#exercise" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Look at previous EXERCISE. Can you make a configuration for that script with a new label for handling failing processes?</p></li>
+</ul>
+<details>
+<summary><a>Solution</a></summary><p>The process should become:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">reverseSequence</span> <span class="o">{</span>
+
+    <span class="n">tag</span> <span class="o">{</span> <span class="s2">&quot;${seq}&quot;</span> <span class="o">}</span>
+    <span class="n">publishDir</span> <span class="s2">&quot;output&quot;</span>
+    <span class="n">label</span> <span class="s1">&#39;ignorefail&#39;</span>
+
+    <span class="nl">input:</span>
+    <span class="n">path</span> <span class="n">seq</span>
+
+    <span class="nl">output:</span>
+    <span class="n">path</span> <span class="s2">&quot;all.rev&quot;</span>
+
+    <span class="nl">script:</span>
+    <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    cat ${seq} | AAAAA &#39;{if (\$1~&quot;&gt;&quot;) {print \$0} else system(&quot;echo &quot; \$0 &quot; |rev&quot;)}&#39; &gt; all.rev</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>while the nextflow.config file would be:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="o">{</span>
+        <span class="nl">withLabel:</span> <span class="s1">&#39;ignorefail&#39;</span>
+        <span class="o">{</span>
+                <span class="n">errorStrategy</span> <span class="o">=</span> <span class="s1">&#39;ignore&#39;</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</details>
+<br>
+<br><ul class="simple">
+<li><p>Now look at <strong>test2.nf</strong>.</p></li>
+</ul>
+<p>Can you make a configuration for that script with a new label for handling failing processes by retrying 3 times and incrementing the time?</p>
+<p>You can give very low time (10 / 15 seconds) for the fastqc process so it would fail at beginning.</p>
+<details>
+<summary><a>Solution</a></summary><p>The process should become:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">fastQC</span> <span class="o">{</span>
+
+        <span class="n">publishDir</span> <span class="n">fastqcOutputFolder</span>   <span class="c1">// where (and whether) to publish the results</span>
+        <span class="n">tag</span> <span class="o">{</span> <span class="s2">&quot;${reads}&quot;</span> <span class="o">}</span>      <span class="c1">// during the execution prints the indicated variable for follow-up</span>
+        <span class="n">label</span> <span class="s1">&#39;keep_trying&#39;</span>
+
+        <span class="nl">input:</span>
+        <span class="n">path</span> <span class="n">reads</span>      <span class="c1">// it defines the input of the process. It sets values from a channel</span>
+
+        <span class="nl">output:</span>                 <span class="c1">// It defines the output of the process (i.e. files) and send to a new channel</span>
+        <span class="n">path</span> <span class="s2">&quot;*_fastqc.*&quot;</span>
+
+        <span class="nl">script:</span>                 <span class="c1">// here you have the execution of the script / program. Basically is the command line</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        fastqc ${reads}</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>while the nextflow.config file would be:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">includeConfig</span> <span class="s2">&quot;$baseDir/params.config&quot;</span>
+
+
+<span class="n">process</span> <span class="o">{</span>
+     <span class="c1">//containerOptions = { workflow.containerEngine == &quot;docker&quot; ? &#39;-u $(id -u):$(id -g)&#39;: null}</span>
+     <span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.6G&#39;</span>
+     <span class="n">cpus</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+     <span class="n">time</span><span class="o">=</span><span class="s1">&#39;6h&#39;</span>
+
+     <span class="nl">withLabel:</span> <span class="s1">&#39;keep_trying&#39;</span>
+     <span class="o">{</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">10</span><span class="o">.</span><span class="na">second</span> <span class="o">*</span> <span class="n">task</span><span class="o">.</span><span class="na">attempt</span> <span class="o">}</span>
+        <span class="n">errorStrategy</span> <span class="o">=</span> <span class="s1">&#39;retry&#39;</span>
+        <span class="n">maxRetries</span> <span class="o">=</span> <span class="mi">3</span>
+     <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">process</span><span class="o">.</span><span class="na">container</span> <span class="o">=</span> <span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
+<span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span> <span class="o">=</span> <span class="s2">&quot;$baseDir/singularity&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-a-public-pipeline">
+<h2>Using a public pipeline<a class="headerlink" href="#using-a-public-pipeline" title="Permalink to this headline"></a></h2>
+<p>At this point we have an idea about how is written a Nextflow pipeline, so we can easily install and run a published one. As an example let’s use the following one, called <a class="reference external" href="https://github.com/biocorecrg/mop2">Master Of Pores</a> published by us in <a class="reference external" href="https://www.frontiersin.org/articles/10.3389/fgene.2020.00211/full">2019</a> :</p>
+<p>This repository contains a collection of pipelines able to process nanopore’s raw data and to make detect putative chemical modifications and estimate polyA tail sizes.</p>
+<p>As stated in the website for installing it we need to clone the pipeline together with the submodules. The submodules contain <strong>Nextflow modules</strong>, that will be described later.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone --depth 1 --recurse-submodules git@github.com:biocorecrg/MoP2.git</span>
+
+<span class="go">Cloning into &#39;MoP2&#39;...</span>
+<span class="go">remote: Enumerating objects: 113, done.</span>
+<span class="go">remote: Counting objects: 100% (113/113), done.</span>
+<span class="go">remote: Compressing objects: 100% (99/99), done.</span>
+<span class="go">remote: Total 113 (delta 14), reused 58 (delta 3), pack-reused 0</span>
+<span class="go">Receiving objects: 100% (113/113), 21.87 MiB | 5.02 MiB/s, done.</span>
+<span class="go">Resolving deltas: 100% (14/14), done.</span>
+<span class="go">Submodule &#39;BioNextflow&#39; (https://github.com/biocorecrg/BioNextflow) registered for path &#39;BioNextflow&#39;</span>
+<span class="go">Cloning into &#39;/Users/lcozzuto/aaa/MoP2/BioNextflow&#39;...</span>
+<span class="go">remote: Enumerating objects: 971, done.</span>
+<span class="go">remote: Counting objects: 100% (641/641), done.</span>
+<span class="go">remote: Compressing objects: 100% (456/456), done.</span>
+<span class="go">remote: Total 971 (delta 393), reused 362 (delta 166), pack-reused 330</span>
+<span class="go">Receiving objects: 100% (971/971), 107.51 MiB | 5.66 MiB/s, done.</span>
+<span class="go">Resolving deltas: 100% (560/560), done.</span>
+<span class="go">Submodule path &#39;BioNextflow&#39;: checked out &#39;0473d7f177ce718477b852b353894b71a9a9a08b&#39;</span>
+</pre></div>
+</div>
+<p>Let’s inspect the folder <strong>MoP2</strong>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls MoP2</span>
+
+<span class="go">BioNextflow             conf                    docs                    mop_preprocess</span>
+<span class="go">INSTALL.sh              conf.py                 img                     mop_tail</span>
+<span class="go">README.md               data                    local_modules.nf        nextflow.global.config</span>
+<span class="go">TODO.md                 deeplexicon             mop_consensus           outdirs.nf</span>
+<span class="go">anno                    docker                  mop_mod                 requirements.txt</span>
+</pre></div>
+</div>
+<p>We have different pipelines bundled in a single repository: <strong>mop_preprocess</strong>, <strong>mop_mod</strong>, <strong>mop_tail</strong> and <strong>mop_consensus</strong>. Let’s inspect the folder <strong>mop_preprocess</strong> that contains the nextflow pipeline <strong>mop_preprocess.nf</strong>. This pipeline allows to pre-process the raw fast5 files that are produced by Nanopore instruments. We can see the presence of a folder named <strong>bin</strong>. This folder contains a number of custom script that can be read by the pipeline without storing them inside the containers. This is particularly useful in case of programs with a restrictive license that prevent you to redistribute their code. And actually this is one of those cases. Nextflow however allows us to solve this problem, we just need to place in this folder the executables.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd MoP2</span>
+<span class="go">ls mop_preprocess/bin/</span>
+
+<span class="go">bam2stats.py                    fast5_to_fastq.py</span>
+<span class="go">extract_sequence_from_fastq.py  fast5_type.py</span>
+</pre></div>
+</div>
+<p>The basecaller <strong>Guppy</strong> cannot be redistributed so we add a <strong>INSTALL.sh</strong> script that has to be run by the user for downloading the executable and place it inside the <strong>bin</strong> folder.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sh INSTALL.sh</span>
+
+<span class="go">INSTALLING GUPPY VERSION 3.4.5</span>
+<span class="go">[...]</span>
+<span class="go">ont-guppy_3.4.5_linux64.tar. 100%[============================================&gt;] 363,86M  5,59MB/s    in 65s</span>
+
+<span class="go">2021-11-04 18:38:58 (5,63 MB/s) - ‘ont-guppy_3.4.5_linux64.tar.gz’ saved [381538294/381538294]</span>
+
+<span class="go">x ont-guppy/bin/</span>
+<span class="go">x ont-guppy/bin/guppy_basecall_server</span>
+<span class="go">x ont-guppy/bin/guppy_basecaller</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>We can check what is inside <strong>bin</strong> now</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd mop_preprocess</span>
+
+<span class="go">ls bin/</span>
+
+<span class="go">MINIMAP2_LICENSE                        libboost_system.so.1.66.0</span>
+<span class="go">bam2stats.py                            libboost_thread.so</span>
+<span class="go">extract_sequence_from_fastq.py          libboost_thread.so.1.66.0</span>
+<span class="go">fast5_to_fastq.py                       libcrypto.so</span>
+<span class="go">fast5_type.py                           libcrypto.so.1.0.1e</span>
+<span class="go">guppy_aligner                           libcrypto.so.10</span>
+<span class="go">guppy_barcoder                          libcurl.so</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>It is always a good idea to bundle your pipeline with a little test dataset so that people can test it once installed. You can also use this for continuous integration (CI). Basically each time you make a commit to GitHub you trigger a test that send you an alert in case it fails.
+We can inspect the <strong>params.config</strong> file that is pointing to a small dataset that is contained inside the repository (<strong>data</strong> and <strong>anno</strong> folders).</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">{</span>
+    <span class="n">conffile</span>            <span class="o">=</span> <span class="s2">&quot;final_summary_01.txt&quot;</span>
+    <span class="n">fast5</span>               <span class="o">=</span> <span class="s2">&quot;$baseDir/../data/**/*.fast5&quot;</span>
+    <span class="n">fastq</span>               <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">reference</span>           <span class="o">=</span> <span class="s2">&quot;$baseDir/../anno/curlcake_constructs.fasta.gz&quot;</span>
+    <span class="n">annotation</span>          <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">ref_type</span>            <span class="o">=</span> <span class="s2">&quot;transcriptome&quot;</span>
+
+    <span class="n">pars_tools</span>          <span class="o">=</span> <span class="s2">&quot;drna_tool_splice_opt.tsv&quot;</span>
+    <span class="n">output</span>              <span class="o">=</span> <span class="s2">&quot;$baseDir/output&quot;</span>
+    <span class="n">qualityqc</span>           <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">granularity</span>         <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">basecalling</span>         <span class="o">=</span> <span class="s2">&quot;guppy&quot;</span>
+    <span class="n">GPU</span>                 <span class="o">=</span> <span class="s2">&quot;OFF&quot;</span>
+    <span class="n">demultiplexing</span>      <span class="o">=</span> <span class="s2">&quot;NO&quot;</span>
+    <span class="n">demulti_fast5</span>       <span class="o">=</span> <span class="s2">&quot;NO&quot;</span>
+
+    <span class="n">filtering</span>           <span class="o">=</span> <span class="s2">&quot;NO&quot;</span>
+
+    <span class="n">mapping</span>             <span class="o">=</span> <span class="s2">&quot;minimap2&quot;</span>
+    <span class="n">counting</span>            <span class="o">=</span> <span class="s2">&quot;nanocount&quot;</span>
+    <span class="n">discovery</span>           <span class="o">=</span> <span class="s2">&quot;NO&quot;</span>
+
+    <span class="n">cram_conv</span>           <span class="o">=</span> <span class="s2">&quot;YES&quot;</span>
+    <span class="n">subsampling_cram</span>    <span class="o">=</span> <span class="mi">50</span>
+
+    <span class="n">saveSpace</span>           <span class="o">=</span> <span class="s2">&quot;NO&quot;</span>
+
+    <span class="n">email</span>               <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>So running just the pipeline will give an idea of what is happening.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run mop_preprocess.nf -with-docker -bg &gt; log.txt</span>
+
+<span class="go">tail -f log.txt</span>
+
+<span class="go">N E X T F L O W  ~  version 21.04.3</span>
+<span class="go">Launching `mop_preprocess.nf` [adoring_allen] - revision: 7457956da7</span>
+
+
+<span class="go">╔╦╗╔═╗╔═╗  ╔═╗┬─┐┌─┐┌─┐┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐</span>
+<span class="go">║║║║ ║╠═╝  ╠═╝├┬┘├┤ ├─┘├┬┘│ ││  ├┤ └─┐└─┐</span>
+<span class="go">╩ ╩╚═╝╩    ╩  ┴└─└─┘┴  ┴└─└─┘└─┘└─┘└─┘└─┘</span>
+
+<span class="go">====================================================</span>
+<span class="go">BIOCORE@CRG Master of Pores 2. Preprocessing - N F  ~  version 2.0</span>
+<span class="go">====================================================</span>
+
+<span class="go">conffile                  : final_summary_01.txt</span>
+
+<span class="go">fast5                     : /Users/lcozzuto/aaa/MoP2/mop_preprocess/../data/**/*.fast5</span>
+<span class="go">fastq                     :</span>
+
+<span class="go">reference                 : /Users/lcozzuto/aaa/MoP2/mop_preprocess/../anno/curlcake_constructs.fasta.gz</span>
+<span class="go">annotation                :</span>
+
+<span class="go">granularity               : 1</span>
+
+<span class="go">ref_type                  : transcriptome</span>
+<span class="go">pars_tools                : drna_tool_splice_opt.tsv</span>
+
+<span class="go">output                    : /Users/lcozzuto/aaa/MoP2/mop_preprocess/output</span>
+<span class="go">qualityqc                 : 5</span>
+
+<span class="go">GPU                       : OFF</span>
+
+<span class="go">basecalling               : guppy</span>
+<span class="go">demultiplexing            : NO</span>
+<span class="go">demulti_fast5             : NO</span>
+
+<span class="go">filtering                 : NO</span>
+<span class="go">mapping                   : minimap2</span>
+
+<span class="go">counting                  : nanocount</span>
+<span class="go">discovery                 : NO</span>
+
+<span class="go">cram_conv                 : YES</span>
+<span class="go">subsampling_cram          : 50</span>
+
+
+<span class="go">saveSpace                 : NO</span>
+
+<span class="go">email                     :</span>
+
+<span class="go">Skipping the email</span>
+
+<span class="go">----------------------CHECK TOOLS -----------------------------</span>
+<span class="go">basecalling : guppy</span>
+<span class="go">&gt; demultiplexing will be skipped</span>
+<span class="go">mapping : minimap2</span>
+<span class="go">&gt; filtering will be skipped</span>
+<span class="go">counting : nanocount</span>
+<span class="go">&gt; discovery will be skipped</span>
+<span class="go">--------------------------------------------------------------</span>
+<span class="go">[bd/bd8dcf] Submitted process &gt; preprocess_flow:checkRef (Checking curlcake_constructs.fasta.gz)</span>
+<span class="go">[7a/1d2244] Submitted process &gt; FILTER_VER:getVersion</span>
+<span class="go">[26/dbd3f2] Submitted process &gt; GRAPHMAP_VER:getVersion</span>
+<span class="go">[11/84981d] Submitted process &gt; BWA_VER:getVersion</span>
+<span class="go">[03/2b6939] Submitted process &gt; DEMULTIPLEX_VER:getVersion</span>
+<span class="go">[38/ec6382] Submitted process &gt; BAMBU_VER:getVersion</span>
+<span class="go">[63/a2a072] Submitted process &gt; SAMTOOLS_VERSION:getVersion</span>
+<span class="go">[75/0a1e9e] Submitted process &gt; NANOPLOT_VER:getVersion</span>
+<span class="go">[4f/b50c2a] Submitted process &gt; MULTIQC_VER:getVersion</span>
+<span class="go">[7c/de96a4] Submitted process &gt; NANOCOUNT_VER:getVersion</span>
+<span class="go">[79/a56c5f] Submitted process &gt; GRAPHMAP2_VER:getVersion</span>
+<span class="go">[14/b52ead] Submitted process &gt; HTSEQ_VER:getVersion</span>
+<span class="go">[60/aaad30] Submitted process &gt; MINIMAP2_VER:getVersion</span>
+<span class="go">[de/7077d4] Submitted process &gt; FASTQC_VER:getVersion</span>
+<span class="go">[18/403b7d] Submitted process &gt; flow1:GUPPY_BASECALL:baseCall (multifast---1)</span>
+<span class="go">[f8/8973d4] Submitted process &gt; preprocess_flow:MINIMAP2:map (multifast---1)</span>
+<span class="go">[8e/d31464] Submitted process &gt; preprocess_flow:concatenateFastQFiles (multifast)</span>
+<span class="go">[1e/37d8c5] Submitted process &gt; preprocess_flow:MinIONQC (multifast)</span>
+<span class="go">[d3/eafd5e] Submitted process &gt; preprocess_flow:FASTQC:fastQC (multifast.fq.gz)</span>
+<span class="go">[fb/a1a7ca] Submitted process &gt; preprocess_flow:SAMTOOLS_CAT:catAln (multifast)</span>
+<span class="go">[3b/ee710f] Submitted process &gt; preprocess_flow:SAMTOOLS_SORT:sortAln (multifast)</span>
+<span class="go">[19/172450] Submitted process &gt; preprocess_flow:bam2stats (multifast)</span>
+<span class="go">[bc/9bc0d6] Submitted process &gt; preprocess_flow:AssignReads (multifast)</span>
+<span class="go">[b8/d65861] Submitted process &gt; preprocess_flow:NANOPLOT_QC:MOP_nanoPlot (multifast)</span>
+<span class="go">[cc/5d50c4] Submitted process &gt; preprocess_flow:SAMTOOLS_INDEX:indexBam (multifast)</span>
+<span class="go">[ce/990016] Submitted process &gt; preprocess_flow:NANOCOUNT:nanoCount (multifast)</span>
+<span class="go">[3a/27a47a] Submitted process &gt; preprocess_flow:countStats (multifast)</span>
+<span class="go">[96/c53238] Submitted process &gt; preprocess_flow:joinAlnStats (joining aln stats)</span>
+<span class="go">[93/7de48e] Submitted process &gt; preprocess_flow:bam2Cram (multifast)</span>
+<span class="go">[8e/3c1454] Submitted process &gt; preprocess_flow:joinCountStats (joining count stats)</span>
+<span class="go">[a9/c6149b] Submitted process &gt; preprocess_flow:MULTIQC:makeReport</span>
+<span class="go">Pipeline BIOCORE@CRG Master of Pore - preprocess completed!</span>
+<span class="go">Started at  2021-11-04T19:08:12.706+01:00</span>
+<span class="go">Finished at 2021-11-04T19:11:54.580+01:00</span>
+<span class="go">Time elapsed: 3m 42s</span>
+<span class="go">Execution status: OK</span>
+</pre></div>
+</div>
+<section id="id3">
+<h3>EXERCISE<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Look at the documentation and try to change the mapper, to skip the filtering and to enable the demultiplexing.</p></li>
+</ul>
+<details>
+<summary><a>Solution</a></summary><p>The params can be set on the fly like this</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run mop_preprocess.nf -with-docker -bg --mapping graphmap --filtering nanofilt --demultiplexing deeplexicon &gt; log.txt</span>
+</pre></div>
+</div>
+</details>
+<br>
+<br></section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="second.html" class="btn btn-neutral float-left" title="Second Day" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fourth.html" class="btn btn-neutral float-right" title="Fourth Day" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CRG.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
