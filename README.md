@@ -51,7 +51,7 @@ Having a [GitHub account](https://github.com/join) is recommended.
 
 * Dates: November 15-18, 2021
 
-* Time: 13:00-17:30
+* Time: 13:00-17:30 (CET)
   * Afternoon coffee break: 15:00-15:30
 
 * Location: virtual, via Zoom.
