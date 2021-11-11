@@ -4,7 +4,7 @@
 First Day
 *******************
 
-Introduction to Docker and Singularity containers.
+Introduction to Linux containers.
 ============
 
 What are containers?
