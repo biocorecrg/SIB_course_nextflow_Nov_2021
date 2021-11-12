@@ -63,7 +63,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#docker-hub-biocontainers-and-other-repositories">Docker hub, BioContainers and other repositories.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#through-registries">Through registries</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#via-galaxy-project-prebuilt-images">Via Galaxy project prebuilt images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#galaxy-project-prebuilt-images">Galaxy project prebuilt images</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#run-and-execution-process">Run and execution process</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#singularity-shell">Singularity shell</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#singularity-exec">Singularity exec</a></li>
@@ -355,12 +355,12 @@ Still less OS diversity, even with current solutions</p></td>
 <li><p>For some features you need root account (or sudo) - alternatively using fakeroot option</p></li>
 </ul>
 <p><strong>Trivia</strong></p>
-<p>Nowadays, there may be some confusion since there are two projects which the share the same name:</p>
+<p>Nowadays, there may be some confusion since there are two projects:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://singularity.hpcng.org/">HPCng Singularity</a></p></li>
 <li><p><a class="reference external" href="https://sylabs.io/singularity/">Sylabs Singularity</a></p></li>
 </ul>
-<p>They “forked” not long ago. So far they share most of the codebase, but eventually this may different and software could have different functionality.</p>
+<p>They “forked” not long ago. So far they share most of the codebase, but eventually this might be different, and software might have different functionality.</p>
 </section>
 </section>
 <section id="docker-hub-biocontainers-and-other-repositories">
@@ -379,12 +379,12 @@ Still less OS diversity, even with current solutions</p></td>
 </pre></div>
 </div>
 </section>
-<section id="via-galaxy-project-prebuilt-images">
-<h3>Via Galaxy project prebuilt images<a class="headerlink" href="#via-galaxy-project-prebuilt-images" title="Permalink to this headline"></a></h3>
+<section id="galaxy-project-prebuilt-images">
+<h3>Galaxy project prebuilt images<a class="headerlink" href="#galaxy-project-prebuilt-images" title="Permalink to this headline"></a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity pull --name fastqc-0.11.9.sif https://depot.galaxyproject.org/singularity/fastqc:0.11.9--0</span>
 </pre></div>
 </div>
-<p>Galaxy project provides all Bioinformatics software from Biocontainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue for you, this is likely the best option if working in the biomedical field.</p>
+<p>Galaxy project provides all Bioinformatics software from the BioContainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue, this might be the best option for those working in the biomedical field.</p>
 </section>
 <section id="run-and-execution-process">
 <h3>Run and execution process<a class="headerlink" href="#run-and-execution-process" title="Permalink to this headline"></a></h3>
@@ -396,7 +396,7 @@ Still less OS diversity, even with current solutions</p></td>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity shell fastqc-multi-bowtie.sif</span>
 </pre></div>
 </div>
-<p>Move around the directories and notice the different isolation approach compared to Docker. You can access most of the host filesystem.</p>
+<p>Move around the directories and notice how the isolation approach is different in comparison to Docker. You can access most of the host filesystem.</p>
 </section>
 <section id="singularity-exec">
 <h3>Singularity exec<a class="headerlink" href="#singularity-exec" title="Permalink to this headline"></a></h3>
