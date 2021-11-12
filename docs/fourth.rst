@@ -368,9 +368,9 @@ Solution in the file test3_2.nf
 
 .. raw:: html
 
-	</details>
-	<br>
-	<br>
+   </details>
+| 
+| 
 
 
 
@@ -591,6 +591,8 @@ Solution in the folder test5
 .. raw:: html
 
    </details>
+| 
+| 
 
 
 Reporting and graphical interface
