@@ -29,7 +29,16 @@ Reproducible research and data analysis using **Nextflow** pipelines
      - |toni|
      - |julia|
    
- 
+Other instructors:
+
+* Alessio Vignoli
+* Athanasios Baltzis
+* Jose Espinosa-Carrasco
+* Leila Mansouri
+* Bjorn Langer
+* Suzanne Jin
+* Emilio Palumbo
+* Edgar Garriga Nogales
 
 Here the course page: `https://www.sib.swiss/training/course/20211115_NEXTF <https://www.sib.swiss/training/course/20211115_NEXTF>`_
 
