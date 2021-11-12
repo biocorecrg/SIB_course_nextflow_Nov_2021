@@ -182,32 +182,6 @@
 <p><strong>Pros and cons</strong></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 21%" />
-<col style="width: 42%" />
-<col style="width: 38%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>ADV</p></th>
-<th class="head"><p>Virtualisation</p></th>
-<th class="head"><p>Containerisation</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>PROS.</p>
-<p>CONS.</p>
-</td>
-<td><div class="line-block">
-<div class="line">test</div>
-<div class="line">test</div>
-</div>
-<p>aaaa.</p>
-</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table class="docutils align-default">
-<colgroup>
 <col style="width: 4%" />
 <col style="width: 47%" />
 <col style="width: 48%" />
@@ -437,36 +411,36 @@ Still less OS diversity, even with current solutions</p></td>
 </section>
 <section id="environment-control">
 <h3>Environment control<a class="headerlink" href="#environment-control" title="Permalink to this headline"></a></h3>
-<p>By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient for some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.</p>
+<p>By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient in some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.</p>
 <p>Compare <code class="docutils literal notranslate"><span class="pre">`env`</span></code> command with and without -e modifier.</p>
 </section>
 </section>
 <section id="introduction-to-nextflow">
 <h2>Introduction to Nextflow<a class="headerlink" href="#introduction-to-nextflow" title="Permalink to this headline"></a></h2>
-<p>A DSL for data-driven computational pipelines. <a class="reference external" href="https://www.nextflow.io">www.nextflow.io</a>.</p>
+<p>DSL for data-driven computational pipelines. <a class="reference external" href="https://www.nextflow.io">www.nextflow.io</a>.</p>
 <a class="reference internal image-reference" href="../_images/nextflow_logo_deep.png"><img alt="../_images/nextflow_logo_deep.png" src="../_images/nextflow_logo_deep.png" style="width: 400px;" /></a>
 <section id="what-is-nextflow">
 <h3>What is Nextflow?<a class="headerlink" href="#what-is-nextflow" title="Permalink to this headline"></a></h3>
 <a class="reference internal image-reference" href="../_images/nextf_groovy.png"><img alt="../_images/nextf_groovy.png" src="../_images/nextf_groovy.png" style="width: 600px;" /></a>
-<p><a class="reference external" href="https://www.nextflow.io">Nextflow</a> is a domain specific language for workflow orchestration that stems from <a class="reference external" href="https://groovy-lang.org/">Groovy</a>. It enables scalable and reproducible workflows using software containers.
+<p><a class="reference external" href="https://www.nextflow.io">Nextflow</a> is a domain specific language (DSL) for workflow orchestration that stems from <a class="reference external" href="https://groovy-lang.org/">Groovy</a>. It enables scalable and reproducible workflows using software containers.
 It was developed at the <a class="reference external" href="www.crg.eu">CRG</a> in the Lab of Cedric Notredame by <a class="reference external" href="https://github.com/pditommaso">Paolo Di Tommaso</a>.
 The Nextflow documentation is <a class="reference external" href="https://www.nextflow.io/docs/latest/">available here</a> and you can ask help to the community using their <a class="reference external" href="https://gitter.im/nextflow-io/nextflow">gitter channel</a></p>
-<p>Nextflow has been upgraded in 2020 from DSL1 (Domain-Specific Language) version to DSL2. In this course we will use exclusively DSL2.</p>
+<p>In 2020, Nextflow has been upgraded from DSL1 version to DSL2. In this course we will use exclusively DSL2.</p>
 </section>
 <section id="what-is-nextflow-for">
 <h3>What is Nextflow for?<a class="headerlink" href="#what-is-nextflow-for" title="Permalink to this headline"></a></h3>
-<p>It is for making pipelines without caring about parallelization, dependencies, intermediate file names, data structures, handling exceptions, resuming executions etc.</p>
+<p>It is for making pipelines without caring about parallelization, dependencies, intermediate file names, data structures, handling exceptions, resuming executions, etc.</p>
 <p>It was published in <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/28398311/">Nature Biotechnology in 2017</a>.</p>
 <a class="reference internal image-reference" href="../_images/NF_pub.png"><img alt="../_images/NF_pub.png" src="../_images/NF_pub.png" style="width: 600px;" /></a>
-<p>There is a growing number of publications mentioning Nextflow in <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/?term=nextflow&amp;timeline=expanded&amp;sort=pubdate&amp;sort_order=asc">PubMed</a>, since many bioinformaticians are starting to write their pipeline with Nextflow.</p>
+<p>There is a growing number of <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/?term=nextflow&amp;timeline=expanded&amp;sort=pubdate&amp;sort_order=asc">PubMed</a> publications citing Nextflow.</p>
 <a class="reference internal image-reference" href="../_images/NF_mentioning.png"><img alt="../_images/NF_mentioning.png" src="../_images/NF_mentioning.png" style="width: 600px;" /></a>
-<p>Here is a curated list of <a class="reference external" href="https://github.com/nextflow-io/awesome-nextflow">Nextflow pipelines</a>.</p>
-<p>And here is a group of pipelines written in a collaborative way from the <a class="reference external" href="https://nf-co.re/pipelines">NF-core</a> project.</p>
-<p>Some pipelines written in Nextflow are used for SARS-Cov-2 analysis, for example:</p>
+<p>A curated list of <a class="reference external" href="https://github.com/nextflow-io/awesome-nextflow">Nextflow pipelines</a>.</p>
+<p>Many pipelines written collaboratively are provided by the <a class="reference external" href="https://nf-co.re/pipelines">NF-core</a> project.</p>
+<p>Some pipelines written in Nextflow have been used for the SARS-Cov-2 analysis, for example:</p>
 <ul class="simple">
-<li><p>the <a class="reference external" href="https://artic.network/ncov-2019">artic Network</a> pipeline: <a class="reference external" href="https://github.com/connor-lab/ncov2019-artic-nf">ncov2019-artic-nf</a>.</p></li>
-<li><p>the <a class="reference external" href="https://covid19beacon.crg.eu/info">CRG / EGA viral Beacon</a> pipeline: <a class="reference external" href="https://github.com/biocorecrg/master_of_pores">Master of Pores</a>.</p></li>
-<li><p>the nf-core pipeline: <a class="reference external" href="https://nf-co.re/viralrecon">viralrecon</a>.</p></li>
+<li><p>The <a class="reference external" href="https://artic.network/ncov-2019">artic Network</a> pipeline <a class="reference external" href="https://github.com/connor-lab/ncov2019-artic-nf">ncov2019-artic-nf</a>.</p></li>
+<li><p>The <a class="reference external" href="https://covid19beacon.crg.eu/info">CRG / EGA viral Beacon</a> pipeline <a class="reference external" href="https://github.com/biocorecrg/master_of_pores">Master of Pores</a>.</p></li>
+<li><p>The nf-core pipeline <a class="reference external" href="https://nf-co.re/viralrecon">viralrecon</a>.</p></li>
 </ul>
 </section>
 <section id="main-advantages">
@@ -475,7 +449,7 @@ The Nextflow documentation is <a class="reference external" href="https://www.ne
 <li><p><strong>Fast prototyping</strong></p></li>
 </ul>
 <p>You can quickly write a small pipeline that can be <strong>expanded incrementally</strong>.
-<strong>Each task is independent</strong> and can be easily added to other ones. You can reuse your scripts and tools without rewriting / adapting them.</p>
+<strong>Each task is independent</strong> and can be easily added to other. You can reuse your scripts without re-writing or adapting them.</p>
 <ul class="simple">
 <li><p><strong>Reproducibility</strong></p></li>
 </ul>
