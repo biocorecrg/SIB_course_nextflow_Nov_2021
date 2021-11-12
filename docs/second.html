@@ -53,7 +53,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#more-complex-scripts">More complex scripts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#directives">Directives</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#resuming-your-pipeline">Resuming your pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#resuming-a-pipeline">Resuming a pipeline</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">EXERCISE</a></li>
 </ul>
 </li>
@@ -88,7 +88,7 @@
              
   <section id="second-day">
 <span id="second-page"></span><h1>Second Day<a class="headerlink" href="#second-day" title="Permalink to this headline"></a></h1>
-<p>Main concepts about Nextflow.</p>
+<p>Nextflow main concepts.</p>
 <section id="channels-and-operators">
 <h2>Channels and Operators<a class="headerlink" href="#channels-and-operators" title="Permalink to this headline"></a></h2>
 <p>There are two different types of channels:</p>
@@ -888,8 +888,8 @@ This time we need a number of directives:</p>
 </pre></div>
 </div>
 </section>
-<section id="resuming-your-pipeline">
-<h2>Resuming your pipeline<a class="headerlink" href="#resuming-your-pipeline" title="Permalink to this headline"></a></h2>
+<section id="resuming-a-pipeline">
+<h2>Resuming a pipeline<a class="headerlink" href="#resuming-a-pipeline" title="Permalink to this headline"></a></h2>
 <p>You can resume the execution after the code modification using the parameter <strong>-resume</strong>.
 Nextflow is smart enough to cache the execution since input and output were not changed.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test1.nf -bg -resume</span>
@@ -905,7 +905,7 @@ Nextflow is smart enough to cache the execution since input and output were not 
 <span class="go">/home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/work/33/a6fc72786d042cacf733034d501691/all.rev</span>
 </pre></div>
 </div>
-<p><strong>IMPORTANT: Nextflow parameters are with one hyphen</strong> (<cite>-resume</cite>) <strong>while pipeline parameters are with two</strong> (<cite>–inputfile</cite>)</p>
+<p><strong>IMPORTANT: Nextflow parameters are provided using one hyphen</strong> (<cite>-resume</cite>) <strong>while a pipeline parameters, two hyphens</strong> (<cite>–inputfile</cite>)</p>
 <p>Sometimes you might want to resume a previous run of your pipeline.</p>
 <p>For doing so you need to extract the job id of that run. You can do this by using the command <cite>nextflow log</cite></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow log</span>
