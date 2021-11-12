@@ -25,14 +25,14 @@ Containers allow us to use **exactly the same versions of the tools**.
 Virtual machines or containers ?
 ----------------------------------
 
-=====================================================  ===================================================== 
-Virtualisation                                         Containerisation (aka lightweight virtualisation) 
-=====================================================  ===================================================== 
-Abstraction of physical hardware                       Abstraction of application layer 
-Depends on hypervisor (software)                       Depends on host kernel (OS) 
+=====================================================  =====================================================
+Virtualisation                                         Containerisation (aka lightweight virtualisation)
+=====================================================  =====================================================
+Abstraction of physical hardware                       Abstraction of application layer
+Depends on hypervisor (software)                       Depends on host kernel (OS)
 Do not confuse with hardware emulator                  Application and dependencies bundled all together
 Enable virtual machines                                Every virtual machine with an OS (Operating System)
-=====================================================  ===================================================== 
+=====================================================  =====================================================
 
 
 Virtualisation
@@ -63,14 +63,14 @@ Virtual machines vs containers
 **Pros and cons**
 
 ===== ===================================================== =====================================================
-ADV   Virtualisation                                        Containerisation 
+ADV   Virtualisation                                        Containerisation
 ===== ===================================================== =====================================================
 PROS. Very similar to a full OS. With current solutions.     No need of full OS installation (less space).
       high OS diversity No need of full OS installation      Better portability
-      (less space). 
-      Faster than virtual machines. 
-      Easier automation. 
-      Current solutions allow easier 
+      (less space).
+      Faster than virtual machines.
+      Easier automation.
+      Current solutions allow easier
       distribution of recipes.
       Better portability.
 
@@ -174,7 +174,7 @@ Singularity architecture
 
 
 ===================================================== =====================================================
-Strengths                                             Weaknesses 
+Strengths                                             Weaknesses
 ===================================================== =====================================================
 No dependency of a daemon                             At the time of writing only good support in Linux
 Can be run as a simple user                           Mac experimental. Desktop edition. Only running
@@ -184,32 +184,10 @@ More easily portable
 
 Two types of images: Read-only (production)
 Writable (development, via sandbox)
-	
+
 ===================================================== =====================================================
 
-Strengths
---------------
-
-* No dependency of a daemon
-* Can be run as a simple user
-  * Avoid permission headaches and hacks
-* Image/container is a file (or directory)
-* More easily portable
-* Two type of images
-  * Read-only (production)
-  * Writable (development, via sandbox)
-
-
-Weaknesses
--------------
-
-* At the time of writing only good support in Linux
-  * Mac experimental. Desktop edition. Only running
-* For some features you need root account (or sudo) - alternatively using fakeroot option
-
-
 **Trivia**
-
 
 Nowadays, there may be some confusion since there are two projects:
 
@@ -218,11 +196,8 @@ Nowadays, there may be some confusion since there are two projects:
 
 They "forked" not long ago. So far they share most of the codebase, but eventually this might be different, and software might have different functionality.
 
-Docker hub, BioContainers and other repositories.
+Container registries.
 ============
-
-Through registries
--------------------
 
 **Docker Hub**
 
@@ -244,69 +219,64 @@ Through registries
 	singularity build fastqc-0.11.9.sif docker://quay.io/biocontainers/fastqc:0.11.9--0
 
 
-Galaxy project prebuilt images
--------------------------------------
+*Via Galaxy project prebuilt images
 
 .. code-block:: console
-    
+
 	singularity pull --name fastqc-0.11.9.sif https://depot.galaxyproject.org/singularity/fastqc:0.11.9--0
 
 
 Galaxy project provides all Bioinformatics software from the BioContainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue, this might be the best option for those working in the biomedical field.
 
 
-Run and execution process
+Running and executing containers
 --------------------------
 
 Once we have some image files (or directories) ready, we can run processes.
 
-Singularity shell
----------------------
+**Singularity shell**
 
-The straight-forward exploratory approach is equivalent to ```docker run -ti myimage /bin/shell``` but with a more handy syntax.
+The straight-forward exploratory approach is equivalent to ```docker run -ti biocontainers/fastqc:v0.11.9_cv7 /bin/shell``` but with a more handy syntax.
 
 .. code-block:: console
 
-	singularity shell fastqc-multi-bowtie.sif
+	singularity shell fastqc-0.11.9.sif
 
 
 Move around the directories and notice how the isolation approach is different in comparison to Docker. You can access most of the host filesystem.
 
-Singularity exec
----------------------
+**Singularity exec**
 
 That is the most common way to execute Singularity (equivalent to ```docker exec```). That would be the normal approach in a HPC environment.
 
 .. code-block:: console
 
-    singularity exec fastqc-multi-bowtie.sif fastqc
+    singularity exec fastqc-0.11.9.sif fastqc
 
 
-Singularity run
---------------------
+**Singularity run**
 
-This executes runscript from recipe definition (equivalent to *docker run*). Not so common for HPC uses. More common for instances (servers).
+This executes runscript from recipe definition (equivalent to ```docker run```). Not so common for HPC uses. More common for instances (servers).
 
 .. code-block:: console
-    singularity run fastqc-multi-bowtie.sif
+    singularity run fastqc-0.11.9.sif
 
 
-Environment control
----------------------
+**Environment control**
 
 By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient in some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.
 
 .. code-block:: console
-    singularity shell -e fastqc-multi-bowtie.sif
-    singularity exec -e fastqc-multi-bowtie.sif fastqc
-    singularity run -e fastqc-multi-bowtie.sif
+    singularity shell -e fastqc-0.11.9.sif
+    singularity exec -e fastqc-0.11.9.sif fastqc
+    singularity run -e fastqc-0.11.9.sif
 
 
 Compare ```env``` command with and without -e modifier.
 
 .. code-block:: console
-    singularity exec fastqc-multi-bowtie.sif env
-    singularity exec -e fastqc-multi-bowtie.sif env
+    singularity exec fastqc-0.11.9.sif env
+    singularity exec -e fastqc-0.11.9.sif env
 
 
 
@@ -507,7 +477,3 @@ The result from my MacBook:
 	[f2/917905] process > MULTIQC                                 [100%] 1 of 1 ✔
 
 	Done! Open the following report in your browser --> results/multiqc_report.html
-
-
-
-
