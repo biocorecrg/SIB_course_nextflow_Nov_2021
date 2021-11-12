@@ -236,7 +236,7 @@ Once we have some image files (or directories) ready, we can run processes.
 
 **Singularity shell**
 
-The straight-forward exploratory approach is equivalent to ```docker run -ti biocontainers/fastqc:v0.11.9_cv7 /bin/shell``` but with a more handy syntax.
+The straight-forward exploratory approach is equivalent to ``docker run -ti biocontainers/fastqc:v0.11.9_cv7 /bin/shell`` but with a more handy syntax.
 
 .. code-block:: console
 
@@ -247,7 +247,7 @@ Move around the directories and notice how the isolation approach is different i
 
 **Singularity exec**
 
-That is the most common way to execute Singularity (equivalent to ```docker exec```). That would be the normal approach in a HPC environment.
+That is the most common way to execute Singularity (equivalent to ``docker exec``). That would be the normal approach in a HPC environment.
 
 .. code-block:: console
 
@@ -256,7 +256,7 @@ That is the most common way to execute Singularity (equivalent to ```docker exec
 
 **Singularity run**
 
-This executes runscript from recipe definition (equivalent to ```docker run```). Not so common for HPC uses. More common for instances (servers).
+This executes runscript from recipe definition (equivalent to ``docker run``). Not so common for HPC uses. More common for instances (servers).
 
 .. code-block:: console
     singularity run fastqc-0.11.9.sif
@@ -272,12 +272,18 @@ By default Singularity inherits a profile environment (e.g., PATH environment va
     singularity run -e fastqc-0.11.9.sif
 
 
-Compare ```env``` command with and without -e modifier.
+Compare ``env`` command with and without -e modifier.
 
 .. code-block:: console
     singularity exec fastqc-0.11.9.sif env
     singularity exec -e fastqc-0.11.9.sif env
 
+**Exercise**
+
+* Generate a Singularity image of the last *NCBI BLAST+* version
+  * Consider and compare different registry sources
+* Explore the inside contents of the image
+* Execute in different ways ``blastp`` or any other NCBI BLAST+ program
 
 
 Introduction to Nextflow
