@@ -437,7 +437,7 @@ As stated in the website for installing it we need to clone the pipeline togethe
 
 .. code-block:: console
 	
-	git clone --depth 1 --recurse-submodules git@github.com:biocorecrg/MoP2.git
+	git clone --depth 1 --recurse-submodules https://github.com/biocorecrg/MOP2.git
 
 	Cloning into 'MoP2'...
 	remote: Enumerating objects: 113, done.
