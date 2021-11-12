@@ -559,7 +559,8 @@ EXERCISE
 .. raw:: html
 
    </details>
-
+| 
+| 
 
 - Change the pipeline to use only one process to handle both the cases (either one element or a list).
 
@@ -635,10 +636,8 @@ You can choose the elements from a list using the positional keys (i.e. list[0],
 .. raw:: html
 
    </details>
-
-|
-|
-|
+| 
+| 
 
 More complex scripts
 ============
@@ -1047,7 +1046,8 @@ First make the process `reverseSequence` failing by creating a mistake in the co
 .. raw:: html
 
    </details>
-
+| 
+| 
 
 Write the first workflow using pipes. Nextflow DLS2 allows you to use pipes for connecting channels via input / output.
 

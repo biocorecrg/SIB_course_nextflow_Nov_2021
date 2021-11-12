@@ -359,9 +359,9 @@ while the nextflow.config file would be:
    
 .. raw:: html
 
-	</details>
-	<br>
-	<br>
+   </details>
+| 
+| 
 
 - Now look at **test2.nf**.
 Can you make a configuration for that script with a new label for handling failing processes by retrying 3 times and incrementing the time?
@@ -422,11 +422,10 @@ while the nextflow.config file would be:
 	singularity.cacheDir = "$baseDir/singularity"
 
 .. raw:: html
-	</details>
-	<br>
-	<br>
-	<br>
 
+   </details>
+| 
+| 
 
 Using a public pipeline
 =============================================
@@ -675,9 +674,8 @@ The params can be set on the fly like this
  
 .. raw:: html
 
-	</details>
-	<br>
-	<br>
-
+   </details>
+| 
+| 
 
 
