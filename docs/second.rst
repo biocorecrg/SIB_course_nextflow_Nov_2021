@@ -962,7 +962,7 @@ You can resume the execution after the code modification using the parameter **-
 	/home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/work/33/a6fc72786d042cacf733034d501691/all.rev
 
 
-**IMPORTANT: Nextflow parameters are provided using one hyphen** (`-resume`) **while a pipeline parameters, two hyphens** (`--inputfile`).
+**IMPORTANT: Nextflow parameters are provided using one hyphen** (`-resume`) **while a pipeline parameters, two hyphens** (`\-\-inputfile`).
 
 Sometimes you might want to resume a previous run of your pipeline.
 
