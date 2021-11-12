@@ -57,18 +57,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#introduction-to-singularity">Introduction to Singularity</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#singularity-architecture">Singularity architecture</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#strengths">Strengths</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#weaknesses">Weaknesses</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#docker-hub-biocontainers-and-other-repositories">Docker hub, BioContainers and other repositories.</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#through-registries">Through registries</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#galaxy-project-prebuilt-images">Galaxy project prebuilt images</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#run-and-execution-process">Run and execution process</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#singularity-shell">Singularity shell</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#singularity-exec">Singularity exec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#singularity-run">Singularity run</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#environment-control">Environment control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#container-registries">Container registries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-and-executing-containers">Running and executing containers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#introduction-to-nextflow">Introduction to Nextflow</a><ul>
@@ -333,27 +325,6 @@ Still less OS diversity, even with current solutions</p></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="strengths">
-<h3>Strengths<a class="headerlink" href="#strengths" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>No dependency of a daemon</p></li>
-<li><p>Can be run as a simple user
-* Avoid permission headaches and hacks</p></li>
-<li><p>Image/container is a file (or directory)</p></li>
-<li><p>More easily portable</p></li>
-<li><p>Two type of images
-* Read-only (production)
-* Writable (development, via sandbox)</p></li>
-</ul>
-</section>
-<section id="weaknesses">
-<h3>Weaknesses<a class="headerlink" href="#weaknesses" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>At the time of writing only good support in Linux
-* Mac experimental. Desktop edition. Only running</p></li>
-<li><p>For some features you need root account (or sudo) - alternatively using fakeroot option</p></li>
-</ul>
 <p><strong>Trivia</strong></p>
 <p>Nowadays, there may be some confusion since there are two projects:</p>
 <ul class="simple">
@@ -363,56 +334,75 @@ Still less OS diversity, even with current solutions</p></td>
 <p>They “forked” not long ago. So far they share most of the codebase, but eventually this might be different, and software might have different functionality.</p>
 </section>
 </section>
-<section id="docker-hub-biocontainers-and-other-repositories">
-<h2>Docker hub, BioContainers and other repositories.<a class="headerlink" href="#docker-hub-biocontainers-and-other-repositories" title="Permalink to this headline"></a></h2>
-<section id="through-registries">
-<h3>Through registries<a class="headerlink" href="#through-registries" title="Permalink to this headline"></a></h3>
+<section id="container-registries">
+<h2>Container registries<a class="headerlink" href="#container-registries" title="Permalink to this headline"></a></h2>
+<p>Container images, normally different versions of them, are stored in container repositories.</p>
+<p>These repositories can be browser or discovered within, normally public, container registries.</p>
 <p><strong>Docker Hub</strong></p>
+<p>It is the first and most popular public container registry (which provides also private repositories).</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://hub.docker.com">Docker Hub</a></p></li>
+</ul>
+<p>Example:</p>
 <p><a class="reference external" href="https://hub.docker.com/r/biocontainers/fastqc">https://hub.docker.com/r/biocontainers/fastqc</a></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity build fastqc-0.11.9_cv7.sif docker://biocontainers/fastqc:v0.11.9_cv7</span>
 </pre></div>
 </div>
 <p><strong>Biocontainers</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://biocontainers.pro">Biocontainers</a></p></li>
+</ul>
+<p>Website gathering Bioinformatics focused container images from different registries.</p>
+<p>Originally Docker Hub was used, but now other registries are preferred.</p>
+<p>Example: <a class="reference external" href="https://biocontainers.pro/tools/fastqc">https://biocontainers.pro/tools/fastqc</a></p>
 <p><em>Via quay.io</em></p>
 <p><a class="reference external" href="https://quay.io/repository/biocontainers/fastqc)">https://quay.io/repository/biocontainers/fastqc</a></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity build fastqc-0.11.9.sif docker://quay.io/biocontainers/fastqc:0.11.9--0</span>
 </pre></div>
 </div>
-</section>
-<section id="galaxy-project-prebuilt-images">
-<h3>Galaxy project prebuilt images<a class="headerlink" href="#galaxy-project-prebuilt-images" title="Permalink to this headline"></a></h3>
+<p><em>Via Galaxy project prebuilt images</em></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity pull --name fastqc-0.11.9.sif https://depot.galaxyproject.org/singularity/fastqc:0.11.9--0</span>
 </pre></div>
 </div>
 <p>Galaxy project provides all Bioinformatics software from the BioContainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue, this might be the best option for those working in the biomedical field.</p>
-</section>
-<section id="run-and-execution-process">
-<h3>Run and execution process<a class="headerlink" href="#run-and-execution-process" title="Permalink to this headline"></a></h3>
+<section id="running-and-executing-containers">
+<h3>Running and executing containers<a class="headerlink" href="#running-and-executing-containers" title="Permalink to this headline"></a></h3>
 <p>Once we have some image files (or directories) ready, we can run processes.</p>
-</section>
-<section id="singularity-shell">
-<h3>Singularity shell<a class="headerlink" href="#singularity-shell" title="Permalink to this headline"></a></h3>
-<p>The straight-forward exploratory approach is equivalent to <code class="docutils literal notranslate"><span class="pre">`docker</span> <span class="pre">run</span> <span class="pre">-ti</span> <span class="pre">myimage</span> <span class="pre">/bin/shell`</span></code> but with a more handy syntax.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity shell fastqc-multi-bowtie.sif</span>
+<p><strong>Singularity shell</strong></p>
+<p>The straight-forward exploratory approach is equivalent to <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-ti</span> <span class="pre">biocontainers/fastqc:v0.11.9_cv7</span> <span class="pre">/bin/shell</span></code> but with a more handy syntax.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity shell fastqc-0.11.9.sif</span>
 </pre></div>
 </div>
 <p>Move around the directories and notice how the isolation approach is different in comparison to Docker. You can access most of the host filesystem.</p>
-</section>
-<section id="singularity-exec">
-<h3>Singularity exec<a class="headerlink" href="#singularity-exec" title="Permalink to this headline"></a></h3>
-<p>That is the most common way to execute Singularity (equivalent to <code class="docutils literal notranslate"><span class="pre">`docker</span> <span class="pre">exec`</span></code>). That would be the normal approach in a HPC environment.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity exec fastqc-multi-bowtie.sif fastqc</span>
+<p><strong>Singularity exec</strong></p>
+<p>That is the most common way to execute Singularity (equivalent to <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span></code>). That would be the normal approach in a HPC environment.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity exec fastqc-0.11.9.sif fastqc</span>
 </pre></div>
 </div>
-</section>
-<section id="singularity-run">
-<h3>Singularity run<a class="headerlink" href="#singularity-run" title="Permalink to this headline"></a></h3>
-<p>This executes runscript from recipe definition (equivalent to <em>docker run</em>). Not so common for HPC uses. More common for instances (servers).</p>
-</section>
-<section id="environment-control">
-<h3>Environment control<a class="headerlink" href="#environment-control" title="Permalink to this headline"></a></h3>
+<p><strong>Singularity run</strong></p>
+<p>This executes runscript from recipe definition (equivalent to <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>). Not so common for HPC uses. More common for instances (servers).</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity run fastqc-0.11.9.sif</span>
+</pre></div>
+</div>
+<p><strong>Environment control</strong></p>
 <p>By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient in some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.</p>
-<p>Compare <code class="docutils literal notranslate"><span class="pre">`env`</span></code> command with and without -e modifier.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity shell -e fastqc-0.11.9.sif</span>
+<span class="go">singularity exec -e fastqc-0.11.9.sif fastqc</span>
+<span class="go">singularity run -e fastqc-0.11.9.sif</span>
+</pre></div>
+</div>
+<p>Compare <code class="docutils literal notranslate"><span class="pre">env</span></code> command with and without -e modifier.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity exec fastqc-0.11.9.sif env</span>
+<span class="go">singularity exec -e fastqc-0.11.9.sif env</span>
+</pre></div>
+</div>
+<p><strong>Exercise</strong></p>
+<ul class="simple">
+<li><p>Generate a Singularity image of the last <em>samtools</em> version
+* Consider and compare different registry sources</p></li>
+<li><p>Explore the inside contents of the image</p></li>
+<li><p>Execute in different ways <code class="docutils literal notranslate"><span class="pre">samtools</span></code> program</p></li>
+</ul>
 </section>
 </section>
 <section id="introduction-to-nextflow">
