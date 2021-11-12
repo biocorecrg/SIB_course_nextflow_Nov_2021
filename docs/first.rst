@@ -62,16 +62,6 @@ Virtual machines vs containers
 
 **Pros and cons**
 
-+----------+--------------------+------------------+
-| ADV      |  Virtualisation    | Containerisation |
-+==========+====================+==================+
-| PROS.    | | test             |                  |
-|          | | test             |                  |
-| CONS.    | aaaa.              |                  |
-+----------+--------------------+------------------+
-
-
-
 ===== ===================================================== =====================================================
 ADV   Virtualisation                                        Containerisation 
 ===== ===================================================== =====================================================
@@ -304,7 +294,7 @@ This executes runscript from recipe definition (equivalent to *docker run*). Not
 Environment control
 ---------------------
 
-By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient for some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.
+By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient in some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.
 
 .. code-block:: console
     singularity shell -e fastqc-multi-bowtie.sif
@@ -322,7 +312,7 @@ Compare ```env``` command with and without -e modifier.
 
 Introduction to Nextflow
 ============
-A DSL for data-driven computational pipelines. `www.nextflow.io <https://www.nextflow.io>`_.
+DSL for data-driven computational pipelines. `www.nextflow.io <https://www.nextflow.io>`_.
 
 .. image:: images/nextflow_logo_deep.png
   :width: 400
@@ -334,16 +324,16 @@ What is Nextflow?
 .. image:: images/nextf_groovy.png
   :width: 600
 
-`Nextflow <https://www.nextflow.io>`__ is a domain specific language for workflow orchestration that stems from `Groovy <https://groovy-lang.org/>`__. It enables scalable and reproducible workflows using software containers.
+`Nextflow <https://www.nextflow.io>`__ is a domain specific language (DSL) for workflow orchestration that stems from `Groovy <https://groovy-lang.org/>`__. It enables scalable and reproducible workflows using software containers.
 It was developed at the `CRG <www.crg.eu>`__ in the Lab of Cedric Notredame by `Paolo Di Tommaso <https://github.com/pditommaso>`__.
 The Nextflow documentation is `available here <https://www.nextflow.io/docs/latest/>`__ and you can ask help to the community using their `gitter channel <https://gitter.im/nextflow-io/nextflow>`__
 
-Nextflow has been upgraded in 2020 from DSL1 (Domain-Specific Language) version to DSL2. In this course we will use exclusively DSL2.
+In 2020, Nextflow has been upgraded from DSL1 version to DSL2. In this course we will use exclusively DSL2.
 
 What is Nextflow for?
 ----------------
 
-It is for making pipelines without caring about parallelization, dependencies, intermediate file names, data structures, handling exceptions, resuming executions etc.
+It is for making pipelines without caring about parallelization, dependencies, intermediate file names, data structures, handling exceptions, resuming executions, etc.
 
 It was published in `Nature Biotechnology in 2017 <https://pubmed.ncbi.nlm.nih.gov/28398311/>`__.
 
@@ -351,21 +341,21 @@ It was published in `Nature Biotechnology in 2017 <https://pubmed.ncbi.nlm.nih.g
   :width: 600
 
 
-There is a growing number of publications mentioning Nextflow in `PubMed <https://pubmed.ncbi.nlm.nih.gov/?term=nextflow&timeline=expanded&sort=pubdate&sort_order=asc>`__, since many bioinformaticians are starting to write their pipeline with Nextflow.
+There is a growing number of `PubMed <https://pubmed.ncbi.nlm.nih.gov/?term=nextflow&timeline=expanded&sort=pubdate&sort_order=asc>`__ publications citing Nextflow.
 
 .. image:: images/NF_mentioning.png
   :width: 600
 
 
-Here is a curated list of `Nextflow pipelines <https://github.com/nextflow-io/awesome-nextflow>`__.
+A curated list of `Nextflow pipelines <https://github.com/nextflow-io/awesome-nextflow>`__.
 
-And here is a group of pipelines written in a collaborative way from the `NF-core <https://nf-co.re/pipelines>`__ project.
+Many pipelines written collaboratively are provided by the `NF-core <https://nf-co.re/pipelines>`__ project.
 
-Some pipelines written in Nextflow are used for SARS-Cov-2 analysis, for example:
+Some pipelines written in Nextflow have been used for the SARS-Cov-2 analysis, for example:
 
-- the `artic Network <https://artic.network/ncov-2019>`__ pipeline: `ncov2019-artic-nf <https://github.com/connor-lab/ncov2019-artic-nf>`__.
-- the `CRG / EGA viral Beacon <https://covid19beacon.crg.eu/info>`__ pipeline: `Master of Pores <https://github.com/biocorecrg/master_of_pores>`__.
-- the nf-core pipeline: `viralrecon <https://nf-co.re/viralrecon>`__.
+- The `artic Network <https://artic.network/ncov-2019>`__ pipeline `ncov2019-artic-nf <https://github.com/connor-lab/ncov2019-artic-nf>`__.
+- The `CRG / EGA viral Beacon <https://covid19beacon.crg.eu/info>`__ pipeline `Master of Pores <https://github.com/biocorecrg/master_of_pores>`__.
+- The nf-core pipeline `viralrecon <https://nf-co.re/viralrecon>`__.
 
 
 Main advantages
@@ -375,7 +365,7 @@ Main advantages
 - **Fast prototyping**
 
 You can quickly write a small pipeline that can be **expanded incrementally**.
-**Each task is independent** and can be easily added to other ones. You can reuse your scripts and tools without rewriting / adapting them.
+**Each task is independent** and can be easily added to other. You can reuse your scripts without re-writing or adapting them.
 
 - **Reproducibility**
 
