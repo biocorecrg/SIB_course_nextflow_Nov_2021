@@ -258,12 +258,12 @@ Galaxy project provides all Bioinformatics software from Biocontainers initiativ
 Run and execution process
 --------------------------
 
-Once we have some image files (or directories) ready, we can run or favourite processes.
+Once we have some image files (or directories) ready, we can run processes.
 
 Singularity shell
 ---------------------
 
-The straight-forward exploratory approach, equivalent to ```docker run -ti myimage /bin/shell```. But with a more handy syntax.
+The straight-forward exploratory approach is equivalent to ```docker run -ti myimage /bin/shell``` but with a more handy syntax.
 
 .. code-block:: console
 
@@ -275,7 +275,7 @@ Move around the directories and notice the different isolation approach compared
 Singularity exec
 ---------------------
 
-That is the most common way to execute Singularity (equivalent to ```docker exec```). That would be the normal approach in HPC environments.
+That is the most common way to execute Singularity (equivalent to ```docker exec```). That would be the normal approach in a HPC environment.
 
 .. code-block:: console
 
@@ -285,7 +285,7 @@ That is the most common way to execute Singularity (equivalent to ```docker exec
 Singularity run
 --------------------
 
-This executes runscript from recipe definition (equivalent to *docker run*). Not so common for HPC uses. More for instances (servers).
+This executes runscript from recipe definition (equivalent to *docker run*). Not so common for HPC uses. More common for instances (servers).
 
 .. code-block:: console
     singularity run fastqc-multi-bowtie.sif
@@ -294,7 +294,7 @@ This executes runscript from recipe definition (equivalent to *docker run*). Not
 Environment control
 ---------------------
 
-By default Singularity inherits our profile environment (e.g., PATH environment variable). This may be convenient for some circumstances, but it can also lead to unexpected problems if you are not aware, when your own environment clashes with the default one from the image.
+By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient for some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.
 
 .. code-block:: console
     singularity shell -e fastqc-multi-bowtie.sif
