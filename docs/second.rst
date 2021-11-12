@@ -4,7 +4,7 @@
 Second Day
 *******************
 
-Main concepts about Nextflow.
+Nextflow main concepts.
 
 Channels and Operators
 ============
@@ -944,7 +944,7 @@ This time we need a number of directives:
 	maxRetries 3
 
 
-Resuming your pipeline
+Resuming a pipeline
 ============
 
 You can resume the execution after the code modification using the parameter **-resume**.
@@ -965,7 +965,7 @@ Nextflow is smart enough to cache the execution since input and output were not 
 	/home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/work/33/a6fc72786d042cacf733034d501691/all.rev
 
 
-**IMPORTANT: Nextflow parameters are with one hyphen** (`-resume`) **while pipeline parameters are with two** (`--inputfile`)
+**IMPORTANT: Nextflow parameters are provided using one hyphen** (`-resume`) **while a pipeline parameters, two hyphens** (`--inputfile`)
 
 Sometimes you might want to resume a previous run of your pipeline.
 
