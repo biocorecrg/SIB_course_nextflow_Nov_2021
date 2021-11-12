@@ -559,8 +559,8 @@ EXERCISE
 .. raw:: html
 
    </details>
-|
-|
+| 
+| 
 
 - Change the pipeline to use only one process to handle both the cases (either one element or a list).
 
