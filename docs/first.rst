@@ -365,15 +365,15 @@ Main advantages
 - **Fast prototyping**
 
 You can quickly write a small pipeline that can be **expanded incrementally**.
-**Each task is independent** and can be easily added to other. You can reuse your scripts without re-writing or adapting them.
+**Each task is independent** and can be easily added to other. You can reuse scripts without re-writing or adapting them.
 
 - **Reproducibility**
 
-Nextflow supports **Docker and Singularity** containers technology. Their use will make the pipelines reproducible in any Unix environment. Nextflow is integrated with **GitHub code sharing platform**, so you can call directly a specific version of pipeline from a repository, download it and use it on the fly.
+Nextflow supports **Docker** and **Singularity** containers technology. Their use will make the pipelines reproducible in any Unix environment. Nextflow is integrated with **GitHub code sharing platform**, so you can call directly a specific version of a pipeline from a repository, download and use it on-the-fly.
 
 - **Portability**
 
-Nextflow can be executed on **multiple platforms** without modifiying the code. It supports several schedulers such as **SGE, LSF, SLURM, PBS and HTCondor** and cloud platforms like **Kubernetes, Amazon AWS and Google Cloud**.
+Nextflow can be executed on **multiple platforms** without modifiying the code. It supports several schedulers such as **SGE, LSF, SLURM, PBS, HTCondor** and cloud platforms like **Kubernetes, Amazon AWS, Google Cloud**.
 
 
 .. image:: images/executors.png
@@ -382,8 +382,8 @@ Nextflow can be executed on **multiple platforms** without modifiying the code. 
 - **Scalability**
 
 Nextflow is based on the **dataflow programming model** which simplifies writing complex pipelines.
-The tool takes care of **parallelizing the processes** without additional written code.
-The resulting applications are inherently parallel and can scale-up or scale-out, transparently, without having to adapt to a specific platform architecture.
+The tool takes care of **parallelizing the processes** without additionally written code.
+The resulting applications are inherently parallel and can scale-up or scale-out transparently; there is no need to adapt them to a specific platform architecture.
 
 - **Resumable, thanks to continuous checkpoints**
 
@@ -401,15 +401,15 @@ The **processes** are blocks of code that can be executed - such as scripts or p
   :width: 600
 
 
-Processes are independent from one another and can be run in parallel depending on the number of elements in a channel.
-In the previous example, processes **A**, **B** and **C** can be run in parallel and only when they **ALL** end can process **D** be triggered.
+Processes are independent from each another and can be run in parallel, depending on the number of elements in a channel.
+In the previous example, processes **A**, **B** and **C** can be run in parallel and only when they **ALL** end the process **D** is triggered.
 
 Installation
 ============
 
 .. note::
-  Nextflow is already installed on the machines for the training!
-  You need at least the Java version 8 for Nextflow installation.
+  Nextflow is already installed on the machines provided for this course.
+  You need at least the Java version 8 for the Nextflow installation.
 
 .. tip::
   You can check the version fo java by typing::
@@ -442,17 +442,17 @@ We can test that the installation was successful with:
 
 This command downloads and runs the pipeline ``hello``.
 
-We can now launch a test pipeline to show what will be using a nextflow pipeline:
+We can now launch a test pipeline:
 
 .. code-block:: console
 
   nextflow run nextflow-io/rnaseq-nf -with-singularity
 
-The command will automatically pull the pipeline and the required test data from the `github repository <https://github.com/nextflow-io/rnatoy>`__
-The command ``-with-singularity`` will trigger automatically the download of the image ``nextflow/rnatoy:1.3`` from DockerHub and convert it on the fly into a singularity image that will be used for running each step of the pipeline.
-Moreover the pipeline can also recognize the kind of queue system used where is launched. In the following examples I launched the same pipeline both on the CRG high performance computing centre (HPC) and on my MacBook:
+This command will automatically pull the pipeline and the required test data from the `github repository <https://github.com/nextflow-io/rnatoy>`__
+The command ``-with-singularity`` will automatically trigger the download of the image ``nextflow/rnatoy:1.3`` from DockerHub and convert it on-the-fly into a singularity image that will be used for running each step of the pipeline.
+The pipeline can also recognize the queue system which is used on the machine where it is launched. In the following examples, I launched the same pipeline both on the CRG high performance computing (HPC) cluster and on my MacBook:
 
-The result from CRG's HPC:
+The result from CRG HPC:
 
 .. code-block:: console
 
@@ -510,4 +510,4 @@ The result from my MacBook:
 
 
 
-This is just an example of the power of the automation of the Nextflow environment.
+
