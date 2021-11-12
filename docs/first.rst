@@ -199,7 +199,17 @@ They "forked" not long ago. So far they share most of the codebase, but eventual
 Container registries
 ====================
 
+Container images, normally different versions of them, are stored in container repositories.
+
+These repositories can be browser or discovered within, normally public, container registries.
+
 **Docker Hub**
+
+It is the first and most popular public container registry (which provides also private repositories).
+
+* `Docker Hub <https://hub.docker.com>`__
+
+Example:
 
 `https://hub.docker.com/r/biocontainers/fastqc <https://hub.docker.com/r/biocontainers/fastqc>`__
 
@@ -209,6 +219,14 @@ Container registries
 
 
 **Biocontainers**
+
+* `Biocontainers <https://biocontainers.pro>`__
+
+Website gathering Bioinformatics focused container images from different registries.
+
+Originally Docker Hub was used, but now other registries are preferred.
+
+Example: `https://biocontainers.pro/tools/fastqc <https://biocontainers.pro/tools/fastqc>`__
 
 *Via quay.io*
 
@@ -283,10 +301,10 @@ Compare ``env`` command with and without -e modifier.
 
 **Exercise**
 
-* Generate a Singularity image of the last *NCBI BLAST+* version
+* Generate a Singularity image of the last *samtools* version
   * Consider and compare different registry sources
 * Explore the inside contents of the image
-* Execute in different ways ``blastp`` or any other NCBI BLAST+ program
+* Execute in different ways ``samtools`` program
 
 
 Introduction to Nextflow
