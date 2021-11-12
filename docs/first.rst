@@ -211,12 +211,12 @@ Weaknesses
 **Trivia**
 
 
-Nowadays, there may be some confusion since there are two projects which the share the same name:
+Nowadays, there may be some confusion since there are two projects:
 
 * `HPCng Singularity <https://singularity.hpcng.org/>`__
 * `Sylabs Singularity <https://sylabs.io/singularity/>`__
 
-They "forked" not long ago. So far they share most of the codebase, but eventually this may different and software could have different functionality.
+They "forked" not long ago. So far they share most of the codebase, but eventually this might be different, and software might have different functionality.
 
 Docker hub, BioContainers and other repositories.
 ============
@@ -244,7 +244,7 @@ Through registries
 	singularity build fastqc-0.11.9.sif docker://quay.io/biocontainers/fastqc:0.11.9--0
 
 
-Via Galaxy project prebuilt images
+Galaxy project prebuilt images
 -------------------------------------
 
 .. code-block:: console
@@ -252,7 +252,7 @@ Via Galaxy project prebuilt images
 	singularity pull --name fastqc-0.11.9.sif https://depot.galaxyproject.org/singularity/fastqc:0.11.9--0
 
 
-Galaxy project provides all Bioinformatics software from Biocontainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue for you, this is likely the best option if working in the biomedical field.
+Galaxy project provides all Bioinformatics software from the BioContainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue, this might be the best option for those working in the biomedical field.
 
 
 Run and execution process
@@ -270,7 +270,7 @@ The straight-forward exploratory approach is equivalent to ```docker run -ti myi
 	singularity shell fastqc-multi-bowtie.sif
 
 
-Move around the directories and notice the different isolation approach compared to Docker. You can access most of the host filesystem.
+Move around the directories and notice how the isolation approach is different in comparison to Docker. You can access most of the host filesystem.
 
 Singularity exec
 ---------------------
