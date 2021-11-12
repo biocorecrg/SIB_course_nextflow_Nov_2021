@@ -221,12 +221,12 @@ Weaknesses
 **Trivia**
 
 
-Nowadays, there may be some confusion since there are two projects which the share the same name:
+Nowadays, there may be some confusion since there are two projects:
 
 * `HPCng Singularity <https://singularity.hpcng.org/>`__
 * `Sylabs Singularity <https://sylabs.io/singularity/>`__
 
-They "forked" not long ago. So far they share most of the codebase, but eventually this may different and software could have different functionality.
+They "forked" not long ago. So far they share most of the codebase, but eventually this might be different, and software might have different functionality.
 
 Docker hub, BioContainers and other repositories.
 ============
@@ -254,7 +254,7 @@ Through registries
 	singularity build fastqc-0.11.9.sif docker://quay.io/biocontainers/fastqc:0.11.9--0
 
 
-Via Galaxy project prebuilt images
+Galaxy project prebuilt images
 -------------------------------------
 
 .. code-block:: console
@@ -262,30 +262,30 @@ Via Galaxy project prebuilt images
 	singularity pull --name fastqc-0.11.9.sif https://depot.galaxyproject.org/singularity/fastqc:0.11.9--0
 
 
-Galaxy project provides all Bioinformatics software from Biocontainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue for you, this is likely the best option if working in the biomedical field.
+Galaxy project provides all Bioinformatics software from the BioContainers initiative as Singularity prebuilt images. If download and conversion time of images is an issue, this might be the best option for those working in the biomedical field.
 
 
 Run and execution process
 --------------------------
 
-Once we have some image files (or directories) ready, we can run or favourite processes.
+Once we have some image files (or directories) ready, we can run processes.
 
 Singularity shell
 ---------------------
 
-The straight-forward exploratory approach, equivalent to ```docker run -ti myimage /bin/shell```. But with a more handy syntax.
+The straight-forward exploratory approach is equivalent to ```docker run -ti myimage /bin/shell``` but with a more handy syntax.
 
 .. code-block:: console
 
 	singularity shell fastqc-multi-bowtie.sif
 
 
-Move around the directories and notice the different isolation approach compared to Docker. You can access most of the host filesystem.
+Move around the directories and notice how the isolation approach is different in comparison to Docker. You can access most of the host filesystem.
 
 Singularity exec
 ---------------------
 
-That is the most common way to execute Singularity (equivalent to ```docker exec```). That would be the normal approach in HPC environments.
+That is the most common way to execute Singularity (equivalent to ```docker exec```). That would be the normal approach in a HPC environment.
 
 .. code-block:: console
 
@@ -295,7 +295,7 @@ That is the most common way to execute Singularity (equivalent to ```docker exec
 Singularity run
 --------------------
 
-This executes runscript from recipe definition (equivalent to *docker run*). Not so common for HPC uses. More for instances (servers).
+This executes runscript from recipe definition (equivalent to *docker run*). Not so common for HPC uses. More common for instances (servers).
 
 .. code-block:: console
     singularity run fastqc-multi-bowtie.sif
@@ -304,7 +304,7 @@ This executes runscript from recipe definition (equivalent to *docker run*). Not
 Environment control
 ---------------------
 
-By default Singularity inherits our profile environment (e.g., PATH environment variable). This may be convenient for some circumstances, but it can also lead to unexpected problems if you are not aware, when your own environment clashes with the default one from the image.
+By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient for some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.
 
 .. code-block:: console
     singularity shell -e fastqc-multi-bowtie.sif

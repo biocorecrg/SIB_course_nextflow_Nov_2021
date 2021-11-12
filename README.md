@@ -28,7 +28,7 @@ Trainees will work in a dedicated [AWS environment](https://en.wikipedia.org/wik
 * Execute/Run a Docker/Singularity container from the command line.
 * Locate and fetch Nextflow pipelines from dedicated repositories.
 * Execute/Run a Nextflow pipeline.
-* Describe and explain Nextflow's basic concepts.
+* Describe and explain Nextflow basic concepts.
 * Test and modify a Nextflow pipeline.
 * Implement short blocks of code into a Nextflow pipeline.
 * Develop a Nextflow pipeline from scratch.
@@ -40,9 +40,9 @@ Trainees will work in a dedicated [AWS environment](https://en.wikipedia.org/wik
 Being comfortable working with the CLI (command-line interface) in a Linux-based environment.
 Knowledge of containers is not mandatory; however, this SIB course (https://www.sib.swiss/training/course/20211014_DOCK) can be advised to take. The course materials is online in the dedicated GitHub page for self-learning.
 
-Practitioners will need to connect during the course to a remove server via the "ssh" protocotol. You can learn about it [here](https://www.hostinger.com/tutorials/ssh-tutorial-how-does-ssh-work)
+Practitioners will need to connect during the course to a remote server via the "ssh" protocotol. You can learn about it [here](https://www.hostinger.com/tutorials/ssh-tutorial-how-does-ssh-work)
 
-Those who follow the course should be able to use a command-line/screen-oriented text editor (such as nano or vi/vim, which are already available in the server) or to be able to use an editor able to connect remotely. For sake of information, below the basics of "nano":
+Those who follow the course should be able to use a command-line/screen-oriented text editor (such as nano or vi/vim, which are already available on the server) or to be able to use an editor able to connect remotely. For sake of information, below the basics of "nano":
 https://wiki.gentoo.org/wiki/Nano/Basics_Guide
 
 Having a [GitHub account](https://github.com/join) is recommended. 
@@ -60,10 +60,10 @@ Having a [GitHub account](https://github.com/join) is recommended.
 
 ### Day 1: Introduction to Nextflow and Linux containers
 
-* 13:00-13:30 Getting started, became familiar with the working environment.
+* 13:00-13:30 Getting started, become familiar with the working environment.
 * 13:30-14:30 Talk by Cedric Notredame, CRG.
 * 14:30-15:00 Introduction to Docker and Singularity containers.
-* 15:00-15:30 Break
+* 15:00-15:30 Break.
 * 15:30-16:30 Docker hub, BioContainers and other repositories. Find existing containers. Execute a Singularity container. 
 * 16:30-17:30 Nexflow: introduction, installation, run a simple pipeline. 
 
@@ -73,29 +73,29 @@ Having a [GitHub account](https://github.com/join) is recommended.
 * 13:00-14:00 Nexflow basic concepts. Channels and Operators. Processes, Workflows and the log
 * 14:00-14:30 Breakout rooms: create channels starting from data. Write and run more simple pipelines.
 * 14:30-15:00 Troubleshooting, Q&A.
-* 15:00-15:30 Break
-* 15:30-16:30 Combining processes, directives, resuming the pipeline
-* 16:30-17:00 Breakout rooms: write and run a more complex pipelines
+* 15:00-15:30 Break.
+* 15:30-16:30 Combine processes, directives, resume the pipeline.
+* 16:30-17:00 Breakout rooms: write and run a more complex pipeline.
 * 17:00-17:30 Troubleshooting, Q&A.  
 
 ### Day 3: Write, modify and run a complex pipeline 
 
-* 13:00-14:00 Decoupling resources, parameters and nextflow script (params and nextflow config). Help section. How to get pipelines and running them.
-* 14:00-14:30 Breakout rooms: example of directives // get a pipeline and run it with a test dataset.
+* 13:00-14:00 Decoupling resources, parameters and nextflow script (params and nextflow config). Help section. How to get pipelines and run them.
+* 14:00-14:30 Breakout rooms: example of directives, get a pipeline and run it with a test dataset.
 * 14:30-15:00 Troubleshooting, Q&A.
-* 15:00-15:30 Break
+* 15:00-15:30 Break.
 * 15:30-16:30 Fetch public pipelines, adapt and run them. 
-* 16:30-17:00 Breakout rooms: exercise
+* 16:30-17:00 Breakout rooms: exercise.
 * 17:00-17:30 Troubleshooting, Q&A. 
 
-### Day 4: Run a Nextflow pipeline in different environments, share, and report
+### Day 4: Run a Nextflow pipeline in different environments, share and report
 
-* 13:00-14:00 Using Singularity, profiles and deploying on AWS 
-* 14:00-14:30 Breakout rooms: Deploy your pipeline on the cloud 
+* 13:00-14:00 Using Singularity, profiles and deploying on AWS. 
+* 14:00-14:30 Breakout rooms: Deploy your pipeline on the cloud. 
 * 14:30-15:00 Troubleshooting, Q&A.
-* 15:00-15:30 Break
-* 15:30-16:30 Modules, reporting and share Nextflow pipelines on github. Nextflow Tower.
-* 16:30-17:00 Breakout rooms: .... 
+* 15:00-15:30 Break.
+* 15:30-16:30 Modules, reporting, share Nextflow pipelines on github. Nextflow Tower.
+* 16:30-17:00 Breakout rooms: exercise. 
 * 17:00-17:30 Troubleshooting, Q&A.  
 
 
