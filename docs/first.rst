@@ -5,7 +5,7 @@ First Day
 *******************
 
 Introduction to Linux containers.
-============
+=================================
 
 What are containers?
 ---------------------
@@ -45,7 +45,7 @@ Virtualisation
 	* Every virtual machine with an OS (Operating System)
 
 Containerisation (aka lightweight virtualisation)
-----------------------------------
+-------------------------------------------------
 
 * Abstraction of application layer
 * Depends on host kernel (OS)
@@ -196,8 +196,8 @@ Nowadays, there may be some confusion since there are two projects:
 
 They "forked" not long ago. So far they share most of the codebase, but eventually this might be different, and software might have different functionality.
 
-Container registries.
-============
+Container registries
+====================
 
 **Docker Hub**
 
@@ -219,7 +219,7 @@ Container registries.
 	singularity build fastqc-0.11.9.sif docker://quay.io/biocontainers/fastqc:0.11.9--0
 
 
-*Via Galaxy project prebuilt images
+*Via Galaxy project prebuilt images*
 
 .. code-block:: console
 
@@ -230,7 +230,7 @@ Galaxy project provides all Bioinformatics software from the BioContainers initi
 
 
 Running and executing containers
---------------------------
+--------------------------------
 
 Once we have some image files (or directories) ready, we can run processes.
 
@@ -259,6 +259,7 @@ That is the most common way to execute Singularity (equivalent to ``docker exec`
 This executes runscript from recipe definition (equivalent to ``docker run``). Not so common for HPC uses. More common for instances (servers).
 
 .. code-block:: console
+
     singularity run fastqc-0.11.9.sif
 
 
@@ -267,6 +268,7 @@ This executes runscript from recipe definition (equivalent to ``docker run``). N
 By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient in some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.
 
 .. code-block:: console
+
     singularity shell -e fastqc-0.11.9.sif
     singularity exec -e fastqc-0.11.9.sif fastqc
     singularity run -e fastqc-0.11.9.sif
@@ -275,6 +277,7 @@ By default Singularity inherits a profile environment (e.g., PATH environment va
 Compare ``env`` command with and without -e modifier.
 
 .. code-block:: console
+
     singularity exec fastqc-0.11.9.sif env
     singularity exec -e fastqc-0.11.9.sif env
 
@@ -287,7 +290,7 @@ Compare ``env`` command with and without -e modifier.
 
 
 Introduction to Nextflow
-============
+========================
 DSL for data-driven computational pipelines. `www.nextflow.io <https://www.nextflow.io>`_.
 
 .. image:: images/nextflow_logo_deep.png
@@ -295,7 +298,7 @@ DSL for data-driven computational pipelines. `www.nextflow.io <https://www.nextf
 
 
 What is Nextflow?
-----------------
+-----------------
 
 .. image:: images/nextf_groovy.png
   :width: 600
@@ -307,7 +310,7 @@ The Nextflow documentation is `available here <https://www.nextflow.io/docs/late
 In 2020, Nextflow has been upgraded from DSL1 version to DSL2. In this course we will use exclusively DSL2.
 
 What is Nextflow for?
-----------------
+---------------------
 
 It is for making pipelines without caring about parallelization, dependencies, intermediate file names, data structures, handling exceptions, resuming executions, etc.
 
@@ -367,7 +370,7 @@ All the intermediate results produced during the pipeline execution are automati
 For each process **a temporary folder is created and is cached (or not) once resuming an execution**.
 
 Workflow structure
-============
+==================
 
 The workflows can be represented as graphs where the nodes are the **processes** and the edges are the **channels**.
 The **processes** are blocks of code that can be executed - such as scripts or programs - while the **channels** are asynchronous queues able to **connect processes among them via input / output**.
