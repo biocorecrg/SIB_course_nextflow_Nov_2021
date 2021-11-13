@@ -379,6 +379,10 @@ Still less OS diversity, even with current solutions</p></td>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity exec fastqc-0.11.9.sif fastqc</span>
 </pre></div>
 </div>
+<p>Test a processing of a file from <em>testdata</em> directory:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity exec fastqc-0.11.9_cv7.sif fastqc B7_input_s_chr19.fastq.gz</span>
+</pre></div>
+</div>
 <p><strong>Singularity run</strong></p>
 <p>This executes runscript from recipe definition (equivalent to <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>). Not so common for HPC uses. More common for instances (servers).</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity run fastqc-0.11.9.sif</span>
@@ -398,10 +402,15 @@ Still less OS diversity, even with current solutions</p></td>
 </div>
 <p><strong>Exercise</strong></p>
 <ul class="simple">
-<li><p>Generate a Singularity image of the last <em>samtools</em> version
-* Consider and compare different registry sources</p></li>
+<li><dl class="simple">
+<dt>Generate a Singularity image of the last <em>samtools</em> version</dt><dd><ul>
+<li><p>Consider and compare different registry sources</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><p>Explore the inside contents of the image</p></li>
-<li><p>Execute in different ways <code class="docutils literal notranslate"><span class="pre">samtools</span></code> program</p></li>
+<li><p>Execute in different ways <code class="docutils literal notranslate"><span class="pre">samtools</span></code> program (e. g., using <em>fqidx</em> option)</p></li>
 </ul>
 </section>
 </section>
