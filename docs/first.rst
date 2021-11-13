@@ -271,6 +271,12 @@ That is the most common way to execute Singularity (equivalent to ``docker exec`
 
     singularity exec fastqc-0.11.9.sif fastqc
 
+Test a processing of a file from *testdata* directory:
+
+.. code-block:: console
+
+    singularity exec fastqc-0.11.9_cv7.sif fastqc B7_input_s_chr19.fastq.gz
+
 
 **Singularity run**
 
@@ -304,7 +310,7 @@ Compare ``env`` command with and without -e modifier.
 * Generate a Singularity image of the last *samtools* version
 	* Consider and compare different registry sources
 * Explore the inside contents of the image
-* Execute in different ways ``samtools`` program
+* Execute in different ways ``samtools`` program (e. g., using *fqidx* option)
 
 
 Introduction to Nextflow
