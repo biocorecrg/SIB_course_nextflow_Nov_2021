@@ -302,7 +302,7 @@ Compare ``env`` command with and without -e modifier.
 **Exercise**
 
 * Generate a Singularity image of the last *samtools* version
-  * Consider and compare different registry sources
+	* Consider and compare different registry sources
 * Explore the inside contents of the image
 * Execute in different ways ``samtools`` program
 
