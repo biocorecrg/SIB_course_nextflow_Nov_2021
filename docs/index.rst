@@ -41,7 +41,7 @@ Other instructors:
 * Edgar Garriga Nogales
 
 Here the course page: `https://www.sib.swiss/training/course/20211115_NEXTF <https://www.sib.swiss/training/course/20211115_NEXTF>`_
-
+And here the `GitHub repository <https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/>`_
 
 Contents:
 
