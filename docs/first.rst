@@ -161,7 +161,7 @@ Introduction to Singularity
 
 
 * Focus:
-  * Reproducibility to scientific computing and the high-performance computing (HPC) world.
+	* Reproducibility to scientific computing and the high-performance computing (HPC) world.
 * Origin: Lawrence Berkeley National Laboratory. Later spin-off: Sylabs
 * Version 1.0 -> 2016
 * More information: `https://en.wikipedia.org/wiki/Singularity_(software) <https://en.wikipedia.org/wiki/Singularity_(software)>`__
