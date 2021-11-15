@@ -104,5 +104,5 @@ Having a [GitHub account](https://github.com/join) is recommended.
 
 ## Acknowledgements
 
-* [Bookdown](https://bookdown.org/). The publication system for our course pages.
+* [Sphinx](https://www.sphinx-doc.org/). The publication system for our course pages.
 * [ELIXIR Workshop Hackathon](https://github.com/vibbits/containers-workflow-hackathon). Joined initiative with other colleagues to exchange materials for courses and approaches for courses like this.
