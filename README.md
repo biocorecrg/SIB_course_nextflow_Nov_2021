@@ -10,7 +10,6 @@ Course page: https://www.sib.swiss/training/course/20211115_NEXTF
 
 This slow-paced hands-on course is designed for absolute beginners who want to start using [Nextflow](https://www.nextflow.io) to achieve reproducibility of data analysis. 
 
-
 ### Outline
 
 The 4-half-day Nextflow course will train participants to build Nextflow pipelines and run them with [Singularity](https://sylabs.io/singularity/)  containers.
