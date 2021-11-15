@@ -1,3 +1,3 @@
 GitHub Pages of [biocorecrg/SIB_course_nextflow_Nov_2021](https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021.git)
 ===
-Sphinx html documentation of [67592476](https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/tree/6759247685934e4f1b7252fdb2f5ec39d69e0a91)
+Sphinx html documentation of [96edc29c](https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/tree/96edc29c79c2e16ccfc5864d8acfe6d0c08b074e)
