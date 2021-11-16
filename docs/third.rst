@@ -67,7 +67,7 @@ In the script **test2.nf file**, there are two processes to run two programs:
 - `fastQC <https://www.bioinformatics.babraham.ac.uk/projects/fastqc/>`__ - a tool that calculates a number of quality control metrics on single fastq files;
 - `multiQC <https://multiqc.info/>`__ - an aggregator of results from bioinformatics tools and samples for generating a single html report.
 
-You can see that the process **fastQC** is labeled "bigmem":
+You can see that the process **fastQC** is labeled 'bigmem':
 
 .. code-block:: groovy
 
@@ -86,8 +86,8 @@ You can see that the process **fastQC** is labeled "bigmem":
 
 
 The last two rows of the config file indicate which containers to use. 
-In this example, -- and be default if the repository is not specified, -- a container is pulled from the DockerHub. 
-In case you want to use a singularity container, you can indicate where to store the local image by using the **singularity.cacheDir** option.
+In this example, -- and by default, if the repository is not specified, -- a container is pulled from the DockerHub. 
+In case of using a singularity container, you can indicate where to store the local image using the **singularity.cacheDir** option:
 
 .. code-block:: groovy
 
