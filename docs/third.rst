@@ -279,7 +279,7 @@ Now you will be able to see this html file via the browser (change the bucket nu
 Adding help section to a pipeline
 =============================================
 
-In this example we also describe another good practice: the use of the `--help` parameter. At the beginning of the pipeline we can write:
+Here we describe another good practice: the use of the `\-\-help` parameter. At the beginning of the pipeline we can write:
 
 .. code-block:: groovy
 
@@ -300,7 +300,7 @@ In this example we also describe another good practice: the use of the `--help` 
 	    exit 1
 	}
 
-so launching the pipeline with `--help` will show you just the parameters and the help.
+so that launching the pipeline with `\-\-help` will show you just the parameters and the help.
 
 .. code-block:: console
 
@@ -317,7 +317,7 @@ so launching the pipeline with `--help` will show you just the parameters and th
 EXERCISE 
 ------------------
 
-- Look at previous EXERCISE. Can you make a configuration for that script with a new label for handling failing processes? 
+- Look at the very last EXERCISE of the Second Day. Change the script and the config file using the label for handling failing processes. 
 
 .. raw:: html
 
@@ -347,7 +347,7 @@ The process should become:
 	}
 	
 
-while the nextflow.config file would be:
+and the nextflow.config file would become:
 
 .. code-block:: groovy
 
@@ -366,9 +366,9 @@ while the nextflow.config file would be:
 | 
 
 - Now look at **test2.nf**.
-Can you make a configuration for that script with a new label for handling failing processes by retrying 3 times and incrementing the time?
+Change this script and the config file using the label for handling failing processes by retrying 3 times and incrementing time.
 
-You can give very low time (10 / 15 seconds) for the fastqc process so it would fail at beginning. 
+You can specify a very low time (5, 10 or 15 seconds) for the fastqc process so it would fail at beginning. 
 
 .. raw:: html
 
@@ -429,9 +429,9 @@ while the nextflow.config file would be:
 | 
 | 
 
-Using a public pipeline
+Using public pipelines
 =============================================
-At this point we have an idea about how is written a Nextflow pipeline, so we can easily install and run a published one. As an example let's use the following one, called `Master Of Pores <https://github.com/biocorecrg/mop2>`__ published by us in `2019 <https://www.frontiersin.org/articles/10.3389/fgene.2020.00211/full>`__ :
+As an example, we will use our pipeline `Master Of Pores <https://github.com/biocorecrg/mop2>`__ published in `2019 in Frontiers in Genetics <https://www.frontiersin.org/articles/10.3389/fgene.2020.00211/full>`__ .
 
 This repository contains a collection of pipelines able to process nanopore's raw data and to make detect putative chemical modifications and estimate polyA tail sizes.  
 
