@@ -65,18 +65,17 @@ Virtual machines vs containers
 ===== ===================================================== =====================================================
 ADV   Virtualisation                                        Containerisation
 ===== ===================================================== =====================================================
-PROS. Very similar to a full OS. With current solutions.     No need of full OS installation (less space).
-      high OS diversity No need of full OS installation      Better portability
-      (less space).
-      Faster than virtual machines.
-      Easier automation.
-      Current solutions allow easier
-      distribution of recipes.
-      Better portability.
+PROS. * Very similar to a full OS.     			     * No need of full OS installation (less space).
+      * High OS diversity       			     * Better portability
+      							     * Faster than virtual machines.
+							     * Easier automation.
+							     * Easier distribution of recipes.
+							     * Better portability.
 
-CONS. Need more space and resources.                        Some cases might not be exactly the same as a full OS.
-      Slower than containers.                               Still less OS diversity, even with current solutions
-      Not that good automation.
+      
+CONS. * Need more space and resources.                       * Some cases might not be exactly the same as a full OS.
+      * Slower than containers.                              * Still less OS diversity, even with current solutions
+      * Not that good automation.
 ===== ===================================================== =====================================================
 
 
