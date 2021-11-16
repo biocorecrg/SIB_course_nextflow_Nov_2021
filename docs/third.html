@@ -50,7 +50,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#exercise">EXERCISE</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#using-a-public-pipeline">Using a public pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-public-pipelines">Using public pipelines</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">EXERCISE</a></li>
 </ul>
 </li>
@@ -296,7 +296,7 @@ We can indicate which process and output can be considered the final output of t
 </section>
 <section id="adding-help-section-to-a-pipeline">
 <h2>Adding help section to a pipeline<a class="headerlink" href="#adding-help-section-to-a-pipeline" title="Permalink to this headline"></a></h2>
-<p>In this example we also describe another good practice: the use of the <cite>–help</cite> parameter. At the beginning of the pipeline we can write:</p>
+<p>Here we describe another good practice: the use of the <cite>--help</cite> parameter. At the beginning of the pipeline we can write:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="o">.</span><span class="na">help</span>             <span class="o">=</span> <span class="kc">false</span>    <span class="c1">// this prevents a warning of undefined parameter</span>
 
 <span class="c1">// this prints the input parameters</span>
@@ -315,7 +315,7 @@ We can indicate which process and output can be considered the final output of t
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>so launching the pipeline with <cite>–help</cite> will show you just the parameters and the help.</p>
+<p>so that launching the pipeline with <cite>--help</cite> will show you just the parameters and the help.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test2.nf --help</span>
 
 <span class="go">N E X T F L O W  ~  version 20.07.1</span>
@@ -330,7 +330,7 @@ We can indicate which process and output can be considered the final output of t
 <section id="exercise">
 <h3>EXERCISE<a class="headerlink" href="#exercise" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Look at previous EXERCISE. Can you make a configuration for that script with a new label for handling failing processes?</p></li>
+<li><p>Look at the very last EXERCISE of the Second Day. Change the script and the config file using the label for handling failing processes.</p></li>
 </ul>
 <details>
 <summary><a>Solution</a></summary><p>The process should become:</p>
@@ -353,7 +353,7 @@ We can indicate which process and output can be considered the final output of t
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>while the nextflow.config file would be:</p>
+<p>and the nextflow.config file would become:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="o">{</span>
         <span class="nl">withLabel:</span> <span class="s1">&#39;ignorefail&#39;</span>
         <span class="o">{</span>
@@ -369,8 +369,8 @@ We can indicate which process and output can be considered the final output of t
 <ul class="simple">
 <li><p>Now look at <strong>test2.nf</strong>.</p></li>
 </ul>
-<p>Can you make a configuration for that script with a new label for handling failing processes by retrying 3 times and incrementing the time?</p>
-<p>You can give very low time (10 / 15 seconds) for the fastqc process so it would fail at beginning.</p>
+<p>Change this script and the config file using the label for handling failing processes by retrying 3 times and incrementing time.</p>
+<p>You can specify a very low time (5, 10 or 15 seconds) for the fastqc process so it would fail at beginning.</p>
 <details>
 <summary><a>Solution</a></summary><p>The process should become:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">fastQC</span> <span class="o">{</span>
@@ -420,9 +420,9 @@ We can indicate which process and output can be considered the final output of t
 </div>
 </section>
 </section>
-<section id="using-a-public-pipeline">
-<h2>Using a public pipeline<a class="headerlink" href="#using-a-public-pipeline" title="Permalink to this headline"></a></h2>
-<p>At this point we have an idea about how is written a Nextflow pipeline, so we can easily install and run a published one. As an example let’s use the following one, called <a class="reference external" href="https://github.com/biocorecrg/mop2">Master Of Pores</a> published by us in <a class="reference external" href="https://www.frontiersin.org/articles/10.3389/fgene.2020.00211/full">2019</a> :</p>
+<section id="using-public-pipelines">
+<h2>Using public pipelines<a class="headerlink" href="#using-public-pipelines" title="Permalink to this headline"></a></h2>
+<p>As an example, we will use our pipeline <a class="reference external" href="https://github.com/biocorecrg/mop2">Master Of Pores</a> published in <a class="reference external" href="https://www.frontiersin.org/articles/10.3389/fgene.2020.00211/full">2019 in Frontiers in Genetics</a> .</p>
 <p>This repository contains a collection of pipelines able to process nanopore’s raw data and to make detect putative chemical modifications and estimate polyA tail sizes.</p>
 <p>As stated in the website for installing it we need to clone the pipeline together with the submodules. The submodules contain <strong>Nextflow modules</strong>, that will be described later.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone --depth 1 --recurse-submodules https://github.com/biocorecrg/MOP2.git</span>
