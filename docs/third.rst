@@ -4,7 +4,7 @@
 Third Day
 *******************
 
-During this day we will make more complex pipelines and separate the main code from the configuration. Then we will focus on the reuse of the code and on how to share your code.
+During this day we will make more complex pipelines and separate the main code from the configuration. Then we will focus on how to reuse and share your code.
 
 .. image:: images/nextflow_logo_deep.png
   :width: 300
@@ -13,14 +13,14 @@ During this day we will make more complex pipelines and separate the main code f
 Decoupling resources, parameters and nextflow script
 =======================
 
-When you make a complex pipelines you might want to keep separated the definition of resources needed, the default parameters and the main script.
-You can achieve this by two additional files:
+When making a complex pipelines it is conveninet to keep the definition of resources needed, the default parameters and the main script separately from each other.
+This can be achieved using two additional files:
 
 - nextflow.config
 - params.config
 
-The **nextflow.config** file allows to indicate the resources needed for each class of processes.
-You can label your processes to make a link with the definitions in the nextflow.config file. This is an example of a nextflow.config file:
+The **nextflow.config** file allows to indicate resources needed for each class of processes.
+This is achieved labeling processes in the nextflow.config file:
 
 .. code-block:: groovy
 
@@ -43,7 +43,7 @@ You can label your processes to make a link with the definitions in the nextflow
 	singularity.cacheDir = "$baseDir/singularity"
 
 
-The first row indicates to use the information stored in the **params.config** file (described later). Then we have the definition of the default resources for a process:
+The first row indicates to use the information stored in the **params.config** file (described later). Then follows the definition of the default resources for a process:
 
 .. code-block:: groovy
 	process {
@@ -52,7 +52,7 @@ The first row indicates to use the information stored in the **params.config** f
 	     time='6h'
 	...
 
-Then we have the resources needed for a class of processes in particular labeled with **bigmem** (i.e. the default options will be overridden)
+Then we specify resources needed for a class of processes labeled **bigmem** (i.e., the default options will be overridden for these processes):
 
 .. code-block:: groovy
 
@@ -62,11 +62,11 @@ Then we have the resources needed for a class of processes in particular labeled
 		cpus='1'
 	} 	
 
-In the script **test2.nf file** we have two processes that will run two programs:
+In the script **test2.nf file**, there are two processes to run two programs:
 - `fastQC <https://www.bioinformatics.babraham.ac.uk/projects/fastqc/>`__: a tool that calculates a number of quality control metrics on single fastq files.
 - `multiQC <https://multiqc.info/>`__: an aggregator of results from bioinformatics tools and samples for generating a single report.
 
-If we have a look at process **fastQC** we can see the use of the label.
+You can see that the process **fastQC** is labeled "bigmem":
 
 .. code-block:: groovy
 
@@ -84,8 +84,8 @@ If we have a look at process **fastQC** we can see the use of the label.
 	...
 
 
-The last two rows of the config file indicate which container needs to be used. 
-In this example, it is pulling it from `DockerHub <https://hub.docker.com/>__. 
+The last two rows of the config file indicate which containers to use. 
+In this example, -- and be default if the repository is not specified, -- a container is pulled from the DockerHub. 
 In case you want to use a singularity container, you can indicate where to store the local image by using the **singularity.cacheDir** option.
 
 .. code-block:: groovy
@@ -148,7 +148,7 @@ Let's now launch the script **test2.nf**.
 	Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
 
 
-We will get a number of errors since no executable is found in our environment / path. This because they are stored in our docker image! So we can launch it this time with the `-with-docker` parameter.
+We will get a number of errors since no executable is found in our environment / path. This is because the executables are stored in our docker image and we have to tell Nextflow to use the docker image, using the `-with-docker` parameter.
 
 
 .. code-block:: console
@@ -169,7 +169,7 @@ We will get a number of errors since no executable is found in our environment /
 	[1a/cfe63b] process > multiQC                              [100%] 1 of 1 ✔
 
 
-This time it worked beautifully since Nextflow used the image indicated within the nextflow.config file that contains our executables.
+This time it worked because Nextflow used the image indicated in the nextflow.config file and that contains the executables.
 
 Now we can have a look at the **params.config** file
 
@@ -181,7 +181,7 @@ Now we can have a look at the **params.config** file
 	}
 
 
-As you can see we indicates the pipeline parameters that can be overridden by using `--reads` and `--email`.
+As you can see, we indicated two pipeline parameters; when running the pipeline they can be overridden using `--reads` and `--email`.
 This is not mandatory but I found quite useful to modify this file instead of using very long command lines with tons of `--something`.
 
 Now, let's have a look at the folders generated by the pipeline.
