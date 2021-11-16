@@ -961,8 +961,9 @@ You can resume the execution after the code modification using the parameter **-
 	[33/a6fc72] Cached process > flow1:reverseSequence ([seq_1, seq_2, seq_3])
 	/home/ec2-user/git/CoursesCRG_Containers_Nextflow_May_2021/nextflow/nextflow/work/33/a6fc72786d042cacf733034d501691/all.rev
 
+.. note::
 
-**IMPORTANT: Nextflow parameters are provided using one hyphen** (`-resume`) **while a pipeline parameters, two hyphens** (`\-\-inputfile`).
+	**IMPORTANT: Nextflow parameters are provided using one hyphen** (`-resume`) **while a pipeline parameters, two hyphens** (`\-\-inputfile`).
 
 Sometimes you might want to resume a previous run of your pipeline.
 
