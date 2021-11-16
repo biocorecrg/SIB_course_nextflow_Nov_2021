@@ -241,10 +241,10 @@ In case of using a singularity container, you can indicate where to store the lo
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">containerOptions</span> <span class="o">=</span> <span class="o">{</span> <span class="n">workflow</span><span class="o">.</span><span class="na">containerEngine</span> <span class="o">==</span> <span class="s2">&quot;docker&quot;</span> <span class="o">?</span> <span class="s1">&#39;-u $(id -u):$(id -g)&#39;</span><span class="o">:</span> <span class="kc">null</span><span class="o">}</span>
 </pre></div>
 </div>
-<p>This will tell Nextflow that if is running with Docker, this has to produce files that belong to your user and not to root.</p>
+<p>This will tell Nextflow that if it is running with Docker, this has to produce files that belong to a user rather than to root.</p>
 <section id="publishing-final-results">
 <h3>Publishing final results<a class="headerlink" href="#publishing-final-results" title="Permalink to this headline"></a></h3>
-<p>After running the script you see two new folders named <strong>output_fastqc</strong> and <strong>output_multiQC</strong> that contain the result of the pipeline.
+<p>After running the script you can see the two new folders generated, <strong>output_fastqc</strong> and <strong>output_multiQC</strong>, that contain the result of the pipeline output.
 We can indicate which process and which output can be considered the final output of the pipeline by using the <strong>publishDir</strong> directive that has to be specified at the beginning of a process.</p>
 <p>In our pipeline we define these folders here:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
