@@ -203,12 +203,12 @@ We observe that Docker runs as "root". This can be problematic and generates sec
 	containerOptions = { workflow.containerEngine == "docker" ? '-u $(id -u):$(id -g)': null}
 
 
-This will tell Nextflow that if is running with Docker, this has to produce files that belong to your user and not to root.
+This will tell Nextflow that if it is running with Docker, this has to produce files that belong to a user rather than to root.
 
 Publishing final results
 ----------------------------
 
-After running the script you see two new folders named **output_fastqc** and **output_multiQC** that contain the result of the pipeline.
+After running the script you can see the two new folders generated, **output_fastqc** and **output_multiQC**, that contain the result of the pipeline output.
 We can indicate which process and which output can be considered the final output of the pipeline by using the **publishDir** directive that has to be specified at the beginning of a process.
 
 In our pipeline we define these folders here:
