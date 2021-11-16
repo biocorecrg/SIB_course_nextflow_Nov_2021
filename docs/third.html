@@ -51,7 +51,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#using-a-public-pipeline">Using a public pipeline</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">EXERCISE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">EXERCISE</a></li>
 </ul>
 </li>
 </ul>
@@ -84,18 +84,18 @@
              
   <section id="third-day">
 <span id="second-page"></span><h1>Third Day<a class="headerlink" href="#third-day" title="Permalink to this headline"></a></h1>
-<p>During this day we will make more complex pipelines and separate the main code from the configuration. Then we will focus on the reuse of the code and on how to share your code.</p>
+<p>During this day we will make more complex pipelines and separate the main code from the configuration. Then we will focus on how to reuse and share your code.</p>
 <a class="reference internal image-reference" href="../_images/nextflow_logo_deep.png"><img alt="../_images/nextflow_logo_deep.png" src="../_images/nextflow_logo_deep.png" style="width: 300px;" /></a>
 <section id="decoupling-resources-parameters-and-nextflow-script">
 <h2>Decoupling resources, parameters and nextflow script<a class="headerlink" href="#decoupling-resources-parameters-and-nextflow-script" title="Permalink to this headline"></a></h2>
-<p>When you make a complex pipelines you might want to keep separated the definition of resources needed, the default parameters and the main script.
-You can achieve this by two additional files:</p>
+<p>When making a complex pipelines it is conveninet to keep the definition of resources needed, the default parameters and the main script separately from each other.
+This can be achieved using two additional files:</p>
 <ul class="simple">
 <li><p>nextflow.config</p></li>
 <li><p>params.config</p></li>
 </ul>
-<p>The <strong>nextflow.config</strong> file allows to indicate the resources needed for each class of processes.
-You can label your processes to make a link with the definitions in the nextflow.config file. This is an example of a nextflow.config file:</p>
+<p>The <strong>nextflow.config</strong> file allows to indicate resources needed for each class of processes.
+This is achieved labeling processes in the nextflow.config file:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">includeConfig</span> <span class="s2">&quot;$baseDir/params.config&quot;</span>
 
 <span class="n">process</span> <span class="o">{</span>
@@ -115,8 +115,8 @@ You can label your processes to make a link with the definitions in the nextflow
 <span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span> <span class="o">=</span> <span class="s2">&quot;$baseDir/singularity&quot;</span>
 </pre></div>
 </div>
-<p>The first row indicates to use the information stored in the <strong>params.config</strong> file (described later). Then we have the definition of the default resources for a process:</p>
-<p>Then we have the resources needed for a class of processes in particular labeled with <strong>bigmem</strong> (i.e. the default options will be overridden)</p>
+<p>The first row indicates to use the information stored in the <strong>params.config</strong> file (described later). Then follows the definition of the default resources for a process:</p>
+<p>Then we specify resources needed for a class of processes labeled <strong>bigmem</strong> (i.e., the default options will be overridden for these processes):</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">withLabel:</span> <span class="s1">&#39;bigmem&#39;</span>
 <span class="o">{</span>
         <span class="n">memory</span><span class="o">=</span><span class="s1">&#39;0.7G&#39;</span>
@@ -124,10 +124,10 @@ You can label your processes to make a link with the definitions in the nextflow
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>In the script <strong>test2.nf file</strong> we have two processes that will run two programs:
+<p>In the script <strong>test2.nf file</strong>, there are two processes to run two programs:
 - <a class="reference external" href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastQC</a>: a tool that calculates a number of quality control metrics on single fastq files.
 - <a class="reference external" href="https://multiqc.info/">multiQC</a>: an aggregator of results from bioinformatics tools and samples for generating a single report.</p>
-<p>If we have a look at process <strong>fastQC</strong> we can see the use of the label.</p>
+<p>You can see that the process <strong>fastQC</strong> is labeled “bigmem”:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Process 1. Run FastQC on raw data.</span>
 <span class="cm"> */</span>
@@ -142,8 +142,8 @@ You can label your processes to make a link with the definitions in the nextflow
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>The last two rows of the config file indicate which container needs to be used.
-In this example, it is pulling it from <a href="#id1"><span class="problematic" id="id2">`</span></a>DockerHub &lt;<a class="reference external" href="https://hub.docker.com/">https://hub.docker.com/</a>&gt;__.
+<p>The last two rows of the config file indicate which containers to use.
+In this example, – and be default if the repository is not specified, – a container is pulled from the DockerHub.
 In case you want to use a singularity container, you can indicate where to store the local image by using the <strong>singularity.cacheDir</strong> option.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="o">.</span><span class="na">container</span> <span class="o">=</span> <span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
 <span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span> <span class="o">=</span> <span class="s2">&quot;$baseDir/singularity&quot;</span>
@@ -200,7 +200,7 @@ In case you want to use a singularity container, you can indicate where to store
 <span class="go">Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line</span>
 </pre></div>
 </div>
-<p>We will get a number of errors since no executable is found in our environment / path. This because they are stored in our docker image! So we can launch it this time with the <cite>-with-docker</cite> parameter.</p>
+<p>We will get a number of errors since no executable is found in our environment / path. This is because the executables are stored in our docker image and we have to tell Nextflow to use the docker image, using the <cite>-with-docker</cite> parameter.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test2.nf -with-docker</span>
 
 <span class="go">nextflow run test2.nf -with-docker</span>
@@ -217,7 +217,7 @@ In case you want to use a singularity container, you can indicate where to store
 <span class="go">[1a/cfe63b] process &gt; multiQC                              [100%] 1 of 1 ✔</span>
 </pre></div>
 </div>
-<p>This time it worked beautifully since Nextflow used the image indicated within the nextflow.config file that contains our executables.</p>
+<p>This time it worked because Nextflow used the image indicated in the nextflow.config file and that contains the executables.</p>
 <p>Now we can have a look at the <strong>params.config</strong> file</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">{</span>
         <span class="n">reads</span>           <span class="o">=</span> <span class="s2">&quot;$baseDir/../testdata/*.fastq.gz&quot;</span>
@@ -225,7 +225,7 @@ In case you want to use a singularity container, you can indicate where to store
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>As you can see we indicates the pipeline parameters that can be overridden by using <cite>–reads</cite> and <cite>–email</cite>.
+<p>As you can see, we indicated two pipeline parameters; when running the pipeline they can be overridden using <cite>–reads</cite> and <cite>–email</cite>.
 This is not mandatory but I found quite useful to modify this file instead of using very long command lines with tons of <cite>–something</cite>.</p>
 <p>Now, let’s have a look at the folders generated by the pipeline.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls  work/2a/22e3df887b1b5ac8af4f9cd0d88ac5/</span>
@@ -629,8 +629,8 @@ We can inspect the <strong>params.config</strong> file that is pointing to a sma
 <span class="go">Execution status: OK</span>
 </pre></div>
 </div>
-<section id="id3">
-<h3>EXERCISE<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<section id="id1">
+<h3>EXERCISE<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Look at the documentation and try to change the mapper, to skip the filtering and to enable the demultiplexing.</p></li>
 </ul>
