@@ -129,7 +129,7 @@ This is achieved labeling processes in the nextflow.config file:</p>
 <li><p><a class="reference external" href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastQC</a> - a tool that calculates a number of quality control metrics on single fastq files;</p></li>
 <li><p><a class="reference external" href="https://multiqc.info/">multiQC</a> - an aggregator of results from bioinformatics tools and samples for generating a single html report.</p></li>
 </ul>
-<p>You can see that the process <strong>fastQC</strong> is labeled “bigmem”:</p>
+<p>You can see that the process <strong>fastQC</strong> is labeled ‘bigmem’:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Process 1. Run FastQC on raw data.</span>
 <span class="cm"> */</span>
@@ -145,8 +145,8 @@ This is achieved labeling processes in the nextflow.config file:</p>
 </pre></div>
 </div>
 <p>The last two rows of the config file indicate which containers to use.
-In this example, – and be default if the repository is not specified, – a container is pulled from the DockerHub.
-In case you want to use a singularity container, you can indicate where to store the local image by using the <strong>singularity.cacheDir</strong> option.</p>
+In this example, – and by default, if the repository is not specified, – a container is pulled from the DockerHub.
+In case of using a singularity container, you can indicate where to store the local image using the <strong>singularity.cacheDir</strong> option:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="o">.</span><span class="na">container</span> <span class="o">=</span> <span class="s1">&#39;biocorecrg/c4lwg-2018:latest&#39;</span>
 <span class="n">singularity</span><span class="o">.</span><span class="na">cacheDir</span> <span class="o">=</span> <span class="s2">&quot;$baseDir/singularity&quot;</span>
 </pre></div>
