@@ -520,7 +520,7 @@ While we keep the information of the container inside the module for better repr
 
 Here you see that we are not using our own image, but rather we use the image provided by **biocontainers** in `quay <https://quay.io/>`__.
 
-Here you can find a list of fastqc images developed and stored by the biocontainers community `https://biocontainers.pro/#/tools/fastqc <https://biocontainers.pro/#/tools/fastqc>`__.
+Here you can find a list of fastqc images developed and stored by the biocontainers community `https://biocontainers.pro/#/tools/fastqc <https://biocontainers.pro/#/tools/fastqc>`___.
 
 Let's have a look at the **multiqc.nf** module:
 
@@ -635,23 +635,23 @@ First, you need to access the `tower.nf <https://tower.nf/>`__ website and login
   :width: 800
 
 
-We select the email for receiving the instructions and the token to be used for the pipeline.
+If you selected the email for receiving the instructions and the token to be used.
 
 .. image:: images/tower0.png
   :width: 800
  
-So we check the email:
+check the email:
 
 .. image:: images/tower1.png
   :width: 800
 
-We then go on getting started and follow the instructions for exporting two environmental variables:
+
 
 .. image:: images/tower2.png
   :width: 800
 
 
-You can then generate your token here: `https://tower.nf/tokens <https://tower.nf/tokens>`___ and copy paste in your pipeline using this snippet in the configuration file
+You can generate your token at `https://tower.nf/tokens <https://tower.nf/tokens>`__ and copy paste it in your pipeline using this snippet in the configuration file:
 
 .. code-block:: groovy
 
@@ -669,7 +669,7 @@ or exporting those environmental variables:
 	export NXF_VER=21.04.0
 
 
-we then launch the pipeline:
+Now we can launch the pipeline:
 
 .. code-block:: console
 
@@ -687,14 +687,14 @@ we then launch the pipeline:
 	CAPSULE: Downloading dependency org.codehaus.groovy:groovy-xml:jar:3.0.5
 
 
-We finally go to the tower website again:
+and go to the tower website again:
 
 
 .. image:: images/tower3.png
   :width: 800
 
 
-And in the end when the pipeline is finished we can also receive a mail.
+When the pipeline is finished we can also receive a mail.
 
 
 .. image:: images/tower4.png
@@ -855,7 +855,7 @@ Then we pass to the pipelines the path of our input files:
 	Succeeded   : 5
 
 
-Nextflow first pulls down the required version of the pipeline and it stores it in:
+Nextflow first pulls down the required version of the pipeline and stores it in:
 
 .. code-block:: console
 
@@ -864,7 +864,7 @@ Nextflow first pulls down the required version of the pipeline and it stores it 
 
 then it pulls the Docker image and runs the pipeline.
 
-You can use the Nextflow's command **list** that shows the number of pipelines installed in your environment and the command **info** for fetching some useful information.
+You can use the Nextflow command **list** to see pipelines installed in your environment and the command **info** to fetch information about the path, repository, etc.
 
 .. code-block:: console
 
@@ -884,7 +884,7 @@ You can use the Nextflow's command **list** that shows the number of pipelines i
 	 revision    : * main
 
 
-Finally you can update, view or delete a project by using the Nextflow commands **pull**, **view** and **drop**.
+Finally, you can update, view or delete a project by using the Nextflow commands **pull**, **view** and **drop**.
 
 .. code-block:: groovy
 
