@@ -136,9 +136,9 @@ This can be done using the Nextflow parameter <cite>-with-singularity</cite> wit
 </section>
 <section id="adding-more-steps">
 <h2>Adding more steps<a class="headerlink" href="#adding-more-steps" title="Permalink to this headline"></a></h2>
-<p>We can make pipelines incrementally complex by adding more and more processes.
+<p>We can build a pipeline incrementally adding more and more processes.
 Nextflow will take care of the dependencies between the input / output and of the parallelization.</p>
-<p>Within the <strong>test3</strong> folder we have two more steps to add: the reference indexing and the read alignments with <a class="reference external" href="http://bowtie-bio.sourceforge.net/index.shtml">bowtie</a>.</p>
+<p>Let’s add to the <strong>test2.nf</strong> pipeline two additional steps, indexign of the reference genome and the read alignment using <a class="reference external" href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a>. Within the <strong>test3</strong> folder</p>
 <p>We add a new input for the reference sequence:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">log</span><span class="o">.</span><span class="na">info</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">BIOCORE@CRG - N F TESTPIPE  ~  version ${version}</span>
