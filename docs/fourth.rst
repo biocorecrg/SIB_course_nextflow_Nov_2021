@@ -39,7 +39,7 @@ Let's inspect the folder `singularity`:
 	biocorecrg-c4lwg-2018-latest.img
 
 
-This singularity image can be used to execute the code outside the pipeline **exactly in the same way** as in the pipeline.
+This singularity image can be used to execute the code outside the pipeline **exactly the same way** as inside the pipeline.
 
 Sometimes we can be interested in launching only a specific job, because it might failed or for making a test. For that, we can go to the corresponding temporary folder; for example, one of the fastQC temporary folders:
 
@@ -237,27 +237,25 @@ This section will allow us to connect these outputs directly with other processe
 
 As you can see, we passed the **samples_log** output to the multiqc process after mixing it with the output channel from the fastqc process.
 
+
 Profiles 
 =================
 
-For deploying a pipeline in a cluster environment or a cloud, we need to add some information in the **nextflow.config** file. 
+For deploying a pipeline in a cluster or Cloud, in the **nextflow.config** file, we need to indicate what kind of the `executor <https://www.nextflow.io/docs/latest/process.html#executor>`__ to use.
 
-In particular we need to indicate the kind of `executor <https://www.nextflow.io/docs/latest/process.html#executor>`__ should be used.
-
-In the Nextflow framework architecture, the executor indicates which is the **batch-queuing system** to use to submit jobs to the HPC or to the cloud.
+In the Nextflow framework architecture, the executor indicates which the **batch-queue system** to use to submit jobs to a HPC or to Cloud.
 
 The executor is completely abstracted, so you can switch from SGE to SLURM just by changing this parameter in the configuration file.
 
 You can group different classes of configuration or **profiles** within a single **nextflow.config** file. 
-In this way that you can indicate at run time which executor and resources to use for a pipeline execution.
 
-Let's inspect the **nextflow.config** file in **test3** folder. We can look at three different profiles:
+Let's inspect the **nextflow.config** file in **test3** folder. We can see three different profiles:
 
 - standard
 - cluster
 - cloud
 
-The first one indicates the resources needed for running the pipeline locally. They are quite small since we have little power and CPUs on the test node.
+The first profile indicates the resources needed for running the pipeline locally. They are quite small since we have little power and CPU on the test node.
 
 .. code-block:: groovy
 
@@ -278,9 +276,9 @@ The first one indicates the resources needed for running the pipeline locally. T
 	   }
  
  
-As you can see we indicate explicitly the **local** executor. So this will be the default when running the pipeline indicating without specifying a profiles.
+As you can see, we explicitly indicated the **local** executor. By definition, the local executor is a default executor if the pipeline is run without specifying a profile.
 
-The second one is **cluster**:
+The second profile is for running the pipeline on the **cluster**; here in particular for the cluster supporting the Sun Grid Engine queuing system:
 
 .. code-block:: groovy
 
@@ -303,7 +301,7 @@ The second one is **cluster**:
 	   }
 
 
-This indicates that the system uses **Sun Grid Engine** as job scheduler and that we have different queues for small jobs and more intensive ones.
+This profile indicates that the system uses **Sun Grid Engine** as a job scheduler and that we have different queues for small jobs and more intensive ones.
 
 
 Deployment in the AWS cloud 
