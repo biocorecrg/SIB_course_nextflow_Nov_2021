@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRADING EXERCISE &mdash; Reproducible research and data analysis using Nextflow pipelines  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Reproducible research and data analysis using Nextflow pipelines
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About the course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first.html">First Day</a></li>
+<li class="toctree-l1"><a class="reference internal" href="second.html">Second Day</a></li>
+<li class="toctree-l1"><a class="reference internal" href="third.html">Third Day</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourth.html">Fourth Day</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Reproducible research and data analysis using Nextflow pipelines</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>GRADING EXERCISE</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="grading-exercise">
+<h1>GRADING EXERCISE<a class="headerlink" href="#grading-exercise" title="Permalink to this headline"></a></h1>
+<p>Make a pipeline that does the following:</p>
+<ul class="simple">
+<li><p>aligns reads in fastq files (there are two files from a ChIP-seq experiment) in the folder <a class="reference external" href="https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/tree/main/testdata/">testdata</a> using Bowtie (as in the course exercises);</p></li>
+<li><p>runs fastqc for fastq files and the files produced as the result of the read alignment to the chr19 (file chr19.fasta.gz);</p></li>
+<li><p>calls ChIP-seq peaks for the produced alignments using the MACS2 software (<a class="reference external" href="https://hub.docker.com/r/fooliu/macs2">here is the official container</a>).</p></li>
+</ul>
+<p>(Optional) Make a more complex pipeline that does all the above plus:</p>
+<ul class="simple">
+<li><p>allows optional (choose as a parameter) read alignment using Bowtie and Bowtie2 or/and BWA;</p></li>
+<li><p>compares the number of called peaks for different alignment programs;</p></li>
+<li><p>compares required computational resources (RAM) and execution time for running the pipeline (all or/and only alignment) for different alignment programs.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, CRG.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
