@@ -49,7 +49,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#exercise">EXERCISE</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#modules-and-re-usage-of-the-code">Modules and re-usage of the code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#modules-and-how-to-re-use-the-code">Modules and how to re-use the code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id5">EXERCISE</a></li>
 </ul>
 </li>
@@ -323,44 +323,44 @@ The first one is the one we want to keep as a final result; for that, we specify
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>We indicate some <strong>AWS specific parameters</strong> (<strong>region</strong> and <strong>cliPath</strong>) and the executor that is <strong>awsbatch</strong>.
-Then we indicate that the working directory, that is normally written locally, should be mounted as <a class="reference external" href="https://aws.amazon.com/s3/">S3 volume</a>.
+<p>We indicate the <strong>AWS specific parameters</strong> (<strong>region</strong> and <strong>cliPath</strong>) and the executor <strong>awsbatch</strong>.
+Then we indicate the working directory, that should be mounted as <a class="reference external" href="https://aws.amazon.com/s3/">S3 volume</a>.
 This is mandatory when running Nextflow on the cloud.</p>
-<p>We can now launch the pipeline indicating <cite>-profile cloud</cite></p>
+<p>We can now launch the pipeline indicating <cite>-profile cloud</cite>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test3.nf -bg -with-docker -profile cloud &gt; log</span>
 </pre></div>
 </div>
 <p>Note that there is no longer a <strong>work</strong> folder because, on the AWS cloud, the output is copied locally.</p>
-<p>Sometimes you can find that the Nextflow process itself is very memory intensive and the main node can run out of memory. To avoid this you can reduce the memory needed by setting an environmental variable:</p>
+<p>Sometimes you can find that the Nextflow process itself is very memory intensive and the main node can run out of memory. To avoid this, you can reduce the memory needed by setting an environmental variable:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export NXF_OPTS=&quot;-Xms50m -Xmx500m&quot;</span>
 </pre></div>
 </div>
 <p>Again we can copy the output file to the bucket.</p>
-<p>We can also tell Nextflow to directly copy the output file to the S3 bucket: to do so, change the parameter <strong>outdir</strong> in the params file:</p>
+<p>We can also tell Nextflow to directly copy the output file to the S3 bucket: to do so, change the parameter <strong>outdir</strong> in the params file (use the bucket corresponding to your AWS instance):</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;s3://class-bucket-1/results&quot;</span>
 </pre></div>
 </div>
 <section id="exercise">
 <h3>EXERCISE<a class="headerlink" href="#exercise" title="Permalink to this headline"></a></h3>
-<p>Modify the <strong>test3.nf</strong> file to make two different subworkflows:</p>
+<p>Modify the <strong>test3.nf</strong> file to make two sub-workflows:</p>
 <ul class="simple">
-<li><p>one for fastqc + bowtie alignment</p></li>
-<li><p>one for a new fastqc analysis of the aligned files produced by bowtie.</p></li>
+<li><p>for fastqc of fastq files and bowtie alignment;</p></li>
+<li><p>for a fastqc analysis of the aligned files produced by bowtie.</p></li>
 </ul>
-<p>For convenience you can use the multiqc config file called config.yaml in the multiqc process.</p>
+<p>For convenience you can use the multiqc config file called <strong>config.yaml</strong> in the multiqc process.</p>
 <details>
-<summary><a>Solution</a></summary><p>Solution in the file test3_2.nf</p>
+<summary><a>Solution</a></summary><p>Solution is in the file test3_2.nf:</p>
 </details><div class="line-block">
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
 </section>
 </section>
-<section id="modules-and-re-usage-of-the-code">
-<h2>Modules and re-usage of the code<a class="headerlink" href="#modules-and-re-usage-of-the-code" title="Permalink to this headline"></a></h2>
-<p>A great advance of the new DSL2 is to allow the <strong>modularization of the code</strong>.
-In particular, you can move a named workflow within a module and keep it aside for being accessed from different pipelines.</p>
-<p>Looking at the <strong>test4</strong> folder gives you an idea of how the code uses modules.</p>
+<section id="modules-and-how-to-re-use-the-code">
+<h2>Modules and how to re-use the code<a class="headerlink" href="#modules-and-how-to-re-use-the-code" title="Permalink to this headline"></a></h2>
+<p>A great advantage of the new DSL2 is to allow the <strong>modularization of the code</strong>.
+In particular, you can move a named workflow within a module and keep it aside for being accessed by different pipelines.</p>
+<p>The <strong>test4</strong> folder provides an example of using modules.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="n">nextflow</span><span class="o">.</span><span class="na">enable</span><span class="o">.</span><span class="na">dsl</span><span class="o">=</span><span class="mi">2</span>
@@ -418,7 +418,7 @@ In particular, you can move a named workflow within a module and keep it aside f
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>We now include two modules named <strong>fastqc</strong> and <strong>multiqc</strong> from <code class="docutils literal notranslate"><span class="pre">`${baseDir}/lib/fastqc.nf`</span></code> and <code class="docutils literal notranslate"><span class="pre">`${baseDir}/lib/multiqc.nf`</span></code>.
+<p>We now include two modules, named <strong>fastqc</strong> and <strong>multiqc</strong>, from <code class="docutils literal notranslate"><span class="pre">`${baseDir}/lib/fastqc.nf`</span></code> and <code class="docutils literal notranslate"><span class="pre">`${baseDir}/lib/multiqc.nf`</span></code>.
 Let’s inspect the <strong>fastqc</strong> module:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm">*  fastqc module</span>
@@ -445,8 +445,8 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Module <strong>fastqc</strong> takes as <strong>input</strong> a channel with reads and produces as <strong>output</strong> the files generated by the fastqc program.</p>
-<p>The module is quite simple: it contains the directive <strong>publishDir</strong>, the tag, the container to be used and has a similar input, output and script session than seen previously.</p>
+<p>Module <strong>fastqc</strong> takes as <strong>input</strong> a channel with files containing reads and produces as <strong>output</strong> the files generated by the fastqc program.</p>
+<p>The module contains the directive <strong>publishDir</strong>, the tag, the container to be used and has similar input, output and script session as the fastqc process in <strong>test3.nf</strong>.</p>
 <p>A module can contain its own parameters that can be used for connecting the main script to some variables inside the module.</p>
 <p>In this example we have the declaration of two <strong>parameters</strong> that are defined at the beginning:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="o">.</span><span class="na">CONTAINER</span> <span class="o">=</span> <span class="s2">&quot;quay.io/biocontainers/fastqc:0.11.9--0&quot;</span>
