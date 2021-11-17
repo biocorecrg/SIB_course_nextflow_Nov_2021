@@ -12,6 +12,39 @@ About the course
 This slow-paced hands-on course is designed for absolute beginners who want to start using  `Nextflow DSL2 <https://www.nextflow.io>`_ to achieve reproducibility of the data analysis. 
 
 
+.. |luca| image:: images/lcozzuto.jpg
+  :alt: Alternative text
+  
+.. |toni| image:: images/thermoso.jpg
+  :alt: Alternative text
+  
+.. |julia| image:: images/jponomarenko.jpg
+  :alt: Alternative text
+  
+
+.. list-table:: Main instructors:
+   :widths: 50 50 50
+   :header-rows: 1
+
+   * - Luca Cozzuto
+     - Toni Hermoso
+     - Julia Ponomarenko
+   * - |luca|
+     - |toni|
+     - |julia|
+   
+Other instructors:
+
+* Alessio Vignoli
+* Athanasios Baltzis
+* Jose Espinosa-Carrasco
+* Leila Mansouri
+* Bjorn Langer
+* Suzanne Jin
+* Emilio Palumbo
+* Edgar Garriga Nogales
+
+
 .. _home-page-outline:
 
 Outline
