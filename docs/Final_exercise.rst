@@ -12,3 +12,6 @@ Make a pipeline that does the following:
 - Allows optional (as a parameter) read alignment using Bowtie, Bowtie2 or BWA.
 - Compares the number of called peaks for different alignment programs.
 - Compares required computational resources and execution time for running the pipeline (all or/and only alignment) for different alignment programs.
+
+
+Email your full solution (we should be able to run your pipeline) at `BioinformaticsUnit@crg.eu` or, better, do a pull request in this repository. Please use your First and Second name in the name of your folder.
