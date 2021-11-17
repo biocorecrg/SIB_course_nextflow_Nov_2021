@@ -54,10 +54,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#reporting-and-graphical-interface">Reporting and graphical interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#share-nextflow-pipelines-and-good-practices">Share Nextflow pipelines and good practices</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#grading-exercise">GRADING EXERCISE</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#share-nextflow-pipelines-and-good-practices">Share Nextflow pipelines and good practices</a></li>
 </ul>
 </li>
 </ul>
@@ -752,21 +749,6 @@ To https://github.com/lucacozzuto/test_course.git
 <span class="o">[...]</span>
 </pre></div>
 </div>
-<section id="grading-exercise">
-<h3>GRADING EXERCISE<a class="headerlink" href="#grading-exercise" title="Permalink to this headline"></a></h3>
-<p>Make a pipeline that does the following:</p>
-<ul class="simple">
-<li><p>aligns reads in fastq files (there are two files from a ChIP-seq experiemnt) in the folder <a class="reference external" href="https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/tree/main/testdata/">testdata</a> using Bowtie (as in the course exercises);</p></li>
-<li><p>runs fastqc for fastq files and the files produced as the result of the read alignment to the chr19 (file chr19.fasta.gz);</p></li>
-<li><p>calls ChIP-seq peaks for the produced alignments using the MACS2 software (<a class="reference external" href="https://hub.docker.com/r/fooliu/macs2">here is the official container</a>).</p></li>
-</ul>
-<p>(Optional) Make a more complex pipeline that does all the above plus:</p>
-<ul class="simple">
-<li><p>allows optional (choose as a parameter) read alignment using Bowtie and Bowtie2 or/and BWA;</p></li>
-<li><p>compares the number of called peaks for different alignment programs;</p></li>
-<li><p>compares required computational resources (RAM) and execution time for running the pipeline (all or/and only alignment) for different alignment programs.</p></li>
-</ul>
-</section>
 </section>
 </section>
 
