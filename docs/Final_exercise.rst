@@ -7,7 +7,7 @@ Make a pipeline that does the following:
 - Runs FastQC on the fastq files and the files produced in the result of the read alignment.
 - Calls ChIP-seq peaks for the produced alignments using the MACS2 software (`here is the official container <https://hub.docker.com/r/fooliu/macs2>`__).
 
-<br>
+
 
 (Optional) Make a more complex pipeline that does all the above plus:
 
@@ -15,7 +15,7 @@ Make a pipeline that does the following:
 - Compares the number of called peaks for different alignment programs.
 - Compares required computational resources and execution time for running the pipeline (all or/and only alignment) for different alignment programs.
 
-<br><br>
+
 
 
 Email your full solution (we should be able to run your pipeline) at `BioinformaticsUnit@crg.eu` or, better, do a pull request in this repository. Please use your First and Second name in the name of your folder.
