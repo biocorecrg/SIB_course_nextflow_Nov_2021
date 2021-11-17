@@ -50,7 +50,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#modules-and-how-to-re-use-the-code">Modules and how to re-use the code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">EXERCISE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">EXERCISE</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#reporting-and-graphical-interface">Reporting and graphical interface</a></li>
@@ -468,7 +468,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 </pre></div>
 </div>
 <p>Here you see that we are not using our own image, but rather we use the image provided by <strong>biocontainers</strong> in <a class="reference external" href="https://quay.io/">quay</a>.</p>
-<p>Here you can find a list of fastqc images developed and stored by the biocontainers community <a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a>.</p>
+<p>Here you can find a list of fastqc images developed and stored by the biocontainers community <a href="#id3"><span class="problematic" id="id4">`</span></a><a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a> &lt;<a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a>&gt;`___.</p>
 <p>Let’s have a look at the <strong>multiqc.nf</strong> module:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm">*  multiqc module</span>
@@ -525,8 +525,8 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <p class="admonition-title">Note</p>
 <p>IMPORTANT: You have to specify a default image to run nextflow -with-docker or -with-singularity and you have to have a container(s) defined inside modules.</p>
 </div>
-<section id="id3">
-<h3>EXERCISE<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<section id="id5">
+<h3>EXERCISE<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
 <p>Make a module wrapper for the bowtie tool and change the script in test3 accordingly.</p>
 <details>
 <summary><a>Solution</a></summary><p>Solution in the folder test5</p>
@@ -551,13 +551,12 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <p>We will show the open source one.</p>
 <p>First, you need to access the <a class="reference external" href="https://tower.nf/">tower.nf</a> website and login.</p>
 <a class="reference internal image-reference" href="../_images/tower.png"><img alt="../_images/tower.png" src="../_images/tower.png" style="width: 800px;" /></a>
-<p>We select the email for receiving the instructions and the token to be used for the pipeline.</p>
+<p>If you selected the email for receiving the instructions and the token to be used.</p>
 <a class="reference internal image-reference" href="../_images/tower0.png"><img alt="../_images/tower0.png" src="../_images/tower0.png" style="width: 800px;" /></a>
-<p>So we check the email:</p>
+<p>check the email:</p>
 <a class="reference internal image-reference" href="../_images/tower1.png"><img alt="../_images/tower1.png" src="../_images/tower1.png" style="width: 800px;" /></a>
-<p>We then go on getting started and follow the instructions for exporting two environmental variables:</p>
 <a class="reference internal image-reference" href="../_images/tower2.png"><img alt="../_images/tower2.png" src="../_images/tower2.png" style="width: 800px;" /></a>
-<p>You can then generate your token here: <a href="#id4"><span class="problematic" id="id5">`</span></a><a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a> &lt;<a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a>&gt;`___ and copy paste in your pipeline using this snippet in the configuration file</p>
+<p>You can generate your token at <a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a> and copy paste it in your pipeline using this snippet in the configuration file:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">tower</span> <span class="o">{</span>
   <span class="n">accessToken</span> <span class="o">=</span> <span class="s1">&#39;&lt;YOUR TOKEN&gt;&#39;</span>
   <span class="n">enabled</span> <span class="o">=</span> <span class="kc">true</span>
@@ -569,7 +568,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <span class="n">export</span> <span class="n">NXF_VER</span><span class="o">=</span><span class="mf">21.04</span><span class="o">.</span><span class="mi">0</span>
 </pre></div>
 </div>
-<p>we then launch the pipeline:</p>
+<p>Now we can launch the pipeline:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test5.nf -with-singularity -with-tower -bg &gt; log</span>
 
 
@@ -584,9 +583,9 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <span class="go">CAPSULE: Downloading dependency org.codehaus.groovy:groovy-xml:jar:3.0.5</span>
 </pre></div>
 </div>
-<p>We finally go to the tower website again:</p>
+<p>and go to the tower website again:</p>
 <a class="reference internal image-reference" href="../_images/tower3.png"><img alt="../_images/tower3.png" src="../_images/tower3.png" style="width: 800px;" /></a>
-<p>And in the end when the pipeline is finished we can also receive a mail.</p>
+<p>When the pipeline is finished we can also receive a mail.</p>
 <a class="reference internal image-reference" href="../_images/tower4.png"><img alt="../_images/tower4.png" src="../_images/tower4.png" style="width: 800px;" /></a>
 </section>
 <section id="share-nextflow-pipelines-and-good-practices">
@@ -710,12 +709,12 @@ To https://github.com/lucacozzuto/test_course.git
 <span class="go">Succeeded   : 5</span>
 </pre></div>
 </div>
-<p>Nextflow first pulls down the required version of the pipeline and it stores it in:</p>
+<p>Nextflow first pulls down the required version of the pipeline and stores it in:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">/home/ec2-user/.nextflow/assets/lucacozzuto/test_course/</span>
 </pre></div>
 </div>
 <p>then it pulls the Docker image and runs the pipeline.</p>
-<p>You can use the Nextflow’s command <strong>list</strong> that shows the number of pipelines installed in your environment and the command <strong>info</strong> for fetching some useful information.</p>
+<p>You can use the Nextflow command <strong>list</strong> to see pipelines installed in your environment and the command <strong>info</strong> to fetch information about the path, repository, etc.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow list</span>
 <span class="go">lucacozzuto/test_course</span>
 <span class="go">...</span>
@@ -730,7 +729,7 @@ To https://github.com/lucacozzuto/test_course.git
 <span class="go"> revision    : * main</span>
 </pre></div>
 </div>
-<p>Finally you can update, view or delete a project by using the Nextflow commands <strong>pull</strong>, <strong>view</strong> and <strong>drop</strong>.</p>
+<p>Finally, you can update, view or delete a project by using the Nextflow commands <strong>pull</strong>, <strong>view</strong> and <strong>drop</strong>.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">view</span> <span class="n">lucacozzuto</span><span class="s">/test_course</span>
 
 <span class="s">== content of file: /</span><span class="n">users</span><span class="s">/bi/</span><span class="n">lcozzuto</span><span class="s">/.nextflow/</span><span class="n">assets</span><span class="s">/lucacozzuto/</span><span class="n">test_course</span><span class="s">/main.nf</span>
