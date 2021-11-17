@@ -86,11 +86,11 @@
 <span id="fourth-page"></span><h1>Fourth Day<a class="headerlink" href="#fourth-day" title="Permalink to this headline"></a></h1>
 <section id="using-singularity">
 <h2>Using Singularity<a class="headerlink" href="#using-singularity" title="Permalink to this headline"></a></h2>
-<p>We recommend to use Singularity instead of Docker in HPC environments.
-This can be done by using the Nextflow parameter <cite>-with-singularity</cite> and  without changing the code.</p>
-<p>Nextflow will take care of <strong>pulling, converting and storing the image</strong> for you. This will be done just once and then Nextflow will use the stored image for further executions.</p>
-<p>Within the AWS main node both Docker and singularity are available. Within the AWS batch system we only have Docker.</p>
-<p>We can then inspect the presence of the singularity image inside the folder singularity.</p>
+<p>We recommend to use Singularity instead of Docker in a HPC environments.
+This can be done using the Nextflow parameter <cite>-with-singularity</cite> without changing the code.</p>
+<p>Nextflow will take care of <strong>pulling, converting and storing the image</strong> for you. This will be done only once and then Nextflow will use the stored image for further executions.</p>
+<p>Within an AWS main node both Docker and Singularity are available. While within the AWS batch system only Docker is available.</p>
+<p>Let’s inspect the folder <cite>singularity</cite>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls singularity/</span>
 <span class="go">biocorecrg-c4lwg-2018-latest.img</span>
 </pre></div>
