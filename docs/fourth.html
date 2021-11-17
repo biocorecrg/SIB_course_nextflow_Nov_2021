@@ -50,7 +50,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#modules-and-how-to-re-use-the-code">Modules and how to re-use the code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id5">EXERCISE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">EXERCISE</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#reporting-and-graphical-interface">Reporting and graphical interface</a></li>
@@ -468,7 +468,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 </pre></div>
 </div>
 <p>Here you see that we are not using our own image, but rather we use the image provided by <strong>biocontainers</strong> in <a class="reference external" href="https://quay.io/">quay</a>.</p>
-<p>Here you can find a list of fastqc images developed and stored by the biocontainers community <a href="#id3"><span class="problematic" id="id4">`</span></a><a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a> &lt;<a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a>&gt;`___.</p>
+<p>Here you can find a list of fastqc images developed and stored by the biocontainers community <a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a>.</p>
 <p>Let’s have a look at the <strong>multiqc.nf</strong> module:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm">*  multiqc module</span>
@@ -525,8 +525,8 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <p class="admonition-title">Note</p>
 <p>IMPORTANT: You have to specify a default image to run nextflow -with-docker or -with-singularity and you have to have a container(s) defined inside modules.</p>
 </div>
-<section id="id5">
-<h3>EXERCISE<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
+<section id="id3">
+<h3>EXERCISE<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
 <p>Make a module wrapper for the bowtie tool and change the script in test3 accordingly.</p>
 <details>
 <summary><a>Solution</a></summary><p>Solution in the folder test5</p>
@@ -557,7 +557,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <a class="reference internal image-reference" href="../_images/tower1.png"><img alt="../_images/tower1.png" src="../_images/tower1.png" style="width: 800px;" /></a>
 <p>We then go on getting started and follow the instructions for exporting two environmental variables:</p>
 <a class="reference internal image-reference" href="../_images/tower2.png"><img alt="../_images/tower2.png" src="../_images/tower2.png" style="width: 800px;" /></a>
-<p>You can then generate your token here: <a href="#id6"><span class="problematic" id="id7">`</span></a><a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a> &lt;<a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a>&gt;`___ and copy paste in your pipeline using this snippet in the configuration file</p>
+<p>You can then generate your token here: <a href="#id4"><span class="problematic" id="id5">`</span></a><a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a> &lt;<a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a>&gt;`___ and copy paste in your pipeline using this snippet in the configuration file</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">tower</span> <span class="o">{</span>
   <span class="n">accessToken</span> <span class="o">=</span> <span class="s1">&#39;&lt;YOUR TOKEN&gt;&#39;</span>
   <span class="n">enabled</span> <span class="o">=</span> <span class="kc">true</span>
