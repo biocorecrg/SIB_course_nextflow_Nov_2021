@@ -500,10 +500,10 @@ In this example we have the declaration of two **parameters** that are defined a
 
 They can be overridden from the main script that is calling the module:
 
-- The parameter **params.OUTPUT** can be used for connecting the definition of the output of this module with the one in the main script.  
-- The parameter **params.CONTAINER** can be used for deciding which image has to be used for this particular module.
+- The parameter **params.OUTPUT** can be used for connecting the output of this module with one in the main script.  
+- The parameter **params.CONTAINER** can be used for declaring the image to use for this particular module.
 
-In this example in our main script we pass only the OUTPUT parameters by writing in this way:
+In this example, in our main script we pass only the OUTPUT parameters by writing them as follows:
 
 .. code-block:: groovy
 
@@ -518,7 +518,7 @@ While we keep the information of the container inside the module for better repr
 	params.CONTAINER = = "quay.io/biocontainers/fastqc:0.11.9--0"
 
 
-Here you see that we are not using our own image but one provided by **biocontainers** stored in `quay <https://quay.io/>`__.
+Here you see that we are not using our own image, but rather we use the image provided by **biocontainers** in `quay <https://quay.io/>`__.
 
 Here you can find a list of fastqc images developed and stored by the biocontainers community `https://biocontainers.pro/#/tools/fastqc <https://biocontainers.pro/#/tools/fastqc>`___.
 
@@ -553,16 +553,16 @@ Let's have a look at the **multiqc.nf** module:
 
 
 
-It is very similar to the fastqc one: we just add an extra parameter for connecting the resources defined in the nextflow.config file and the label indicated in the process.
+It is very similar to the fastqc one: we just add an extra parameter for connecting the resources defined in the **nextflow.config** file and the label indicated in the process.
 
-In case we want to use it we would need to change the main code in this way:
+To use this module, we have to change the main code as follows:
 
 .. code-block:: groovy
 
 	include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder, LABEL="onecpu")
 
 
-This is because we specified the label **onecpu** in out **nextflow.config** file:
+The label **onecpu** is specified in the **nextflow.config** file:
 
 .. code-block:: groovy
 
@@ -586,12 +586,12 @@ This is because we specified the label **onecpu** in out **nextflow.config** fil
 
 .. note::
 
-	IMPORTANT: you will need to specify a default image when you want to run nextflow -with-docker or -with-singularity and you have containers defined inside the modules
+	IMPORTANT: You have to specify a default image to run nextflow -with-docker or -with-singularity and you have to have a container(s) defined inside modules.
 
 EXERCISE 
 ------------
 
-Try to make a module wrapper of the bowtie tool and change the script accordingly as the test3.
+Make a module wrapper for the bowtie tool and change the script in test3 accordingly.
 
 .. raw:: html
 
@@ -610,7 +610,7 @@ Solution in the folder test5
 Reporting and graphical interface
 ===================================
 
-Nextflow has an embedded function for reporting a number of informations about the resources needed by each job and the timing: you can get a nice html report with parameter **-with-report**:
+Nextflow has an embedded function for reporting informations about the resources requested for each job and the timing; to generate a html report, run Nextflow with the `-with-report` parameter :
 
 .. code-block:: console
 
@@ -620,14 +620,15 @@ Nextflow has an embedded function for reporting a number of informations about t
 .. image:: images/report.png
   :width: 800
   
+
 **Nextflow Tower** is an open source monitoring and managing platform for Nextflow workflows. There are two versions:
 
-- Open source for monitoring of single pipelines
+- Open source for monitoring of single pipelines.
 - Commercial one for workflow management, monitoring and resource optimisation.
 
 We will show the open source one. 
 
-First of all you need to access the `tower.nf <https://tower.nf/>`___ website and doing the login using one of the methods.
+First, you need to access the `tower.nf <https://tower.nf/>`__ website and login.
 
 
 .. image:: images/tower.png
