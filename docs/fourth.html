@@ -455,10 +455,10 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 </div>
 <p>They can be overridden from the main script that is calling the module:</p>
 <ul class="simple">
-<li><p>The parameter <strong>params.OUTPUT</strong> can be used for connecting the definition of the output of this module with the one in the main script.</p></li>
-<li><p>The parameter <strong>params.CONTAINER</strong> can be used for deciding which image has to be used for this particular module.</p></li>
+<li><p>The parameter <strong>params.OUTPUT</strong> can be used for connecting the output of this module with one in the main script.</p></li>
+<li><p>The parameter <strong>params.CONTAINER</strong> can be used for declaring the image to use for this particular module.</p></li>
 </ul>
-<p>In this example in our main script we pass only the OUTPUT parameters by writing in this way:</p>
+<p>In this example, in our main script we pass only the OUTPUT parameters by writing them as follows:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">include</span> <span class="o">{</span> <span class="n">fastqc</span> <span class="o">}</span> <span class="n">from</span> <span class="s2">&quot;${baseDir}/lib/fastqc&quot;</span> <span class="n">addParams</span><span class="o">(</span><span class="nl">OUTPUT:</span> <span class="n">fastqcOutputFolder</span><span class="o">)</span>
 <span class="n">include</span> <span class="o">{</span> <span class="n">multiqc</span> <span class="o">}</span> <span class="n">from</span> <span class="s2">&quot;${baseDir}/lib/multiqc&quot;</span> <span class="n">addParams</span><span class="o">(</span><span class="nl">OUTPUT:</span> <span class="n">multiqcOutputFolder</span><span class="o">)</span>
 </pre></div>
@@ -467,7 +467,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="o">.</span><span class="na">CONTAINER</span> <span class="o">=</span> <span class="o">=</span> <span class="s2">&quot;quay.io/biocontainers/fastqc:0.11.9--0&quot;</span>
 </pre></div>
 </div>
-<p>Here you see that we are not using our own image but one provided by <strong>biocontainers</strong> stored in <a class="reference external" href="https://quay.io/">quay</a>.</p>
+<p>Here you see that we are not using our own image, but rather we use the image provided by <strong>biocontainers</strong> in <a class="reference external" href="https://quay.io/">quay</a>.</p>
 <p>Here you can find a list of fastqc images developed and stored by the biocontainers community <a href="#id3"><span class="problematic" id="id4">`</span></a><a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a> &lt;<a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a>&gt;`___.</p>
 <p>Let’s have a look at the <strong>multiqc.nf</strong> module:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
@@ -496,12 +496,12 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>It is very similar to the fastqc one: we just add an extra parameter for connecting the resources defined in the nextflow.config file and the label indicated in the process.</p>
-<p>In case we want to use it we would need to change the main code in this way:</p>
+<p>It is very similar to the fastqc one: we just add an extra parameter for connecting the resources defined in the <strong>nextflow.config</strong> file and the label indicated in the process.</p>
+<p>To use this module, we have to change the main code as follows:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">include</span> <span class="o">{</span> <span class="n">multiqc</span> <span class="o">}</span> <span class="n">from</span> <span class="s2">&quot;${baseDir}/lib/multiqc&quot;</span> <span class="n">addParams</span><span class="o">(</span><span class="nl">OUTPUT:</span> <span class="n">multiqcOutputFolder</span><span class="o">,</span> <span class="n">LABEL</span><span class="o">=</span><span class="s2">&quot;onecpu&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>This is because we specified the label <strong>onecpu</strong> in out <strong>nextflow.config</strong> file:</p>
+<p>The label <strong>onecpu</strong> is specified in the <strong>nextflow.config</strong> file:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">includeConfig</span> <span class="s2">&quot;$baseDir/params.config&quot;</span>
 
 <span class="n">process</span> <span class="o">{</span>
@@ -523,11 +523,11 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>IMPORTANT: you will need to specify a default image when you want to run nextflow -with-docker or -with-singularity and you have containers defined inside the modules</p>
+<p>IMPORTANT: You have to specify a default image to run nextflow -with-docker or -with-singularity and you have to have a container(s) defined inside modules.</p>
 </div>
 <section id="id5">
 <h3>EXERCISE<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
-<p>Try to make a module wrapper of the bowtie tool and change the script accordingly as the test3.</p>
+<p>Make a module wrapper for the bowtie tool and change the script in test3 accordingly.</p>
 <details>
 <summary><a>Solution</a></summary><p>Solution in the folder test5</p>
 </details><div class="line-block">
@@ -538,18 +538,18 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 </section>
 <section id="reporting-and-graphical-interface">
 <h2>Reporting and graphical interface<a class="headerlink" href="#reporting-and-graphical-interface" title="Permalink to this headline"></a></h2>
-<p>Nextflow has an embedded function for reporting a number of informations about the resources needed by each job and the timing: you can get a nice html report with parameter <strong>-with-report</strong>:</p>
+<p>Nextflow has an embedded function for reporting informations about the resources requested for each job and the timing; to generate a html report, run Nextflow with the <cite>-with-report</cite> parameter :</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test5.nf -with-docker -bg -with-report &gt; log</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="../_images/report.png"><img alt="../_images/report.png" src="../_images/report.png" style="width: 800px;" /></a>
 <p><strong>Nextflow Tower</strong> is an open source monitoring and managing platform for Nextflow workflows. There are two versions:</p>
 <ul class="simple">
-<li><p>Open source for monitoring of single pipelines</p></li>
+<li><p>Open source for monitoring of single pipelines.</p></li>
 <li><p>Commercial one for workflow management, monitoring and resource optimisation.</p></li>
 </ul>
 <p>We will show the open source one.</p>
-<p>First of all you need to access the <a href="#id6"><span class="problematic" id="id7">`</span></a>tower.nf &lt;<a class="reference external" href="https://tower.nf/">https://tower.nf/</a>&gt;`___ website and doing the login using one of the methods.</p>
+<p>First, you need to access the <a class="reference external" href="https://tower.nf/">tower.nf</a> website and login.</p>
 <a class="reference internal image-reference" href="../_images/tower.png"><img alt="../_images/tower.png" src="../_images/tower.png" style="width: 800px;" /></a>
 <p>We select the email for receiving the instructions and the token to be used for the pipeline.</p>
 <a class="reference internal image-reference" href="../_images/tower0.png"><img alt="../_images/tower0.png" src="../_images/tower0.png" style="width: 800px;" /></a>
@@ -557,7 +557,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <a class="reference internal image-reference" href="../_images/tower1.png"><img alt="../_images/tower1.png" src="../_images/tower1.png" style="width: 800px;" /></a>
 <p>We then go on getting started and follow the instructions for exporting two environmental variables:</p>
 <a class="reference internal image-reference" href="../_images/tower2.png"><img alt="../_images/tower2.png" src="../_images/tower2.png" style="width: 800px;" /></a>
-<p>You can then generate your token here: <a href="#id8"><span class="problematic" id="id9">`</span></a><a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a> &lt;<a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a>&gt;`___ and copy paste in your pipeline using this snippet in the configuration file</p>
+<p>You can then generate your token here: <a href="#id6"><span class="problematic" id="id7">`</span></a><a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a> &lt;<a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a>&gt;`___ and copy paste in your pipeline using this snippet in the configuration file</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">tower</span> <span class="o">{</span>
   <span class="n">accessToken</span> <span class="o">=</span> <span class="s1">&#39;&lt;YOUR TOKEN&gt;&#39;</span>
   <span class="n">enabled</span> <span class="o">=</span> <span class="kc">true</span>
