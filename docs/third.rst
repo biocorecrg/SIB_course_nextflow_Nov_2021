@@ -13,7 +13,7 @@ During this day we will make more complex pipelines and separate the main code f
 Decoupling resources, parameters and nextflow script
 =======================
 
-When making a complex pipelines it is conveninet to keep the definition of resources needed, the default parameters and the main script separately from each other.
+When making a complex pipelines it is convenient to keep the definition of resources needed, the default parameters and the main script separately from each other.
 This can be achieved using two additional files:
 
 - nextflow.config
