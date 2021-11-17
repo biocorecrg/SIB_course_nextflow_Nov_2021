@@ -95,7 +95,7 @@ This can be done using the Nextflow parameter <cite>-with-singularity</cite> wit
 <span class="go">biocorecrg-c4lwg-2018-latest.img</span>
 </pre></div>
 </div>
-<p>This singularity image can be used to execute the code outside the pipeline <strong>exactly in the same way</strong> as in the pipeline.</p>
+<p>This singularity image can be used to execute the code outside the pipeline <strong>exactly the same way</strong> as inside the pipeline.</p>
 <p>Sometimes we can be interested in launching only a specific job, because it might failed or for making a test. For that, we can go to the corresponding temporary folder; for example, one of the fastQC temporary folders:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd work/da/eb7564*/</span>
 </pre></div>
@@ -248,19 +248,17 @@ The first one is the one we want to keep as a final result; for that, we specify
 </section>
 <section id="profiles">
 <h2>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline"></a></h2>
-<p>For deploying a pipeline in a cluster environment or a cloud, we need to add some information in the <strong>nextflow.config</strong> file.</p>
-<p>In particular we need to indicate the kind of <a class="reference external" href="https://www.nextflow.io/docs/latest/process.html#executor">executor</a> should be used.</p>
-<p>In the Nextflow framework architecture, the executor indicates which is the <strong>batch-queuing system</strong> to use to submit jobs to the HPC or to the cloud.</p>
+<p>For deploying a pipeline in a cluster or Cloud, in the <strong>nextflow.config</strong> file, we need to indicate what kind of the <a class="reference external" href="https://www.nextflow.io/docs/latest/process.html#executor">executor</a> to use.</p>
+<p>In the Nextflow framework architecture, the executor indicates which the <strong>batch-queue system</strong> to use to submit jobs to a HPC or to Cloud.</p>
 <p>The executor is completely abstracted, so you can switch from SGE to SLURM just by changing this parameter in the configuration file.</p>
-<p>You can group different classes of configuration or <strong>profiles</strong> within a single <strong>nextflow.config</strong> file.
-In this way that you can indicate at run time which executor and resources to use for a pipeline execution.</p>
-<p>Let’s inspect the <strong>nextflow.config</strong> file in <strong>test3</strong> folder. We can look at three different profiles:</p>
+<p>You can group different classes of configuration or <strong>profiles</strong> within a single <strong>nextflow.config</strong> file.</p>
+<p>Let’s inspect the <strong>nextflow.config</strong> file in <strong>test3</strong> folder. We can see three different profiles:</p>
 <ul class="simple">
 <li><p>standard</p></li>
 <li><p>cluster</p></li>
 <li><p>cloud</p></li>
 </ul>
-<p>The first one indicates the resources needed for running the pipeline locally. They are quite small since we have little power and CPUs on the test node.</p>
+<p>The first profile indicates the resources needed for running the pipeline locally. They are quite small since we have little power and CPU on the test node.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">profiles</span> <span class="o">{</span>
   <span class="n">standard</span> <span class="o">{</span>
      <span class="n">process</span> <span class="o">{</span>
@@ -278,8 +276,8 @@ In this way that you can indicate at run time which executor and resources to us
    <span class="o">}</span>
 </pre></div>
 </div>
-<p>As you can see we indicate explicitly the <strong>local</strong> executor. So this will be the default when running the pipeline indicating without specifying a profiles.</p>
-<p>The second one is <strong>cluster</strong>:</p>
+<p>As you can see, we explicitly indicated the <strong>local</strong> executor. By definition, the local executor is a default executor if the pipeline is run without specifying a profile.</p>
+<p>The second profile is for running the pipeline on the <strong>cluster</strong>; here in particular for the cluster supporting the Sun Grid Engine queuing system:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">cluster</span> <span class="o">{</span>
   <span class="n">process</span> <span class="o">{</span>
      <span class="n">containerOptions</span> <span class="o">=</span> <span class="o">{</span> <span class="n">workflow</span><span class="o">.</span><span class="na">containerEngine</span> <span class="o">==</span> <span class="s2">&quot;docker&quot;</span> <span class="o">?</span> <span class="s1">&#39;-u $(id -u):$(id -g)&#39;</span><span class="o">:</span> <span class="kc">null</span><span class="o">}</span>
@@ -299,7 +297,7 @@ In this way that you can indicate at run time which executor and resources to us
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>This indicates that the system uses <strong>Sun Grid Engine</strong> as job scheduler and that we have different queues for small jobs and more intensive ones.</p>
+<p>This profile indicates that the system uses <strong>Sun Grid Engine</strong> as a job scheduler and that we have different queues for small jobs and more intensive ones.</p>
 </section>
 <section id="deployment-in-the-aws-cloud">
 <h2>Deployment in the AWS cloud<a class="headerlink" href="#deployment-in-the-aws-cloud" title="Permalink to this headline"></a></h2>
