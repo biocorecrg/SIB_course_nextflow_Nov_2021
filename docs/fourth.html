@@ -95,8 +95,8 @@ This can be done using the Nextflow parameter <cite>-with-singularity</cite> wit
 <span class="go">biocorecrg-c4lwg-2018-latest.img</span>
 </pre></div>
 </div>
-<p>We can then reuse this image if we want to execute the code <strong>exactly in the same way</strong> as in the pipeline but outside the pipeline.</p>
-<p>Sometimes we can be interested in launching just one job, because it failed or for just making a test. We can go to the corresponding temporary folder: as an example let’s go to one of the fastQC temporary folder:</p>
+<p>This singularity image can be used to execute the code outside the pipeline <strong>exactly in the same way</strong> as in the pipeline.</p>
+<p>Sometimes we can be interested in launching only a specific job, because it might failed or for making a test. For that, we can go to the corresponding temporary folder; for example, one of the fastQC temporary folders:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd work/da/eb7564*/</span>
 </pre></div>
 </div>
@@ -110,7 +110,7 @@ This can be done using the Nextflow parameter <cite>-with-singularity</cite> wit
 </pre></div>
 </div>
 <p>This means that Nextflow is running the code by using the <strong>singularity exec</strong> command.</p>
-<p>Then we can launch the following command:</p>
+<p>Thus we can launch this command outside the pipeline (locally):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bash .command.run</span>
 
 <span class="go">Started analysis of B7_H3K4me1_s_chr19.fastq.gz</span>
@@ -129,7 +129,7 @@ This can be done using the Nextflow parameter <cite>-with-singularity</cite> wit
 <span class="go">...</span>
 </pre></div>
 </div>
-<p>In this way you are doing the same execution done by Nextflow using the local machine. In case you are submitting a job to a HPC you need to use the corresponding program, for instance <strong>qsub</strong> or <strong>sbatch</strong>.</p>
+<p>If you have to submit a job to a HPC you need to use the corresponding program, <strong>qsub</strong> or <strong>sbatch</strong>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">qsub .command.run</span>
 </pre></div>
 </div>
