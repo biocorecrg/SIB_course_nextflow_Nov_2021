@@ -50,7 +50,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#modules-and-re-usage-of-the-code">Modules and re-usage of the code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id7">EXERCISE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">EXERCISE</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#reporting-and-graphical-interface">Reporting and graphical interface</a></li>
@@ -138,8 +138,8 @@ This can be done using the Nextflow parameter <cite>-with-singularity</cite> wit
 <h2>Adding more processes<a class="headerlink" href="#adding-more-processes" title="Permalink to this headline"></a></h2>
 <p>We can build a pipeline incrementally adding more and more processes.
 Nextflow will take care of the dependencies between the input / output and of the parallelization.</p>
-<p>Let’s add to the <strong>test2.nf</strong> pipeline two additional steps, indexign of the reference genome and the read alignment using <a class="reference external" href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a>. For that we will have to modify the <a href="#id1"><span class="problematic" id="id2">*</span></a>nf, paramas.config and nexflow.config files (the full solution is available in the <a href="#id3"><span class="problematic" id="id4">_`</span></a>test3 folder on the GitHub &lt;<a class="reference external" href="https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/blob/main/nextflow/test3">https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/blob/main/nextflow/test3</a>&gt;`__.</p>
-<p>We add a new input for the reference sequence:</p>
+<p>Let’s add to the <strong>test2.nf</strong> pipeline two additional steps, indexign of the reference genome and the read alignment using <a class="reference external" href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a>. For that we will have to modify the <a href="#id1"><span class="problematic" id="id2">*</span></a>.nf, paramas.config and nexflow.config files (the full solution is available in the <a class="reference external" href="https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/blob/main/nextflow/test3">test3 folder on the GitHub</a>).</p>
+<p>In <strong>test3.nf</strong>, we have to add a new input for the reference sequence:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">log</span><span class="o">.</span><span class="na">info</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">BIOCORE@CRG - N F TESTPIPE  ~  version ${version}</span>
 <span class="s2">=============================================</span>
@@ -152,7 +152,7 @@ Nextflow will take care of the dependencies between the input / output and of th
 <span class="n">reference</span> <span class="o">=</span> <span class="n">file</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">reference</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>The <strong>singleton channel</strong> called <strong>reference</strong> is created. Its content is never consumed and can be indefinitely used. We also add a path specifying where to place the output files.</p>
+<p>This way, the <strong>singleton channel</strong> called <strong>reference</strong> is created. Its content can be used indefinitely. We also add a path specifying where to place the output files.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Defining the output folders.</span>
 <span class="cm"> */</span>
@@ -161,7 +161,7 @@ Nextflow will take care of the dependencies between the input / output and of th
 <span class="n">multiqcOutputFolder</span>   <span class="o">=</span> <span class="s2">&quot;${params.outdir}/output_multiQC&quot;</span>
 </pre></div>
 </div>
-<p>We add two more processes. The first one is for the indexing the reference genome (with <cite>bowtie-build</cite>):</p>
+<p>And we have to add two new processes. The first one is for the indexing the reference genome (with <cite>bowtie-build</cite>):</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Process 2. Bowtie index</span>
 <span class="cm"> */</span>
@@ -183,8 +183,8 @@ Nextflow will take care of the dependencies between the input / output and of th
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Since bowtie indexing requires unzipped reference fasta file, we first <strong>gunzip</strong> it, we then build the reference index, and we finally remove the unzipped file.</p>
-<p>The output channel generated is organized as a <strong>tuple</strong>, i.e. a list of elements.</p>
+<p>Since bowtie indexing requires unzipped reference fasta file, we first <strong>gunzip</strong> it, then build the reference index, and finally remove the unzipped file.</p>
+<p>The output channel is organized as a <strong>tuple</strong>; i.e., a list of elements.</p>
 <p>The first element of the list is the <strong>name of the index as a value</strong>, the second is a <strong>list of files constituting the index</strong>.</p>
 <p>The former is needed for building the command line of the alignment step, the latter are the files needed for the alignment.</p>
 <p>The second process <strong>bowtieAln</strong> is the alignment step:</p>
@@ -212,14 +212,14 @@ Nextflow will take care of the dependencies between the input / output and of th
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>There are two different input channels: the <strong>index</strong> and the <strong>reads</strong>.</p>
-<p>The index name specified by <strong>refname</strong> is used for building the command line while the index files, indicated by <strong>ref_files</strong>, are just linked in the current directory by using the <strong>path</strong> qualifier.</p>
-<p>We also produced two kind of outputs: the <strong>alignments</strong> and the <strong>logs</strong>.
-The first one is the one we want to keep as a final result. So we specify this using the <strong>pattern</strong> parameter in <strong>publishDir</strong>.</p>
+<p>There are two different input channels, the <strong>index</strong> and <strong>reads</strong>.</p>
+<p>The index name specified by <strong>refname</strong> is used for building the command line; while the index files, indicated by <strong>ref_files</strong>, are linked to the current directory by using the <strong>path</strong> qualifier.</p>
+<p>We also produced two kind of outputs, the <strong>alignments</strong> and <strong>logs</strong>.
+The first one is the one we want to keep as a final result; for that, we specify the <strong>pattern</strong> parameter in <strong>publishDir</strong>.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">publishDir</span> <span class="n">alnOutputFolder</span><span class="o">,</span> <span class="nl">pattern:</span> <span class="s1">&#39;*.sam&#39;</span>
 </pre></div>
 </div>
-<p>The second one will be just passed to the next process for being used by the multiQC process. To distinguish them we can assign them different names.</p>
+<p>The second output will be passed to the next process, that is, the multiQC process. To distinguish the outputs let’s assign them different names.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">output:</span>
     <span class="n">path</span> <span class="s2">&quot;${reads}.sam&quot;</span><span class="o">,</span> <span class="nl">emit:</span> <span class="n">samples_sam</span>
     <span class="n">path</span> <span class="s2">&quot;${reads}.log&quot;</span><span class="o">,</span> <span class="nl">emit:</span> <span class="n">samples_log</span>
@@ -234,7 +234,7 @@ The first one is the one we want to keep as a final result. So we specify this u
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>So we passed the <strong>samples_log</strong> output to the multiqc process after mixing it with the output channel from the fastqc process.</p>
+<p>As you can see, we passed the <strong>samples_log</strong> output to the multiqc process after mixing it with the output channel from the fastqc process.</p>
 </section>
 <section id="profiles">
 <h2>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline"></a></h2>
@@ -460,7 +460,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 </pre></div>
 </div>
 <p>Here you see that we are not using our own image but one provided by <strong>biocontainers</strong> stored in <a class="reference external" href="https://quay.io/">quay</a>.</p>
-<p>Here you can find a list of fastqc images developed and stored by the biocontainers community <a href="#id5"><span class="problematic" id="id6">`</span></a><a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a> &lt;<a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a>&gt;`___.</p>
+<p>Here you can find a list of fastqc images developed and stored by the biocontainers community <a href="#id3"><span class="problematic" id="id4">`</span></a><a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a> &lt;<a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a>&gt;`___.</p>
 <p>Let’s have a look at the <strong>multiqc.nf</strong> module:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm">*  multiqc module</span>
@@ -517,8 +517,8 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <p class="admonition-title">Note</p>
 <p>IMPORTANT: you will need to specify a default image when you want to run nextflow -with-docker or -with-singularity and you have containers defined inside the modules</p>
 </div>
-<section id="id7">
-<h3>EXERCISE<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h3>
+<section id="id5">
+<h3>EXERCISE<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
 <p>Try to make a module wrapper of the bowtie tool and change the script accordingly as the test3.</p>
 <details>
 <summary><a>Solution</a></summary><p>Solution in the folder test5</p>
@@ -541,7 +541,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <li><p>Commercial one for workflow management, monitoring and resource optimisation.</p></li>
 </ul>
 <p>We will show the open source one.</p>
-<p>First of all you need to access the <a href="#id8"><span class="problematic" id="id9">`</span></a>tower.nf &lt;<a class="reference external" href="https://tower.nf/">https://tower.nf/</a>&gt;`___ website and doing the login using one of the methods.</p>
+<p>First of all you need to access the <a href="#id6"><span class="problematic" id="id7">`</span></a>tower.nf &lt;<a class="reference external" href="https://tower.nf/">https://tower.nf/</a>&gt;`___ website and doing the login using one of the methods.</p>
 <a class="reference internal image-reference" href="../_images/tower.png"><img alt="../_images/tower.png" src="../_images/tower.png" style="width: 800px;" /></a>
 <p>We select the email for receiving the instructions and the token to be used for the pipeline.</p>
 <a class="reference internal image-reference" href="../_images/tower0.png"><img alt="../_images/tower0.png" src="../_images/tower0.png" style="width: 800px;" /></a>
@@ -549,7 +549,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <a class="reference internal image-reference" href="../_images/tower1.png"><img alt="../_images/tower1.png" src="../_images/tower1.png" style="width: 800px;" /></a>
 <p>We then go on getting started and follow the instructions for exporting two environmental variables:</p>
 <a class="reference internal image-reference" href="../_images/tower2.png"><img alt="../_images/tower2.png" src="../_images/tower2.png" style="width: 800px;" /></a>
-<p>You can then generate your token here: <a href="#id10"><span class="problematic" id="id11">`</span></a><a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a> &lt;<a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a>&gt;`___ and copy paste in your pipeline using this snippet in the configuration file</p>
+<p>You can then generate your token here: <a href="#id8"><span class="problematic" id="id9">`</span></a><a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a> &lt;<a class="reference external" href="https://tower.nf/tokens">https://tower.nf/tokens</a>&gt;`___ and copy paste in your pipeline using this snippet in the configuration file</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">tower</span> <span class="o">{</span>
   <span class="n">accessToken</span> <span class="o">=</span> <span class="s1">&#39;&lt;YOUR TOKEN&gt;&#39;</span>
   <span class="n">enabled</span> <span class="o">=</span> <span class="kc">true</span>
