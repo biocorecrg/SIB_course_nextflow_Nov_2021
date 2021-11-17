@@ -96,9 +96,9 @@ Adding more processes
 We can build a pipeline incrementally adding more and more processes. 
 Nextflow will take care of the dependencies between the input / output and of the parallelization.
 
-Let's add to the **test2.nf** pipeline two additional steps, indexign of the reference genome and the read alignment using `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`__. For that we will have to modify the *nf, paramas.config and nexflow.config files (the full solution is available in the _`test3 folder on the GitHub <https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/blob/main/nextflow/test3>`__.
+Let's add to the **test2.nf** pipeline two additional steps, indexign of the reference genome and the read alignment using `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`__. For that we will have to modify the *.nf, paramas.config and nexflow.config files (the full solution is available in the `test3 folder on the GitHub <https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/blob/main/nextflow/test3>`__).
 
-We add a new input for the reference sequence:
+In **test3.nf**, we have to add a new input for the reference sequence:
 
 .. code-block:: groovy
 
@@ -114,7 +114,7 @@ We add a new input for the reference sequence:
 	reference = file(params.reference)
 
 
-The **singleton channel** called **reference** is created. Its content is never consumed and can be indefinitely used. We also add a path specifying where to place the output files.
+This way, the **singleton channel** called **reference** is created. Its content can be used indefinitely. We also add a path specifying where to place the output files.
 
 .. code-block:: groovy
 
@@ -127,7 +127,7 @@ The **singleton channel** called **reference** is created. Its content is never 
 
 
 
-We add two more processes. The first one is for the indexing the reference genome (with `bowtie-build`):
+And we have to add two new processes. The first one is for the indexing the reference genome (with `bowtie-build`):
 
 .. code-block:: groovy
 
@@ -152,9 +152,9 @@ We add two more processes. The first one is for the indexing the reference genom
 	}
 
 
-Since bowtie indexing requires unzipped reference fasta file, we first **gunzip** it, we then build the reference index, and we finally remove the unzipped file.
+Since bowtie indexing requires unzipped reference fasta file, we first **gunzip** it, then build the reference index, and finally remove the unzipped file.
 
-The output channel generated is organized as a **tuple**, i.e. a list of elements.
+The output channel is organized as a **tuple**; i.e., a list of elements.
 
 The first element of the list is the **name of the index as a value**, the second is a **list of files constituting the index**.
 
@@ -188,19 +188,19 @@ The second process **bowtieAln** is the alignment step:
 	}
 
 
-There are two different input channels: the **index** and the **reads**.
+There are two different input channels, the **index** and **reads**.
 
-The index name specified by **refname** is used for building the command line while the index files, indicated by **ref_files**, are just linked in the current directory by using the **path** qualifier.
+The index name specified by **refname** is used for building the command line; while the index files, indicated by **ref_files**, are linked to the current directory by using the **path** qualifier.
 
-We also produced two kind of outputs: the **alignments** and the **logs**.
-The first one is the one we want to keep as a final result. So we specify this using the **pattern** parameter in **publishDir**.
+We also produced two kind of outputs, the **alignments** and **logs**.
+The first one is the one we want to keep as a final result; for that, we specify the **pattern** parameter in **publishDir**.
 
 .. code-block:: groovy
 
 	publishDir alnOutputFolder, pattern: '*.sam'
 
 
-The second one will be just passed to the next process for being used by the multiQC process. To distinguish them we can assign them different names.
+The second output will be passed to the next process, that is, the multiQC process. To distinguish the outputs let's assign them different names.
 
 .. code-block:: groovy
 
@@ -221,7 +221,7 @@ This section will allow us to connect these outputs directly with other processe
 	}
 
 
-So we passed the **samples_log** output to the multiqc process after mixing it with the output channel from the fastqc process.
+As you can see, we passed the **samples_log** output to the multiqc process after mixing it with the output channel from the fastqc process.
 
 Profiles 
 =================
