@@ -39,9 +39,9 @@ Let's inspect the folder `singularity`:
 	biocorecrg-c4lwg-2018-latest.img
 
 
-We can then reuse this image if we want to execute the code **exactly in the same way** as in the pipeline but outside the pipeline.
+This singularity image can be used to execute the code outside the pipeline **exactly in the same way** as in the pipeline.
 
-Sometimes we can be interested in launching just one job, because it failed or for just making a test. We can go to the corresponding temporary folder: as an example let's go to one of the fastQC temporary folder:
+Sometimes we can be interested in launching only a specific job, because it might failed or for making a test. For that, we can go to the corresponding temporary folder; for example, one of the fastQC temporary folders:
 
 .. code-block:: console
 
@@ -62,7 +62,7 @@ Inspecting the `.command.run` file shows us this piece of code:
 
 This means that Nextflow is running the code by using the **singularity exec** command. 
 
-Then we can launch the following command:
+Thus we can launch this command outside the pipeline (locally):
 
 .. code-block:: console
 
@@ -83,7 +83,7 @@ Then we can launch the following command:
 	Approx 60% complete for B7_H3K4me1_s_chr19.fastq.gz
 	...
 
-In this way you are doing the same execution done by Nextflow using the local machine. In case you are submitting a job to a HPC you need to use the corresponding program, for instance **qsub** or **sbatch**.
+If you have to submit a job to a HPC you need to use the corresponding program, **qsub** or **sbatch**.
 
 .. code-block:: console
 
