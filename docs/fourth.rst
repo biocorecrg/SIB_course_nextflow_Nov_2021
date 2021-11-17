@@ -7,12 +7,12 @@ Fourth Day
 Using Singularity
 =======================
 
-We recommend to use Singularity instead of Docker in HPC environments.
-This can be done by using the Nextflow parameter `-with-singularity` and  without changing the code.
+We recommend to use Singularity instead of Docker in a HPC environments.
+This can be done using the Nextflow parameter `-with-singularity` without changing the code.
 
-Nextflow will take care of **pulling, converting and storing the image** for you. This will be done just once and then Nextflow will use the stored image for further executions.
+Nextflow will take care of **pulling, converting and storing the image** for you. This will be done only once and then Nextflow will use the stored image for further executions.
 
-Within the AWS main node both Docker and singularity are available. Within the AWS batch system we only have Docker.
+Within an AWS main node both Docker and Singularity are available. While within the AWS batch system only Docker is available.
 
 .. code-block:: console
 	nextflow run test2.nf -with-singularity -bg > log
@@ -31,7 +31,7 @@ Within the AWS main node both Docker and singularity are available. Within the A
 	...
 
 
-We can then inspect the presence of the singularity image inside the folder singularity.
+Let's inspect the folder `singularity`:
 
 .. code-block:: console
 
