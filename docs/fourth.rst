@@ -93,10 +93,10 @@ If you have to submit a job to a HPC you need to use the corresponding program, 
 Adding more steps
 ======================
 
-We can make pipelines incrementally complex by adding more and more processes. 
+We can build a pipeline incrementally adding more and more processes. 
 Nextflow will take care of the dependencies between the input / output and of the parallelization.
 
-Within the **test3** folder we have two more steps to add: the reference indexing and the read alignments with `bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`__.
+Let's add to the **test2.nf** pipeline two additional steps, indexign of the reference genome and the read alignment using `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`__. Within the **test3** folder 
 
 We add a new input for the reference sequence:
 
