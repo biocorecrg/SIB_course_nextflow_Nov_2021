@@ -431,7 +431,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <span class="n">params</span><span class="o">.</span><span class="na">CONTAINER</span> <span class="o">=</span> <span class="s2">&quot;quay.io/biocontainers/fastqc:0.11.9--0&quot;</span>
 <span class="n">params</span><span class="o">.</span><span class="na">OUTPUT</span> <span class="o">=</span> <span class="s2">&quot;fastqc_output&quot;</span>
 
-<span class="n">process</span> <span class="n">qc</span> <span class="o">{</span>
+<span class="n">process</span> <span class="n">fastqc</span> <span class="o">{</span>
     <span class="n">publishDir</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">OUTPUT</span><span class="o">,</span> <span class="nl">mode:</span> <span class="s1">&#39;copy&#39;</span><span class="o">)</span>
     <span class="n">tag</span> <span class="o">{</span> <span class="s2">&quot;${reads}&quot;</span> <span class="o">}</span>
     <span class="n">container</span> <span class="n">params</span><span class="o">.</span><span class="na">CONTAINER</span>
