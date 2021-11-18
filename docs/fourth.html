@@ -305,7 +305,7 @@ The first one is the one we want to keep as a final result; for that, we specify
 <h2>Deployment in the AWS cloud<a class="headerlink" href="#deployment-in-the-aws-cloud" title="Permalink to this headline"></a></h2>
 <p>The final profile is for running the pipeline in the <strong>Amazon Cloud</strong>, known as Amazon Web Services or AWS. In particular we will use <strong>AWS Batch</strong> that allows the execution of containerised workloads in the Amazon cloud infrastructure.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span> <span class="n">cloud</span> <span class="o">{</span>
-  <span class="n">workDir</span> <span class="o">=</span> <span class="s1">&#39;s3://class-bucket-1/work&#39;</span>
+  <span class="n">workDir</span> <span class="o">=</span> <span class="s1">&#39;s3://nf-class-bucket-1/work&#39;</span>
   <span class="n">aws</span><span class="o">.</span><span class="na">region</span> <span class="o">=</span> <span class="s1">&#39;eu-central-1&#39;</span>
   <span class="n">aws</span><span class="o">.</span><span class="na">batch</span><span class="o">.</span><span class="na">cliPath</span> <span class="o">=</span> <span class="s1">&#39;/home/ec2-user/miniconda/bin/aws&#39;</span>
 
