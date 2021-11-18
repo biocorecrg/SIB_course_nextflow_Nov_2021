@@ -312,7 +312,7 @@ The final profile is for running the pipeline in the **Amazon Cloud**, known as 
 .. code-block:: groovy
 
 	   cloud {
-	    workDir = 's3://class-bucket-1/work'
+	    workDir = 's3://nf-class-bucket-1/work'
 	    aws.region = 'eu-central-1'
 	    aws.batch.cliPath = '/home/ec2-user/miniconda/bin/aws'
 
