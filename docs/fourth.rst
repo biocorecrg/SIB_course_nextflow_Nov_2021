@@ -307,7 +307,7 @@ This profile indicates that the system uses **Sun Grid Engine** as a job schedul
 Deployment in the AWS cloud 
 =============================
 
-The final profile is for running the pipeline in the **Amazon Cloud**, known as Amazon Web Services or AWS. In particular, we will use **AWS Batch** that allows the execution of containerised workloads in the Amazon cloud infrastructure (where NNNN is the number of your bucket which you can see in the mounted folder by typing **df -h**).
+The final profile is for running the pipeline in the **Amazon Cloud**, known as Amazon Web Services or AWS. In particular, we will use **AWS Batch** that allows the execution of containerised workloads in the Amazon cloud infrastructure (where NNNN is the number of your bucket which you can see in the mounted folder `/mnt` by typing the command **df**).
 
 .. code-block:: groovy
 
@@ -343,9 +343,9 @@ We can now launch the pipeline indicating `-profile cloud`:
 	nextflow run test3.nf -bg -with-docker -profile cloud > log
 
 
-Note that there is no longer a **work** folder because, on the AWS cloud, the output is copied locally in the folder **/mnt/class-bucket-NNN/work** (you can see the mounted folders by typing **df -h**).
+Note that there is no longer a **work** folder in the directory where test3.nf is located, because, in the AWS cloud, the output is copied locally in the folder **/mnt/class-bucket-NNN/work** (you can see the mounted folder - and the correspondign number - typing **df**).
 
-The multiqc report can be seen on the AWS webpage at https://nf-class-bucket-XXX.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html
+The multiqc report can be seen on the AWS webpage at https://nf-class-bucket-NNN.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html
 
 But you need before to change permissions for that file as (where NNNN is the number of your bucket): 
 
