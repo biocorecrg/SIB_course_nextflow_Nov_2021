@@ -343,7 +343,7 @@ We can now launch the pipeline indicating `-profile cloud`:
 	nextflow run test3.nf -bg -with-docker -profile cloud > log
 
 
-Note that there is no longer a **work** folder because, on the AWS cloud, the output is copied locally. 
+Note that there is no longer a **work** folder because, on the AWS cloud, the output is copied locally in the folder ./mnt/clas-bucket-XXX/work.
 
 Sometimes you can find that the Nextflow process itself is very memory intensive and the main node can run out of memory. To avoid this, you can reduce the memory needed by setting an environmental variable:
 
@@ -358,7 +358,7 @@ We can also tell Nextflow to directly copy the output file to the S3 bucket: to 
 
 .. code-block:: groovy
 
-	outdir = "s3://class-bucket-1/results"
+	outdir = "s3://nf-class-bucket-1/results"
 
 
 EXERCISE 
