@@ -18,5 +18,6 @@ Make a pipeline that does the following:
 
 
 
-Email your full solution (we should be able to run your pipeline) at `BioinformaticsUnit@crg.eu` or, better, do a pull request in this repository. Please use your First and Second name in the name of your folder.
+Email your full solution (we should be able to run your pipeline) at `BioinformaticsUnit@crg.eu` or, better, do a pull request in this repository. Please use your First and Second name in the name of your folder. 
+
 Deadline: 28 November 2021 23:59
