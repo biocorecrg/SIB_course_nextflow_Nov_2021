@@ -51,7 +51,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#modules-and-how-to-re-use-the-code">Modules and how to re-use the code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id5">EXERCISE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">EXERCISE</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#reporting-and-graphical-interface">Reporting and graphical interface</a></li>
@@ -407,8 +407,8 @@ In particular, you can move a named workflow within a module and keep it aside f
 <span class="cm">/*</span>
 <span class="cm"> * Here we include two modules from two files. We also add the parameter OUTPUT to pass them the folders where to publish the results</span>
 <span class="cm"> */</span>
-<span class="n">include</span> <span class="o">{</span> <span class="n">fastqc</span> <span class="o">}</span> <span class="n">from</span> <span class="s2">&quot;${baseDir}/lib/fastqc&quot;</span> <span class="n">addParams</span><span class="o">(</span><span class="nl">OUTPUT:</span> <span class="n">fastqcOutputFolder</span><span class="o">)</span>
-<span class="n">include</span> <span class="o">{</span> <span class="n">multiqc</span> <span class="o">}</span> <span class="n">from</span> <span class="s2">&quot;${baseDir}/lib/multiqc&quot;</span> <span class="n">addParams</span><span class="o">(</span><span class="nl">OUTPUT:</span> <span class="n">multiqcOutputFolder</span><span class="o">)</span>
+<span class="n">include</span> <span class="o">{</span> <span class="n">fastqc</span> <span class="o">}</span> <span class="n">from</span> <span class="s2">&quot;${baseDir}/modules/fastqc&quot;</span> <span class="n">addParams</span><span class="o">(</span><span class="nl">OUTPUT:</span> <span class="n">fastqcOutputFolder</span><span class="o">)</span>
+<span class="n">include</span> <span class="o">{</span> <span class="n">multiqc</span> <span class="o">}</span> <span class="n">from</span> <span class="s2">&quot;${baseDir}/modules/multiqc&quot;</span> <span class="n">addParams</span><span class="o">(</span><span class="nl">OUTPUT:</span> <span class="n">multiqcOutputFolder</span><span class="o">)</span>
 
 <span class="c1">// The main worflow can directly call the named workflows from the modules</span>
 <span class="n">workflow</span> <span class="o">{</span>
@@ -422,7 +422,7 @@ In particular, you can move a named workflow within a module and keep it aside f
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>We now include two modules, named <strong>fastqc</strong> and <strong>multiqc</strong>, from <code class="docutils literal notranslate"><span class="pre">`${baseDir}/lib/fastqc.nf`</span></code> and <code class="docutils literal notranslate"><span class="pre">`${baseDir}/lib/multiqc.nf`</span></code>.
+<p>We now include two modules, named <strong>fastqc</strong> and <strong>multiqc</strong>, from <code class="docutils literal notranslate"><span class="pre">`${baseDir}/modules/fastqc.nf`</span></code> and <code class="docutils literal notranslate"><span class="pre">`${baseDir}/modules/multiqc.nf`</span></code>.
 Let’s inspect the <strong>fastqc</strong> module:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm">*  fastqc module</span>
@@ -472,7 +472,7 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 </pre></div>
 </div>
 <p>Here you see that we are not using our own image, but rather we use the image provided by <strong>biocontainers</strong> in <a class="reference external" href="https://quay.io/">quay</a>.</p>
-<p>Here you can find a list of fastqc images developed and stored by the biocontainers community <a href="#id3"><span class="problematic" id="id4">`</span></a><a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a> &lt;<a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a>&gt;`___.</p>
+<p>Here you can find a list of fastqc images developed and stored by the biocontainers community <a class="reference external" href="https://biocontainers.pro/#/tools/fastqc">https://biocontainers.pro/#/tools/fastqc</a>.</p>
 <p>Let’s have a look at the <strong>multiqc.nf</strong> module:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm">*  multiqc module</span>
@@ -529,8 +529,8 @@ Let’s inspect the <strong>fastqc</strong> module:</p>
 <p class="admonition-title">Note</p>
 <p>IMPORTANT: You have to specify a default image to run nextflow -with-docker or -with-singularity and you have to have a container(s) defined inside modules.</p>
 </div>
-<section id="id5">
-<h3>EXERCISE<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
+<section id="id3">
+<h3>EXERCISE<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
 <p>Make a module wrapper for the bowtie tool and change the script in test3 accordingly.</p>
 <details>
 <summary><a>Solution</a></summary><p>Solution in the folder test5</p>
