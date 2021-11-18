@@ -443,8 +443,8 @@ The **test4** folder provides an example of using modules.
 	/*
 	 * Here we include two modules from two files. We also add the parameter OUTPUT to pass them the folders where to publish the results
 	 */
-	include { fastqc } from "${baseDir}/lib/fastqc" addParams(OUTPUT: fastqcOutputFolder)
-	include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder)
+	include { fastqc } from "${baseDir}/modules/fastqc" addParams(OUTPUT: fastqcOutputFolder)
+	include { multiqc } from "${baseDir}/modules/multiqc" addParams(OUTPUT: multiqcOutputFolder)
 
 	// The main worflow can directly call the named workflows from the modules
 	workflow {
@@ -458,7 +458,7 @@ The **test4** folder provides an example of using modules.
 	}
 
 
-We now include two modules, named **fastqc** and **multiqc**, from ```${baseDir}/lib/fastqc.nf``` and ```${baseDir}/lib/multiqc.nf```.
+We now include two modules, named **fastqc** and **multiqc**, from ```${baseDir}/modules/fastqc.nf``` and ```${baseDir}/modules/multiqc.nf```.
 Let's inspect the **fastqc** module:
 
 .. code-block:: groovy
@@ -525,7 +525,7 @@ While we keep the information of the container inside the module for better repr
 
 Here you see that we are not using our own image, but rather we use the image provided by **biocontainers** in `quay <https://quay.io/>`__.
 
-Here you can find a list of fastqc images developed and stored by the biocontainers community `https://biocontainers.pro/#/tools/fastqc <https://biocontainers.pro/#/tools/fastqc>`___.
+Here you can find a list of fastqc images developed and stored by the biocontainers community `https://biocontainers.pro/#/tools/fastqc <https://biocontainers.pro/#/tools/fastqc>`__.
 
 Let's have a look at the **multiqc.nf** module:
 
