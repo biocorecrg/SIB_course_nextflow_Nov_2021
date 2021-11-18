@@ -116,7 +116,7 @@ Day 1: Introduction to Nextflow and Linux containers
 -------------
 
 * 13:00-13:30 Getting started, become familiar with the working environment.
-* 13:30-14:30 Talk by Cedric Notredame, CRG.
+* 13:30-14:30 Talk by Cédric Notredame and Jose Antonio Espinosa, Comparative Bioinformatics, CRG.
 * 14:30-15:00 Introduction to Docker and Singularity containers.
 * 15:00-15:30 Break.
 * 15:30-16:30 Docker hub, BioContainers and other repositories. Find existing containers. Execute a Singularity container. 
