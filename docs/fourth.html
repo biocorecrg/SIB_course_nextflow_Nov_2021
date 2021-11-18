@@ -332,14 +332,14 @@ This is mandatory when running Nextflow on the cloud.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test3.nf -bg -with-docker -profile cloud &gt; log</span>
 </pre></div>
 </div>
-<p>Note that there is no longer a <strong>work</strong> folder because, on the AWS cloud, the output is copied locally.</p>
+<p>Note that there is no longer a <strong>work</strong> folder because, on the AWS cloud, the output is copied locally in the folder ./mnt/clas-bucket-XXX/work.</p>
 <p>Sometimes you can find that the Nextflow process itself is very memory intensive and the main node can run out of memory. To avoid this, you can reduce the memory needed by setting an environmental variable:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export NXF_OPTS=&quot;-Xms50m -Xmx500m&quot;</span>
 </pre></div>
 </div>
 <p>Again we can copy the output file to the bucket.</p>
 <p>We can also tell Nextflow to directly copy the output file to the S3 bucket: to do so, change the parameter <strong>outdir</strong> in the params file (use the bucket corresponding to your AWS instance):</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;s3://class-bucket-1/results&quot;</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;s3://nf-class-bucket-1/results&quot;</span>
 </pre></div>
 </div>
 <section id="exercise">
