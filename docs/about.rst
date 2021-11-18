@@ -12,6 +12,39 @@ About the course
 This slow-paced hands-on course is designed for absolute beginners who want to start using  `Nextflow DSL2 <https://www.nextflow.io>`_ to achieve reproducibility of the data analysis. 
 
 
+.. |luca| image:: images/lcozzuto.jpg
+  :alt: Alternative text
+  
+.. |toni| image:: images/thermoso.jpg
+  :alt: Alternative text
+  
+.. |julia| image:: images/jponomarenko.jpg
+  :alt: Alternative text
+  
+
+.. list-table:: Main instructors:
+   :widths: 50 50 50
+   :header-rows: 1
+
+   * - Luca Cozzuto
+     - Toni Hermoso
+     - Julia Ponomarenko
+   * - |luca|
+     - |toni|
+     - |julia|
+   
+Other instructors:
+
+* Alessio Vignoli
+* Athanasios Baltzis
+* Jose Espinosa-Carrasco
+* Leila Mansouri
+* Bjorn Langer
+* Suzanne Jin
+* Emilio Palumbo
+* Edgar Garriga Nogales
+
+
 .. _home-page-outline:
 
 Outline
@@ -83,7 +116,7 @@ Day 1: Introduction to Nextflow and Linux containers
 -------------
 
 * 13:00-13:30 Getting started, become familiar with the working environment.
-* 13:30-14:30 Talk by Cedric Notredame, CRG.
+* 13:30-14:30 Talk by Cédric Notredame and Jose Antonio Espinosa, Comparative Bioinformatics, CRG.
 * 14:30-15:00 Introduction to Docker and Singularity containers.
 * 15:00-15:30 Break.
 * 15:30-16:30 Docker hub, BioContainers and other repositories. Find existing containers. Execute a Singularity container. 

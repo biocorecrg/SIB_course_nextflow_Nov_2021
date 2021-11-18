@@ -39,9 +39,9 @@ Let's inspect the folder `singularity`:
 	biocorecrg-c4lwg-2018-latest.img
 
 
-We can then reuse this image if we want to execute the code **exactly in the same way** as in the pipeline but outside the pipeline.
+This singularity image can be used to execute the code outside the pipeline **exactly the same way** as inside the pipeline.
 
-Sometimes we can be interested in launching just one job, because it failed or for just making a test. We can go to the corresponding temporary folder: as an example let's go to one of the fastQC temporary folder:
+Sometimes we can be interested in launching only a specific job, because it might failed or for making a test. For that, we can go to the corresponding temporary folder; for example, one of the fastQC temporary folders:
 
 .. code-block:: console
 
@@ -62,7 +62,7 @@ Inspecting the `.command.run` file shows us this piece of code:
 
 This means that Nextflow is running the code by using the **singularity exec** command. 
 
-Then we can launch the following command:
+Thus we can launch this command outside the pipeline (locally):
 
 .. code-block:: console
 
@@ -83,22 +83,36 @@ Then we can launch the following command:
 	Approx 60% complete for B7_H3K4me1_s_chr19.fastq.gz
 	...
 
-In this way you are doing the same execution done by Nextflow using the local machine. In case you are submitting a job to a HPC you need to use the corresponding program, for instance **qsub** or **sbatch**.
+If you have to submit a job to a HPC you need to use the corresponding program, **qsub** or **sbatch**.
 
 .. code-block:: console
 
 	qsub .command.run 
 
 
-Adding more steps
+Adding more processes
 ======================
 
-We can make pipelines incrementally complex by adding more and more processes. 
+We can build a pipeline incrementally adding more and more processes. 
 Nextflow will take care of the dependencies between the input / output and of the parallelization.
 
-Within the **test3** folder we have two more steps to add: the reference indexing and the read alignments with `bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`__.
+Let's add to the **test2.nf** pipeline two additional steps, indexing of the reference genome and the read alignment using `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`__. For that we will have to modify the *.nf, params.config and nexflow.config files (the full solution is available in the `test3 folder on the GitHub <https://github.com/biocorecrg/SIB_course_nextflow_Nov_2021/blob/main/nextflow/test3>`__).
 
-We add a new input for the reference sequence:
+In **params.config**, we have to add new parameters:
+
+
+.. code-block:: groovy
+
+	params {
+		reads		= "$baseDir/../../testdata/*.fastq.gz"
+		reference       = "$baseDir/../../testdata/chr19.fasta.gz"
+		outdir          = "$baseDir"
+		//outdir          = "s3://class-bucket-1/results"
+		email		= "myemail@google.com"
+	}
+
+
+In **test3.nf**, we have to add a new input for the reference sequence:
 
 .. code-block:: groovy
 
@@ -114,7 +128,7 @@ We add a new input for the reference sequence:
 	reference = file(params.reference)
 
 
-The **singleton channel** called **reference** is created. Its content is never consumed and can be indefinitely used. We also add a path specifying where to place the output files.
+This way, the **singleton channel** called **reference** is created. Its content can be used indefinitely. We also add a path specifying where to place the output files.
 
 .. code-block:: groovy
 
@@ -127,7 +141,7 @@ The **singleton channel** called **reference** is created. Its content is never 
 
 
 
-We add two more processes. The first one is for the indexing the reference genome (with `bowtie-build`):
+And we have to add two new processes. The first one is for the indexing the reference genome (with `bowtie-build`):
 
 .. code-block:: groovy
 
@@ -152,9 +166,9 @@ We add two more processes. The first one is for the indexing the reference genom
 	}
 
 
-Since bowtie indexing requires unzipped reference fasta file, we first **gunzip** it, we then build the reference index, and we finally remove the unzipped file.
+Since bowtie indexing requires unzipped reference fasta file, we first **gunzip** it, then build the reference index, and finally remove the unzipped file.
 
-The output channel generated is organized as a **tuple**, i.e. a list of elements.
+The output channel is organized as a **tuple**; i.e., a list of elements.
 
 The first element of the list is the **name of the index as a value**, the second is a **list of files constituting the index**.
 
@@ -188,19 +202,19 @@ The second process **bowtieAln** is the alignment step:
 	}
 
 
-There are two different input channels: the **index** and the **reads**.
+There are two different input channels, the **index** and **reads**.
 
-The index name specified by **refname** is used for building the command line while the index files, indicated by **ref_files**, are just linked in the current directory by using the **path** qualifier.
+The index name specified by **refname** is used for building the command line; while the index files, indicated by **ref_files**, are linked to the current directory by using the **path** qualifier.
 
-We also produced two kind of outputs: the **alignments** and the **logs**.
-The first one is the one we want to keep as a final result. So we specify this using the **pattern** parameter in **publishDir**.
+We also produced two kind of outputs, the **alignments** and **logs**.
+The first one is the one we want to keep as a final result; for that, we specify the **pattern** parameter in **publishDir**.
 
 .. code-block:: groovy
 
 	publishDir alnOutputFolder, pattern: '*.sam'
 
 
-The second one will be just passed to the next process for being used by the multiQC process. To distinguish them we can assign them different names.
+The second output will be passed to the next process, that is, the multiQC process. To distinguish the outputs let's assign them different names.
 
 .. code-block:: groovy
 
@@ -221,29 +235,27 @@ This section will allow us to connect these outputs directly with other processe
 	}
 
 
-So we passed the **samples_log** output to the multiqc process after mixing it with the output channel from the fastqc process.
+As you can see, we passed the **samples_log** output to the multiqc process after mixing it with the output channel from the fastqc process.
+
 
 Profiles 
 =================
 
-For deploying a pipeline in a cluster environment or a cloud, we need to add some information in the **nextflow.config** file. 
+For deploying a pipeline in a cluster or Cloud, in the **nextflow.config** file, we need to indicate what kind of the `executor <https://www.nextflow.io/docs/latest/process.html#executor>`__ to use.
 
-In particular we need to indicate the kind of `executor <https://www.nextflow.io/docs/latest/process.html#executor>`__ should be used.
-
-In the Nextflow framework architecture, the executor indicates which is the **batch-queuing system** to use to submit jobs to the HPC or to the cloud.
+In the Nextflow framework architecture, the executor indicates which the **batch-queue system** to use to submit jobs to a HPC or to Cloud.
 
 The executor is completely abstracted, so you can switch from SGE to SLURM just by changing this parameter in the configuration file.
 
 You can group different classes of configuration or **profiles** within a single **nextflow.config** file. 
-In this way that you can indicate at run time which executor and resources to use for a pipeline execution.
 
-Let's inspect the **nextflow.config** file in **test3** folder. We can look at three different profiles:
+Let's inspect the **nextflow.config** file in **test3** folder. We can see three different profiles:
 
 - standard
 - cluster
 - cloud
 
-The first one indicates the resources needed for running the pipeline locally. They are quite small since we have little power and CPUs on the test node.
+The first profile indicates the resources needed for running the pipeline locally. They are quite small since we have little power and CPU on the test node.
 
 .. code-block:: groovy
 
@@ -264,9 +276,9 @@ The first one indicates the resources needed for running the pipeline locally. T
 	   }
  
  
-As you can see we indicate explicitly the **local** executor. So this will be the default when running the pipeline indicating without specifying a profiles.
+As you can see, we explicitly indicated the **local** executor. By definition, the local executor is a default executor if the pipeline is run without specifying a profile.
 
-The second one is **cluster**:
+The second profile is for running the pipeline on the **cluster**; here in particular for the cluster supporting the Sun Grid Engine queuing system:
 
 .. code-block:: groovy
 
@@ -289,7 +301,7 @@ The second one is **cluster**:
 	   }
 
 
-This indicates that the system uses **Sun Grid Engine** as job scheduler and that we have different queues for small jobs and more intensive ones.
+This profile indicates that the system uses **Sun Grid Engine** as a job scheduler and that we have different queues for small jobs and more intensive ones.
 
 
 Deployment in the AWS cloud 
@@ -300,7 +312,7 @@ The final profile is for running the pipeline in the **Amazon Cloud**, known as 
 .. code-block:: groovy
 
 	   cloud {
-	    workDir = 's3://class-bucket-1/work'
+	    workDir = 's3://nf-class-bucket-1/work'
 	    aws.region = 'eu-central-1'
 	    aws.batch.cliPath = '/home/ec2-user/miniconda/bin/aws'
 
@@ -320,20 +332,20 @@ The final profile is for running the pipeline in the **Amazon Cloud**, known as 
 	  }
 
 
-We indicate some **AWS specific parameters** (**region** and **cliPath**) and the executor that is **awsbatch**.
-Then we indicate that the working directory, that is normally written locally, should be mounted as `S3 volume <https://aws.amazon.com/s3/>`__. 
+We indicate the **AWS specific parameters** (**region** and **cliPath**) and the executor **awsbatch**.
+Then we indicate the working directory, that should be mounted as `S3 volume <https://aws.amazon.com/s3/>`__. 
 This is mandatory when running Nextflow on the cloud.
 
-We can now launch the pipeline indicating `-profile cloud`
+We can now launch the pipeline indicating `-profile cloud`:
 
 .. code-block:: console
 
 	nextflow run test3.nf -bg -with-docker -profile cloud > log
 
 
-Note that there is no longer a **work** folder because, on the AWS cloud, the output is copied locally. 
+Note that there is no longer a **work** folder because, on the AWS cloud, the output is copied locally in the folder ./mnt/class-bucket-XXX/work.
 
-Sometimes you can find that the Nextflow process itself is very memory intensive and the main node can run out of memory. To avoid this you can reduce the memory needed by setting an environmental variable:
+Sometimes you can find that the Nextflow process itself is very memory intensive and the main node can run out of memory. To avoid this, you can reduce the memory needed by setting an environmental variable:
 
 .. code-block:: console
 
@@ -342,29 +354,34 @@ Sometimes you can find that the Nextflow process itself is very memory intensive
 
 Again we can copy the output file to the bucket.
 
-We can also tell Nextflow to directly copy the output file to the S3 bucket: to do so, change the parameter **outdir** in the params file:
+We can also tell Nextflow to directly copy the output file to the S3 bucket: to do so, change the parameter **outdir** in the params file (use the bucket corresponding to your AWS instance):
 
 .. code-block:: groovy
 
-	outdir = "s3://class-bucket-1/results"
+	outdir = "s3://nf-class-bucket-1/results"
+
+
+The multiqc report can be seen on the AWS webpage at https://nf-class-bucket-XXX.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html
+
+But you need before to change permission: chmod 777 multiqc_report.html.
 
 
 EXERCISE 
 ---------------
 
-Modify the **test3.nf** file to make two different subworkflows: 
+Modify the **test3.nf** file to make two sub-workflows: 
 
-* one for fastqc + bowtie alignment
-* one for a new fastqc analysis of the aligned files produced by bowtie. 
+* for fastqc of fastq files and bowtie alignment;
+* for a fastqc analysis of the aligned files produced by bowtie. 
 
-For convenience you can use the multiqc config file called config.yaml in the multiqc process.
+For convenience you can use the multiqc config file called **config.yaml** in the multiqc process.
 
 .. raw:: html
 
    <details>
    <summary><a>Solution</a></summary>
 
-Solution in the file test3_2.nf
+Solution is in the file test3_2.nf:
 
 .. raw:: html
 
@@ -374,13 +391,13 @@ Solution in the file test3_2.nf
 
 
 
-Modules and re-usage of the code
+Modules and how to re-use the code
 ==================================
 
-A great advance of the new DSL2 is to allow the **modularization of the code**.
-In particular, you can move a named workflow within a module and keep it aside for being accessed from different pipelines.
+A great advantage of the new DSL2 is to allow the **modularization of the code**.
+In particular, you can move a named workflow within a module and keep it aside for being accessed by different pipelines.
 
-Looking at the **test4** folder gives you an idea of how the code uses modules.
+The **test4** folder provides an example of using modules.
 
 .. code-block:: groovy
 
@@ -441,7 +458,7 @@ Looking at the **test4** folder gives you an idea of how the code uses modules.
 	}
 
 
-We now include two modules named **fastqc** and **multiqc** from ```${baseDir}/lib/fastqc.nf``` and ```${baseDir}/lib/multiqc.nf```.
+We now include two modules, named **fastqc** and **multiqc**, from ```${baseDir}/lib/fastqc.nf``` and ```${baseDir}/lib/multiqc.nf```.
 Let's inspect the **fastqc** module:
 
 .. code-block:: groovy
@@ -472,9 +489,9 @@ Let's inspect the **fastqc** module:
 
 
 
-Module **fastqc** takes as **input** a channel with reads and produces as **output** the files generated by the fastqc program.
+Module **fastqc** takes as **input** a channel with files containing reads and produces as **output** the files generated by the fastqc program.
 
-The module is quite simple: it contains the directive **publishDir**, the tag, the container to be used and has a similar input, output and script session than seen previously.
+The module contains the directive **publishDir**, the tag, the container to be used and has similar input, output and script session as the fastqc process in **test3.nf**.
 
 A module can contain its own parameters that can be used for connecting the main script to some variables inside the module.
 
@@ -488,10 +505,10 @@ In this example we have the declaration of two **parameters** that are defined a
 
 They can be overridden from the main script that is calling the module:
 
-- The parameter **params.OUTPUT** can be used for connecting the definition of the output of this module with the one in the main script.  
-- The parameter **params.CONTAINER** can be used for deciding which image has to be used for this particular module.
+- The parameter **params.OUTPUT** can be used for connecting the output of this module with one in the main script.  
+- The parameter **params.CONTAINER** can be used for declaring the image to use for this particular module.
 
-In this example in our main script we pass only the OUTPUT parameters by writing in this way:
+In this example, in our main script we pass only the OUTPUT parameters by writing them as follows:
 
 .. code-block:: groovy
 
@@ -506,7 +523,7 @@ While we keep the information of the container inside the module for better repr
 	params.CONTAINER = = "quay.io/biocontainers/fastqc:0.11.9--0"
 
 
-Here you see that we are not using our own image but one provided by **biocontainers** stored in `quay <https://quay.io/>`__.
+Here you see that we are not using our own image, but rather we use the image provided by **biocontainers** in `quay <https://quay.io/>`__.
 
 Here you can find a list of fastqc images developed and stored by the biocontainers community `https://biocontainers.pro/#/tools/fastqc <https://biocontainers.pro/#/tools/fastqc>`___.
 
@@ -541,16 +558,16 @@ Let's have a look at the **multiqc.nf** module:
 
 
 
-It is very similar to the fastqc one: we just add an extra parameter for connecting the resources defined in the nextflow.config file and the label indicated in the process.
+It is very similar to the fastqc one: we just add an extra parameter for connecting the resources defined in the **nextflow.config** file and the label indicated in the process.
 
-In case we want to use it we would need to change the main code in this way:
+To use this module, we have to change the main code as follows:
 
 .. code-block:: groovy
 
 	include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder, LABEL="onecpu")
 
 
-This is because we specified the label **onecpu** in out **nextflow.config** file:
+The label **onecpu** is specified in the **nextflow.config** file:
 
 .. code-block:: groovy
 
@@ -574,12 +591,12 @@ This is because we specified the label **onecpu** in out **nextflow.config** fil
 
 .. note::
 
-	IMPORTANT: you will need to specify a default image when you want to run nextflow -with-docker or -with-singularity and you have containers defined inside the modules
+	IMPORTANT: You have to specify a default image to run nextflow -with-docker or -with-singularity and you have to have a container(s) defined inside modules.
 
 EXERCISE 
 ------------
 
-Try to make a module wrapper of the bowtie tool and change the script accordingly as the test3.
+Make a module wrapper for the bowtie tool and change the script in test3 accordingly.
 
 .. raw:: html
 
@@ -598,7 +615,7 @@ Solution in the folder test5
 Reporting and graphical interface
 ===================================
 
-Nextflow has an embedded function for reporting a number of informations about the resources needed by each job and the timing: you can get a nice html report with parameter **-with-report**:
+Nextflow has an embedded function for reporting informations about the resources requested for each job and the timing; to generate a html report, run Nextflow with the `-with-report` parameter :
 
 .. code-block:: console
 
@@ -608,37 +625,38 @@ Nextflow has an embedded function for reporting a number of informations about t
 .. image:: images/report.png
   :width: 800
   
+
 **Nextflow Tower** is an open source monitoring and managing platform for Nextflow workflows. There are two versions:
 
-- Open source for monitoring of single pipelines
+- Open source for monitoring of single pipelines.
 - Commercial one for workflow management, monitoring and resource optimisation.
 
 We will show the open source one. 
 
-First of all you need to access the `tower.nf <https://tower.nf/>`___ website and doing the login using one of the methods.
+First, you need to access the `tower.nf <https://tower.nf/>`__ website and login.
 
 
 .. image:: images/tower.png
   :width: 800
 
 
-We select the email for receiving the instructions and the token to be used for the pipeline.
+If you selected the email for receiving the instructions and the token to be used.
 
 .. image:: images/tower0.png
   :width: 800
  
-So we check the email:
+check the email:
 
 .. image:: images/tower1.png
   :width: 800
 
-We then go on getting started and follow the instructions for exporting two environmental variables:
+
 
 .. image:: images/tower2.png
   :width: 800
 
 
-You can then generate your token here: `https://tower.nf/tokens <https://tower.nf/tokens>`___ and copy paste in your pipeline using this snippet in the configuration file
+You can generate your token at `https://tower.nf/tokens <https://tower.nf/tokens>`__ and copy paste it in your pipeline using this snippet in the configuration file:
 
 .. code-block:: groovy
 
@@ -656,7 +674,7 @@ or exporting those environmental variables:
 	export NXF_VER=21.04.0
 
 
-we then launch the pipeline:
+Now we can launch the pipeline:
 
 .. code-block:: console
 
@@ -674,14 +692,14 @@ we then launch the pipeline:
 	CAPSULE: Downloading dependency org.codehaus.groovy:groovy-xml:jar:3.0.5
 
 
-We finally go to the tower website again:
+and go to the tower website again:
 
 
 .. image:: images/tower3.png
   :width: 800
 
 
-And in the end when the pipeline is finished we can also receive a mail.
+When the pipeline is finished we can also receive a mail.
 
 
 .. image:: images/tower4.png
@@ -842,7 +860,7 @@ Then we pass to the pipelines the path of our input files:
 	Succeeded   : 5
 
 
-Nextflow first pulls down the required version of the pipeline and it stores it in:
+Nextflow first pulls down the required version of the pipeline and stores it in:
 
 .. code-block:: console
 
@@ -851,7 +869,7 @@ Nextflow first pulls down the required version of the pipeline and it stores it 
 
 then it pulls the Docker image and runs the pipeline.
 
-You can use the Nextflow's command **list** that shows the number of pipelines installed in your environment and the command **info** for fetching some useful information.
+You can use the Nextflow command **list** to see pipelines installed in your environment and the command **info** to fetch information about the path, repository, etc.
 
 .. code-block:: console
 
@@ -871,7 +889,7 @@ You can use the Nextflow's command **list** that shows the number of pipelines i
 	 revision    : * main
 
 
-Finally you can update, view or delete a project by using the Nextflow commands **pull**, **view** and **drop**.
+Finally, you can update, view or delete a project by using the Nextflow commands **pull**, **view** and **drop**.
 
 .. code-block:: groovy
 
@@ -892,5 +910,6 @@ Finally you can update, view or delete a project by using the Nextflow commands 
 	 *
 	 *   CRG_Containers_NextFlow is distributed in the hope that it will be useful,
 	[...]
+
 
 
