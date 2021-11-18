@@ -307,12 +307,12 @@ This profile indicates that the system uses **Sun Grid Engine** as a job schedul
 Deployment in the AWS cloud 
 =============================
 
-The final profile is for running the pipeline in the **Amazon Cloud**, known as Amazon Web Services or AWS. In particular we will use **AWS Batch** that allows the execution of containerised workloads in the Amazon cloud infrastructure.
+The final profile is for running the pipeline in the **Amazon Cloud**, known as Amazon Web Services or AWS. In particular, we will use **AWS Batch** that allows the execution of containerised workloads in the Amazon cloud infrastructure (where NNNN is the number of your bucket which you can see in the mounted folder by typing **df -h**).
 
 .. code-block:: groovy
 
 	   cloud {
-	    workDir = 's3://nf-class-bucket-1/work'
+	    workDir = 's3://nf-class-bucket-NNNN/work'
 	    aws.region = 'eu-central-1'
 	    aws.batch.cliPath = '/home/ec2-user/miniconda/bin/aws'
 
@@ -343,7 +343,16 @@ We can now launch the pipeline indicating `-profile cloud`:
 	nextflow run test3.nf -bg -with-docker -profile cloud > log
 
 
-Note that there is no longer a **work** folder because, on the AWS cloud, the output is copied locally in the folder ./mnt/class-bucket-XXX/work.
+Note that there is no longer a **work** folder because, on the AWS cloud, the output is copied locally in the folder **/mnt/class-bucket-NNN/work** (you can see the mounted folders by typing **df -h**).
+
+The multiqc report can be seen on the AWS webpage at https://nf-class-bucket-XXX.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html
+
+But you need before to change permissions for that file as (where NNNN is the number of your bucket): 
+
+.. code-block:: console
+
+	chmod 775 /mnt/class-bucket-NNNN/results/ouptut_multiQCmultiqc_report.html
+
 
 Sometimes you can find that the Nextflow process itself is very memory intensive and the main node can run out of memory. To avoid this, you can reduce the memory needed by setting an environmental variable:
 
@@ -358,12 +367,10 @@ We can also tell Nextflow to directly copy the output file to the S3 bucket: to 
 
 .. code-block:: groovy
 
-	outdir = "s3://nf-class-bucket-1/results"
+	outdir = "s3://nf-class-bucket-NNNN/results"
 
 
-The multiqc report can be seen on the AWS webpage at https://nf-class-bucket-XXX.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html
 
-But you need before to change permission: chmod 777 multiqc_report.html.
 
 
 EXERCISE 
