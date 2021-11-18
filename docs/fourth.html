@@ -332,7 +332,7 @@ This is mandatory when running Nextflow on the cloud.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nextflow run test3.nf -bg -with-docker -profile cloud &gt; log</span>
 </pre></div>
 </div>
-<p>Note that there is no longer a <strong>work</strong> folder because, on the AWS cloud, the output is copied locally in the folder ./mnt/clas-bucket-XXX/work.</p>
+<p>Note that there is no longer a <strong>work</strong> folder because, on the AWS cloud, the output is copied locally in the folder ./mnt/class-bucket-XXX/work.</p>
 <p>Sometimes you can find that the Nextflow process itself is very memory intensive and the main node can run out of memory. To avoid this, you can reduce the memory needed by setting an environmental variable:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export NXF_OPTS=&quot;-Xms50m -Xmx500m&quot;</span>
 </pre></div>
@@ -342,6 +342,8 @@ This is mandatory when running Nextflow on the cloud.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;s3://nf-class-bucket-1/results&quot;</span>
 </pre></div>
 </div>
+<p>The multiqc report can be seen on the AWS webpage at <a class="reference external" href="https://nf-class-bucket-XXX.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html">https://nf-class-bucket-XXX.s3.eu-central-1.amazonaws.com/results/ouptut_multiQC/multiqc_report.html</a></p>
+<p>But you need before to change permission: chmod 777 multiqc_report.html.</p>
 <section id="exercise">
 <h3>EXERCISE<a class="headerlink" href="#exercise" title="Permalink to this headline"></a></h3>
 <p>Modify the <strong>test3.nf</strong> file to make two sub-workflows:</p>
