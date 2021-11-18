@@ -74,9 +74,9 @@ Channel
 
 reference = file(params.reference)
 
-include { fastqc } from "${baseDir}/lib/fastqc" addParams(OUTPUT: fastqcOutputFolder)
-include { BOWTIE } from "${baseDir}/lib/bowtie" addParams(OUTPUT: alnOutputFolder)
-include { multiqc } from "${baseDir}/lib/multiqc" addParams(OUTPUT: multiqcOutputFolder)
+include { fastqc } from "${baseDir}/modules/fastqc" addParams(OUTPUT: fastqcOutputFolder)
+include { BOWTIE } from "${baseDir}/modules/bowtie" addParams(OUTPUT: alnOutputFolder)
+include { multiqc } from "${baseDir}/modules/multiqc" addParams(OUTPUT: multiqcOutputFolder)
  
 
 workflow {
