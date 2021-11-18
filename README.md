@@ -6,7 +6,7 @@ Reproducible research and data analysis using Nextflow pipelines
 <br>
 Course page: https://www.sib.swiss/training/course/20211115_NEXTF
 <br>
-Course materials: https://biocorecrg.github.io/SIB_course_nextflow_Nov_2021
+Course materials: https://biocorecrg.github.io/SIB_course_nextflow_Nov_2021/docs/
 
 
 ## About the course
