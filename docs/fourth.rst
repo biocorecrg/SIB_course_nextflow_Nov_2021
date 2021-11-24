@@ -814,8 +814,6 @@ If we go back to the GitHub website we can see that everything has been uploaded
 .. image:: images/git_2.png
   :width: 800
 
-CHECK THIS!!!
-
 Now we can remove that folder and go in the home folder.
 
 .. code-block:: console
